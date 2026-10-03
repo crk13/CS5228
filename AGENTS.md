@@ -21,12 +21,17 @@ CS5228 小组项目（Kaggle 私有比赛 "CS5228-2610 Project"）：根据新�
   - `sg-coe-prices.csv`：数值列是带 `$` 和千分位逗号的字符串，需先解析。
   - `sg-stock-prices.csv`：日频股价，需聚合到月。
 
-### 已确认的数据坑
+### 清洗后的数据（建模请用这一份）
 
-- `FURNISHED`（全为 yes）和 `FEE`（全为 0）在 train 和 test 中都是常数，应删除。
-- `FLAT_TYPE` 混用 "4 room" 和 "4-room"，需统一（test 中只有连字符写法）。
-- `STREET` 约 20% 带大写，join 和分组前统一转小写。
-- 无缺失值。
+- `data_cleaned/` 由 `src/data_cleaning/` 生成，只做了与模型无关的基础清洗：统一格式、删除常数列 `FURNISHED` 和 `FEE`、统一 `FLAT_TYPE` 写法、join 楼栋表、修正辅助表的格式。
+- 处理细节、已知的数据现象、每个文件的数据字典以及 `NUM_COLS` / `CAT_COLS`，见 `data_cleaned/README.md`。
+- 读取必须使用 `src.data_cleaning` 中的 `load_train()`、`load_test()`、`load("auxiliary/xxx.csv")`。直接 `pd.read_csv` 会丢失 `POSTAL_CODE` 的前导 0。
+- 异常值、编码、填充缺失值、特征工程都属于模型相关处理，**不要放进 `src/data_cleaning/`**，由各模型负责人在自己的代码里处理。
+
+```bash
+python -m src.data_cleaning.clean    # 重新生成 data_cleaned/（在项目根目录运行）
+python -m src.data_cleaning.checks   # 校验输出；修改清洗逻辑后必须跑通
+```
 
 ## 关键建模约束
 
@@ -40,7 +45,7 @@ CS5228 小组项目（Kaggle 私有比赛 "CS5228-2610 Project"）：根据新�
 - **噪声下限**：同一伪单位、同一月份的记录之间，租金标准差中位数约 283。RMSE 的合理预期在 300 以上。
 - **目标编码 / 分组统计必须防泄漏**：验证时只能用验证切分点之前的数据或 out-of-fold 统计；最终提交时才用全量 train。
 
-## 团队约定（规划中，代码尚未建立）
+## 团队约定（数据清洗已完成，其余为规划）
 
 四人分工：
 - P1：数据与公共框架、目标编码、融合与提交。
@@ -48,11 +53,11 @@ CS5228 小组项目（Kaggle 私有比赛 "CS5228-2610 Project"）：根据新�
 - P3：GBDT（LightGBM、XGBoost、CatBoost、RF）、调参、SHAP。
 - P4：辅助数据、距离特征、KNN、神经网络（MLP + embedding）。
 
-计划的代码组织：
-- 公共模块放在 `src/`（清洗、特征、时间切分、`run_experiment()` 接口）。
+代码组织：
+- 公共模块放在 `src/`。已有 `src/data_cleaning/`；特征、时间切分、`run_experiment()` 接口待建。
 - 个人实验放在 `notebooks/<姓名>_<主题>.ipynb`。
 - 提交文件放在 `submissions/`。
 
 所有实验通过统一接口、在同一验证切分上运行，结果记入共享实验日志，以便方法之间可比。特征按模块（F1 基础 / F2 楼栋 / F3 距离 / F4 目标编码 / F5 宏观 / F6 空间邻居）组织，可单独开关，用于消融实验。
 
-建立代码后，请在此补充实际的运行命令与依赖说明。
+新增公共模块后，请在此补充对应的运行命令与依赖说明。
