@@ -1,0 +1,263 @@
+{
+  "timestamp": "2026-10-03T13:00:05.398381+00:00",
+  "run_id": "20261003T130005398381Z_9567f16f",
+  "name": "hist_gradient_boosting",
+  "author": "baseline",
+  "features": [
+    "basic",
+    "block"
+  ],
+  "feature_parameters": {
+    "basic": {},
+    "block": {}
+  },
+  "model": "src.models.base.ModelWrapper",
+  "parameters": {
+    "columns": [
+      "FLOOR_AREA_SQM",
+      "LEASE_COMMENCE_DATE",
+      "RENT_MONTH",
+      "MONTH_INDEX",
+      "FLAT_AGE",
+      "REMAINING_LEASE",
+      "FLAT_TYPE_ORDINAL",
+      "LATITUDE",
+      "LONGITUDE",
+      "MAX_FLOOR",
+      "YEAR_COMPLETED",
+      "TOWN",
+      "FLAT_MODEL",
+      "SUBZONE",
+      "PLANNING_AREA",
+      "REGION"
+    ],
+    "estimator": {
+      "class": "sklearn.pipeline.Pipeline",
+      "parameters": {
+        "memory": null,
+        "steps": [
+          [
+            "columns",
+            {
+              "class": "sklearn.compose._column_transformer.ColumnTransformer",
+              "parameters": {
+                "force_int_remainder_cols": true,
+                "n_jobs": null,
+                "remainder": "drop",
+                "sparse_threshold": 0,
+                "transformer_weights": null,
+                "transformers": [
+                  [
+                    "numeric",
+                    "passthrough",
+                    [
+                      "FLOOR_AREA_SQM",
+                      "LEASE_COMMENCE_DATE",
+                      "RENT_MONTH",
+                      "MONTH_INDEX",
+                      "FLAT_AGE",
+                      "REMAINING_LEASE",
+                      "FLAT_TYPE_ORDINAL",
+                      "LATITUDE",
+                      "LONGITUDE",
+                      "MAX_FLOOR",
+                      "YEAR_COMPLETED"
+                    ]
+                  ],
+                  [
+                    "categorical",
+                    {
+                      "class": "sklearn.pipeline.Pipeline",
+                      "parameters": {
+                        "memory": null,
+                        "steps": [
+                          [
+                            "values",
+                            {
+                              "class": "sklearn.preprocessing._function_transformer.FunctionTransformer",
+                              "parameters": {
+                                "accept_sparse": false,
+                                "check_inverse": true,
+                                "feature_names_out": "one-to-one",
+                                "func": "src.models.baselines._categorical_values",
+                                "inv_kw_args": null,
+                                "inverse_func": null,
+                                "kw_args": null,
+                                "validate": false
+                              }
+                            }
+                          ],
+                          [
+                            "ordinal",
+                            {
+                              "class": "sklearn.preprocessing._encoders.OrdinalEncoder",
+                              "parameters": {
+                                "categories": "auto",
+                                "dtype": "numpy.float64",
+                                "encoded_missing_value": "nan",
+                                "handle_unknown": "use_encoded_value",
+                                "max_categories": null,
+                                "min_frequency": null,
+                                "unknown_value": "nan"
+                              }
+                            }
+                          ]
+                        ],
+                        "transform_input": null,
+                        "verbose": false
+                      }
+                    },
+                    [
+                      "TOWN",
+                      "FLAT_MODEL",
+                      "SUBZONE",
+                      "PLANNING_AREA",
+                      "REGION"
+                    ]
+                  ]
+                ],
+                "verbose": false,
+                "verbose_feature_names_out": true
+              }
+            }
+          ],
+          [
+            "regressor",
+            {
+              "class": "sklearn.ensemble._hist_gradient_boosting.gradient_boosting.HistGradientBoostingRegressor",
+              "parameters": {
+                "categorical_features": [
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ],
+                "early_stopping": false,
+                "interaction_cst": null,
+                "l2_regularization": 1.0,
+                "learning_rate": 0.08,
+                "loss": "squared_error",
+                "max_bins": 255,
+                "max_depth": null,
+                "max_features": 1.0,
+                "max_iter": 120,
+                "max_leaf_nodes": 31,
+                "min_samples_leaf": 30,
+                "monotonic_cst": null,
+                "n_iter_no_change": 10,
+                "quantile": null,
+                "random_state": 5228,
+                "scoring": "loss",
+                "tol": 1e-07,
+                "validation_fraction": 0.1,
+                "verbose": 0,
+                "warm_start": false
+              }
+            }
+          ]
+        ],
+        "transform_input": null,
+        "verbose": false
+      }
+    },
+    "target_transform": "none"
+  },
+  "split": "rolling",
+  "seed": 5228,
+  "final": true,
+  "versions": {
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "sklearn": "1.6.1"
+  },
+  "folds": [
+    {
+      "name": "holdout",
+      "train_start": "2021-01",
+      "train_end": "2023-11",
+      "valid_start": "2023-12",
+      "valid_end": "2025-03",
+      "train_rows": 102829,
+      "valid_rows": 47171,
+      "rmse": 497.9370809504029,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION"
+      ]
+    },
+    {
+      "name": "rolling_2024_04",
+      "train_start": "2021-01",
+      "train_end": "2024-03",
+      "valid_start": "2024-04",
+      "valid_end": "2025-03",
+      "train_rows": 114842,
+      "valid_rows": 35158,
+      "rmse": 480.54470878259895,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION"
+      ]
+    }
+  ],
+  "final_train_rows": 150000,
+  "test_rows": 50000,
+  "submission_path": "D:\\DSML\\CS_5228\\Project_export\\submissions\\20261003T130005398381Z_9567f16f.csv",
+  "fold_rmse": {
+    "holdout": 497.9370809504029,
+    "rolling_2024_04": 480.54470878259895
+  },
+  "mean_rmse": 489.2408948665009
+}
