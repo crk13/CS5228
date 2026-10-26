@@ -93,6 +93,30 @@ def main():
     for name, score in rows:
         print(f"{score:7.0f}  {name}")
 
+    # 5) both shared splits, and three ways to extend the market level into the validation months
+    print("\nmarket-ratio Ridge on both splits (alpha chosen inside training months):")
+    for split, fit_end, valid_start in [("A", "2023-11", "2023-12"), ("B", "2024-03", "2024-04")]:
+        fit_s, valid_s = df[df[DATE] <= fit_end], df[df[DATE] >= valid_start]
+        recent_s = fit_s[fit_s[DATE] >= sorted(fit_s[DATE].unique())[-6]]
+        alpha_s, _ = pick_alpha(recent_s, cats, nums)
+        level_s = fit_s.groupby(DATE)[TARGET].median()
+        a, b = design(fit_s, valid_s, cats, nums)
+        ratio_pred = Ridge(alpha=alpha_s).fit(a, fit_s[TARGET] / fit_s[DATE].map(level_s)).predict(b)
+        for how in ("carry", "trend_last_12m", "trend_all"):
+            scale = valid_s[DATE].map(extend_level(level_s, how, valid_s[DATE].unique())).values
+            print(f"  split {split}  {how:15s} {rmse(valid_s[TARGET], ratio_pred * scale):6.0f}")
+
+
+def extend_level(level, how, future_months):
+    """Market level for unseen months: carry the last value, or extend a straight line."""
+    if how == "carry":
+        return {m: level.iloc[-1] for m in future_months}
+    month_no = lambda m: int(m[:4]) * 12 + int(m[5:7])
+    k = len(level) if how == "trend_all" else 12
+    x = np.array([month_no(m) for m in level.index[-k:]])
+    slope, intercept = np.polyfit(x, level.values[-k:], 1)
+    return {m: intercept + slope * month_no(m) for m in future_months}
+
 
 if __name__ == "__main__":
     main()
