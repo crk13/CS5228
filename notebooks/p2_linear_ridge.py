@@ -108,6 +108,8 @@ def main():
         if split == "A":
             error_analysis(valid_s.assign(pred=ratio_pred * level_s.iloc[-1]))
 
+    plot_market_level(df)
+
 
 def error_analysis(v):
     """Where does the model go wrong? err > 0 means the guess was too high."""
@@ -125,6 +127,52 @@ def error_analysis(v):
         print(f"\n  error by {name} (split A):\n" + table.round(0).astype(int).to_string())
     # Note: grouping by ACTUAL rent always shows cheap rows over-predicted and expensive rows
     # under-predicted (selection on the outcome); grouping by PREDICTED rent checks real bias.
+
+
+def plot_market_level(df, out_dir="notebooks/p2_figs"):
+    """Two figures: straight-line vs curve extensions of the market level into split A's validation months."""
+    import os
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from scipy.optimize import curve_fit
+
+    os.makedirs(out_dir, exist_ok=True)
+    month_no = lambda m: (int(m[:4]) - 2021) * 12 + int(m[5:7]) - 1
+    actual = df.groupby(DATE)[TARGET].median()
+    fit_level = actual[actual.index <= FIT_END]
+    x_fit = np.array([month_no(m) for m in fit_level.index])
+    y_fit = fit_level.values.astype(float)
+    future = np.arange(month_no(VALID_START), month_no("2026-07") + 1)
+    s_curve = lambda x, top, k, mid, base: base + top / (1 + np.exp(-k * (x - mid)))
+    s_params, _ = curve_fit(s_curve, x_fit, y_fit, p0=[1200, 0.2, 20, 2000], maxfev=20000)
+    lines = {
+        "carry last month": np.full(len(future), y_fit[-1]),
+        "straight line, last 12 fit months": np.polyval(np.polyfit(x_fit[-12:], y_fit[-12:], 1), future),
+        "straight line, all fit months": np.polyval(np.polyfit(x_fit, y_fit, 1), future),
+        "parabola, all fit months": np.polyval(np.polyfit(x_fit, y_fit, 2), future),
+        "S-curve, all fit months": s_curve(future, *s_params),
+    }
+    groups = {"market_level_straight_lines.png": list(lines)[:3],
+              "market_level_curves.png": ["carry last month", "parabola, all fit months", "S-curve, all fit months"]}
+    ticks = [month_no(f"{y}-01") for y in range(2021, 2027)]
+    for filename, names in groups.items():
+        plt.figure(figsize=(10, 4.8))
+        plt.plot([month_no(m) for m in actual.index], actual.values, "k-", lw=2, label="actual monthly median rent")
+        plt.axvspan(month_no(VALID_START), month_no(actual.index[-1]), color="orange", alpha=0.12, label="validation (split A)")
+        plt.axvspan(month_no(actual.index[-1]), month_no("2026-07"), color="grey", alpha=0.10, label="test months (rent hidden)")
+        for name in names:
+            plt.plot(future, lines[name], "--", lw=2, label=name)
+        plt.xticks(ticks, [f"{y}-01" for y in range(2021, 2027)])
+        plt.ylim(1800, 4600)
+        plt.ylabel("SGD per month")
+        plt.title("Extending the market level beyond the last fit month (split A)")
+        plt.legend(loc="upper left", fontsize=8.5)
+        plt.grid(alpha=0.3)
+        plt.tight_layout()
+        plt.savefig(os.path.join(out_dir, filename), dpi=130)
+        plt.close()
+    print(f"\nfigures saved to {out_dir}/")
 
 
 def extend_level(level, how, future_months):
