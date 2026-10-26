@@ -105,6 +105,26 @@ def main():
         for how in ("carry", "trend_last_12m", "trend_all"):
             scale = valid_s[DATE].map(extend_level(level_s, how, valid_s[DATE].unique())).values
             print(f"  split {split}  {how:15s} {rmse(valid_s[TARGET], ratio_pred * scale):6.0f}")
+        if split == "A":
+            error_analysis(valid_s.assign(pred=ratio_pred * level_s.iloc[-1]))
+
+
+def error_analysis(v):
+    """Where does the model go wrong? err > 0 means the guess was too high."""
+    v = v.assign(err=v["pred"] - v[TARGET])
+    groupings = {
+        "actual rent": pd.cut(v[TARGET], [0, 2000, 2500, 3000, 3500, 4000, 1e5]),
+        "predicted rent": pd.cut(v["pred"], [0, 2500, 3000, 3500, 4000, 1e5]),
+        "region": v["REGION"],
+        "flat type": v["FLAT_TYPE"],
+        "flat age": pd.cut(v["FLAT_AGE"], [-1, 10, 20, 30, 40, 100]),
+    }
+    for name, key in groupings.items():
+        g = v.groupby(key, observed=True)["err"]
+        table = pd.DataFrame({"rows": g.size(), "rmse": g.apply(lambda e: np.sqrt((e ** 2).mean())), "mean_err": g.mean()})
+        print(f"\n  error by {name} (split A):\n" + table.round(0).astype(int).to_string())
+    # Note: grouping by ACTUAL rent always shows cheap rows over-predicted and expensive rows
+    # under-predicted (selection on the outcome); grouping by PREDICTED rent checks real bias.
 
 
 def extend_level(level, how, future_months):
