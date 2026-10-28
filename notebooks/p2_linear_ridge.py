@@ -53,49 +53,74 @@ def pick_alpha(train, cats, nums, alphas=(0.3, 1, 3, 10, 30, 100)):
     return min(scores, key=scores.get), scores
 
 
-def main():
-    df = load()
-    fit, valid = df[df[DATE] <= FIT_END], df[df[DATE] >= VALID_START]
+SPLITS = [("A", "2023-11", "2023-12"), ("B", "2024-03", "2024-04")]
+
+
+def step_scores(df, fit_end, valid_start, split):
+    """Steps 1-4 on one split; returns RMSE per step (same order for every split)."""
+    fit, valid = df[df[DATE] <= fit_end], df[df[DATE] >= valid_start]
     recent = fit[fit[DATE] >= sorted(fit[DATE].unique())[-6]]  # last 6 fit months
-    rows = []
+    scores = []
 
     # 1) baseline: median rent by town x flat type over the last 6 fit months
     med = recent.groupby(["TOWN", "FLAT_TYPE"])[TARGET].median()
     pred = valid.join(med.rename("p"), on=["TOWN", "FLAT_TYPE"])["p"].fillna(recent[TARGET].median())
-    rows.append(("baseline: median by town x flat type (last 6 months)", rmse(valid[TARGET], pred)))
+    scores.append(rmse(valid[TARGET], pred))
 
     # 2) plain linear regression, adding features step by step (last 6 months)
     lin = LinearRegression()
-    rows.append(("linear: floor area only, ALL fit months", run(fit, valid, [], ["FLOOR_AREA_SQM"], lin)))
-    rows.append(("linear: floor area only, last 6 months", run(recent, valid, [], ["FLOOR_AREA_SQM"], lin)))
-    rows.append(("linear: town + flat type + area", run(recent, valid, ["TOWN", "FLAT_TYPE"], ["FLOOR_AREA_SQM"], lin)))
+    scores.append(run(fit, valid, [], ["FLOOR_AREA_SQM"], lin))
+    scores.append(run(recent, valid, [], ["FLOOR_AREA_SQM"], lin))
+    scores.append(run(recent, valid, ["TOWN", "FLAT_TYPE"], ["FLOOR_AREA_SQM"], lin))
     base_nums = ["FLOOR_AREA_SQM", "FLAT_AGE"]
-    rows.append(("linear: + flat age + flat model", run(recent, valid, ["TOWN", "FLAT_TYPE", "FLAT_MODEL"], base_nums, lin)))
-    rows.append(("linear: town -> subzone", run(recent, valid, ["SUBZONE", "FLAT_TYPE", "FLAT_MODEL"], base_nums, lin)))
-    rows.append(("linear: subzone + block (overfits)", run(recent, valid, ["SUBZONE", "BLOCK_KEY", "FLAT_TYPE", "FLAT_MODEL"], base_nums, lin)))
+    scores.append(run(recent, valid, ["TOWN", "FLAT_TYPE", "FLAT_MODEL"], base_nums, lin))
+    scores.append(run(recent, valid, ["SUBZONE", "FLAT_TYPE", "FLAT_MODEL"], base_nums, lin))
+    scores.append(run(recent, valid, ["SUBZONE", "BLOCK_KEY", "FLAT_TYPE", "FLAT_MODEL"], base_nums, lin))
 
     # 3) Ridge with alpha chosen inside the training months
     cats = ["SUBZONE", "BLOCK_KEY", "FLAT_TYPE", "FLAT_MODEL"]
     nums = base_nums + ["MRT_KM"]
-    alpha, scores = pick_alpha(recent, cats, nums)
-    print("alpha check inside training months:", {k: round(v) for k, v in scores.items()}, "-> alpha", alpha)
-    rows.append((f"ridge (alpha={alpha}): subzone + block + MRT distance, last 6 months", run(recent, valid, cats, nums, Ridge(alpha=alpha))))
-    rows.append((f"ridge (alpha={alpha}): same, ALL fit months, raw rent", run(fit, valid, cats, nums, Ridge(alpha=alpha))))
+    alpha, alpha_scores = pick_alpha(recent, cats, nums)
+    print(f"split {split}: alpha check inside training months:", {k: round(v) for k, v in alpha_scores.items()}, "-> alpha", alpha)
+    scores.append(run(recent, valid, cats, base_nums, Ridge(alpha=alpha)))  # same alpha, no MRT distance
+    scores.append(run(recent, valid, cats, nums, Ridge(alpha=alpha)))
+    scores.append(run(fit, valid, cats, nums, Ridge(alpha=alpha)))
 
     # 4) time trend: divide by the monthly market level, learn the ratio, scale back
     level = fit.groupby(DATE)[TARGET].median()  # monthly median rent = market level
     ratio = fit[TARGET] / fit[DATE].map(level)
-    carry = level.iloc[-1]  # assume the level stays at the last fit month (rents flat since 2023)
-    rows.append((f"ridge (alpha={alpha}): ALL fit months, rent / market level, carry last level {carry:.0f}",
-                 run(fit, valid, cats, nums, Ridge(alpha=alpha), target=ratio, scale=carry)))
+    carry = level.iloc[-1]  # assume the level stays at the last fit month
+    print(f"split {split}: validation rows {len(valid)} ({valid_start} .. {valid[DATE].max()}), carry last level {carry:.0f}")
+    scores.append(run(fit, valid, cats, nums, Ridge(alpha=alpha), target=ratio, scale=carry))
+    return scores
 
-    print(f"\nvalidation rows: {len(valid)}  ({VALID_START} .. {valid[DATE].max()})\n")
-    for name, score in rows:
-        print(f"{score:7.0f}  {name}")
+
+def main():
+    df = load()
+    cats = ["SUBZONE", "BLOCK_KEY", "FLAT_TYPE", "FLAT_MODEL"]
+    nums = ["FLOOR_AREA_SQM", "FLAT_AGE", "MRT_KM"]
+    names = [
+        "baseline: median by town x flat type (last 6 months)",
+        "linear: floor area only, ALL fit months",
+        "linear: floor area only, last 6 months",
+        "linear: town + flat type + area",
+        "linear: + flat age + flat model",
+        "linear: town -> subzone",
+        "linear: subzone + block (overfits)",
+        "ridge: subzone + block, last 6 months",
+        "ridge: subzone + block + MRT distance, last 6 months",
+        "ridge: same, ALL fit months, raw rent",
+        "ridge: ALL fit months, rent / market level, carry last level",
+    ]
+    by_split = [step_scores(df, fit_end, valid_start, split) for split, fit_end, valid_start in SPLITS]
+
+    print("\n  split A  split B  step")
+    for i, name in enumerate(names):
+        print(f"{by_split[0][i]:9.0f}{by_split[1][i]:9.0f}  {name}")
 
     # 5) both shared splits, and three ways to extend the market level into the validation months
     print("\nmarket-ratio Ridge on both splits (alpha chosen inside training months):")
-    for split, fit_end, valid_start in [("A", "2023-11", "2023-12"), ("B", "2024-03", "2024-04")]:
+    for split, fit_end, valid_start in SPLITS:
         fit_s, valid_s = df[df[DATE] <= fit_end], df[df[DATE] >= valid_start]
         recent_s = fit_s[fit_s[DATE] >= sorted(fit_s[DATE].unique())[-6]]
         alpha_s, _ = pick_alpha(recent_s, cats, nums)
@@ -107,6 +132,7 @@ def main():
             print(f"  split {split}  {how:15s} {rmse(valid_s[TARGET], ratio_pred * scale):6.0f}")
         if split == "A":
             error_analysis(valid_s.assign(pred=ratio_pred * level_s.iloc[-1]))
+            mrt_by_flat_type(fit_s, valid_s, level_s, alpha_s, cats)
 
     plot_market_level(df)
 
@@ -127,6 +153,21 @@ def error_analysis(v):
         print(f"\n  error by {name} (split A):\n" + table.round(0).astype(int).to_string())
     # Note: grouping by ACTUAL rent always shows cheap rows over-predicted and expensive rows
     # under-predicted (selection on the outcome); grouping by PREDICTED rent checks real bias.
+
+
+def mrt_by_flat_type(fit, valid, level, alpha, cats):
+    """Final model with one MRT_KM column per flat type; prints the per-km effect in SGD (split A)."""
+    types = sorted(fit["FLAT_TYPE"].unique())
+    add = lambda d: d.assign(**{f"MRT_KM x {t}": d["MRT_KM"] * (d["FLAT_TYPE"] == t) for t in types})
+    fit_i, valid_i = add(fit), add(valid)
+    nums = ["FLOOR_AREA_SQM", "FLAT_AGE"] + [f"MRT_KM x {t}" for t in types]
+    a, b = design(fit_i, valid_i, cats, nums)
+    model = Ridge(alpha=alpha).fit(a, fit_i[TARGET] / fit_i[DATE].map(level))
+    carry = level.iloc[-1]
+    print(f"\n  MRT_KM per flat type, final model (split A, alpha {alpha}, carried level {carry:.0f}); effect = coef x level, SGD per extra km:")
+    for t, coef in zip(types, model.coef_[-len(types):]):
+        print(f"    {t:12s} coef {coef:9.4f}  effect {coef * carry:8.1f} SGD/km")
+    print(f"  split A RMSE with per-flat-type MRT_KM: {rmse(valid[TARGET], model.predict(b) * carry):.0f}")
 
 
 def plot_market_level(df, out_dir="notebooks/p2_figs"):
