@@ -1,35 +1,22 @@
-# Yuxin：Transformer、RNN、LSTM 候选预测
+# Yuxin：调优后的三个正式候选
 
-本目录按公共 `docs/experiment-interface.md` 的交付格式保存三个运行：
-表格 Transformer、市场 RNN＋属性 MLP、市场 LSTM＋属性 MLP。
-完整实测结果、局限性和检查证据见根目录 `develop_test.md`。
+三个运行均使用公共 rolling 两折及 `final=True`；实际预测已逐行复核，见 [verification.json](verification.json)。
+完整方法、参数、搜索边界和证据见 [develop_tuning.md](../../develop_tuning.md)，初验与最新摘要见 [develop_test.md](../../develop_test.md)。
 
 | 模型 | run_id | A RMSE | B RMSE | 平均 RMSE |
 |---|---|---:|---:|---:|
-| 表格 Transformer | 20261103T165254207013Z_e7366de1 | 515.646 | 484.467 | 500.056 |
-| 市场 RNN | 20261103T165254212024Z_ae71e28f | 497.557 | 482.783 | 490.170 |
-| 市场 LSTM | 20261103T165436355139Z_16342354 | 498.832 | 481.537 | 490.184 |
+| 4 个表格 Transformer 平均 | 20261103T181754695021Z_493b5f46 | 487.952332 | 474.705755 | **481.329044** |
+| 市场 RNN＋4 个 MLP 属性成员 | 20261103T180702097497Z_0c01ed2c | 486.398628 | 469.853216 | **478.125922** |
+| 市场 LSTM＋相同属性成员 | 20261103T180702083101Z_b8e1e8c0 | 486.337890 | 469.919411 | **478.128651** |
 
-本轮 carry 对照平均 RMSE 为 485.611，优于这里的两个循环网络。
-这些是已实现模型的初始候选，不是已证明优于对照的融合推荐。
+单位 SGD，越低越好。三者开发均值低于固定 CatBoost 参考 484.521404；但这是同类平均版本，不是单网络成绩，也不是 Kaggle 隐藏分数。
+两折已用于调参，区间重叠，不能把 82329 行当作独立无偏测试样本。队友参考使用不同种子、环境及额外特征，不能据此作算法因果排名。
 
-每个运行使用公共 `split="rolling", final=True`，种子 5228，原尺度 SGD RMSE。
-每折和最终训练均重新建立词表、数值统计和网络；epoch 由训练部分内部时间验证选择。
-市场模型不假定同楼栋的出租记录属于同一套房，月度聚合只来自当前训练折。
+每个 `experiments/<run_id>/` 有 config、training_audit、validation_predictions；对应 `submissions/<run_id>.csv` 有完整 50000 行 `Id,Predicted`。
+验证行数 A=47171、B=35158，融合评估按 `(fold,row_index)` 对齐。没有训练集拟合预测冒充时间留出预测，也不声称已证明团队融合收益。
 
-```text
-experiments/log.csv
-experiments/<run_id>/config.json
-experiments/<run_id>/training_audit.json
-experiments/<run_id>/validation_predictions.csv
-submissions/<run_id>.csv
-verification.json
-```
+carry 同属性对照均值为 **478.237340**，完整结果在 `notebooks/Yuxin/tuning/final/`，不占本目录 3 个名额。
+RNN/LSTM 相对 carry 只改善约 0.11 SGD，主要提升来自属性模型调参与平均。序列是全市月度租金中位数，不是单套房。
 
-融合读取 `validation_predictions.csv`，按 `(fold,row_index)` 对齐；A 有 47171 行，B 有 35158 行。
-两折有重叠，每个模型总计 82329 行，不能当作 82329 个独立验证样本。
-最终 `submissions/<run_id>.csv` 有 50000 行 `Id,Predicted`，预测顺序对应 test。
-
-MLP、carry 和公共参考基线在 `notebooks/Yuxin/validation/`，不占用本目录三个运行。
-这里保存的是阶段 1—3 的真实候选结果；符合格式不代表胜过参考模型或已证实融合收益。
-没有上传 Kaggle，也没有在此阶段训练融合器。完整文件可用个人 `verify_delivery.py` 独立复核。
+原三个初始候选可从 `notebooks/Yuxin/archive/stage1_3/results_Yuxin/` 恢复；重放前的时间赢家另存 `notebooks/Yuxin/tuning/pre_replay/`。
+未实现步骤 4 的时间 Transformer，未上传 Kaggle，未推送远端。复现使用 `notebooks/Yuxin/tuning/configs/` 冻结参数，勿向本目录重复追加运行。

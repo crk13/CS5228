@@ -220,6 +220,21 @@ class NeuralTests(unittest.TestCase):
                     predictions.append(saved.Predicted.to_numpy())
             np.testing.assert_array_equal(*predictions)
 
+    def test_process_parallel_members_reproduce_serial_training(self):
+        raw = fixture().iloc[:105]
+        X = FeaturePipeline(["basic", "block"]).fit_transform(raw)
+        for kind in ("mlp", "transformer"):
+            params = dict(kind=kind, epochs=2, batch_size=64, hidden_size=16,
+                          d_model=8, nhead=2, layers=1, inner_months=2,
+                          market_normalize=True, random_state=5228, threads=1)
+            members = [params, dict(params, dropout=0.)]
+            serial = NeuralFamilyEnsemble(members, n_jobs=1).fit(X, raw.MONTHLY_RENT)
+            parallel = NeuralFamilyEnsemble(members, n_jobs=2).fit(X, raw.MONTHLY_RENT)
+            np.testing.assert_array_equal(serial.predict(X), parallel.predict(X))
+            self.assertEqual(serial.property_.training_history_, parallel.property_.training_history_)
+            self.assertEqual(serial.property_.audit_, parallel.property_.audit_)
+            self.assertEqual(clone(parallel).n_jobs, 2)
+
 
 if __name__ == "__main__":
     unittest.main()

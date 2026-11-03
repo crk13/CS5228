@@ -22,6 +22,7 @@ from src.config import SEED
 from src.experiment import run_experiment
 from src.models import group_median_model, hist_gradient_boosting_model
 from src.models.yuxin_nn import MarketHybridRegressor, TabularNNRegressor
+from src.models.yuxin_nn.ensemble import NeuralFamilyEnsemble
 
 MODELS = ("mlp", "tabular_transformer", "market_carry", "market_rnn", "market_lstm")
 
@@ -37,15 +38,23 @@ def source_hashes():
     return {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 
-def build_model(name, *, smoke=False, verbose=False):
+def build_model(name, *, smoke=False, verbose=False, config_dir=None):
     if name == "baseline_median":
         return group_median_model(), []
     if name == "baseline_hist":
         return hist_gradient_boosting_model(), ["basic", "block"]
-    recipe = json.loads((Path(__file__).parent / "configs" / f"{name}.json").read_text())
-    cls = TabularNNRegressor if recipe["class"] == "tabular" else MarketHybridRegressor
-    params = dict(recipe["parameters"], verbose=verbose)
+    config_dir = Path(config_dir) if config_dir else Path(__file__).parent / "configs"
+    recipe = json.loads((config_dir / f"{name}.json").read_text())
+    classes = {"tabular": TabularNNRegressor, "market": MarketHybridRegressor, "ensemble": NeuralFamilyEnsemble}
+    if recipe["class"] not in classes:
+        raise ValueError("Unknown neural configuration class")
+    cls = classes[recipe["class"]]
+    params = dict(recipe["parameters"])
+    if cls is not NeuralFamilyEnsemble:
+        params["verbose"] = verbose
     if smoke:
+        if cls is NeuralFamilyEnsemble:
+            raise ValueError("Use individual-member smoke tests before ensemble delivery")
         params.update(epochs=2, inner_months=1) if cls is TabularNNRegressor else params.update(
             property_epochs=2, temporal_epochs=3, inner_months=1, temporal_inner_months=2)
     return cls(**params), ["basic", "block"]
@@ -91,9 +100,9 @@ class AuditRecorder(RegressorMixin, BaseEstimator):
         return self.estimator_.predict(X)
 
 
-def run_one(name, output, *, split="rolling", final=False, smoke=False, verbose=False):
+def run_one(name, output, *, split="rolling", final=False, smoke=False, verbose=False, config_dir=None):
     before = source_hashes()
-    model, features = build_model(name, smoke=smoke, verbose=verbose)
+    model, features = build_model(name, smoke=smoke, verbose=verbose, config_dir=config_dir)
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     # Keep transient audit files/checkpoints out of Git. Final evidence is attached below.
@@ -112,7 +121,7 @@ def run_one(name, output, *, split="rolling", final=False, smoke=False, verbose=
         config["submission_path"] = "submissions/" + result.submission_path.name
     # The cache path is not an inference dependency, nor part of a reproducible recipe.
     config["parameters"]["audit_dir"] = "temporary; training evidence is in training_audit.json"
-    versions = {p: importlib.metadata.version(p) for p in ("numpy", "pandas", "scikit-learn", "torch")}
+    versions = {p: importlib.metadata.version(p) for p in ("numpy", "pandas", "scikit-learn", "torch", "optuna")}
     config["yuxin"] = {"model_name": name, "seconds": time.monotonic()-start,
                        "versions": versions, "python": platform.python_version(),
                        "platform": platform.platform(), "device": "cpu", "seed": SEED,
@@ -120,6 +129,11 @@ def run_one(name, output, *, split="rolling", final=False, smoke=False, verbose=
                        "features": features, "data_hashes": before,
                        "model_source_hashes": {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
                                                for p in sorted((ROOT / "src/models/yuxin_nn").glob("*.py"))}}
+    if name in MODELS:
+        recipe_dir = Path(config_dir) if config_dir else Path(__file__).parent / "configs"
+        recipe_file = recipe_dir / f"{name}.json"
+        config["yuxin"]["recipe"] = json.loads(recipe_file.read_text())
+        config["yuxin"]["recipe_sha256"] = hashlib.sha256(recipe_file.read_bytes()).hexdigest()
     write_json(config_path, config)
     write_json(result.run_dir / "training_audit.json", audits)
     if before != source_hashes():
@@ -135,6 +149,7 @@ def main():
     parser.add_argument("--split", choices=["holdout", "rolling"], default="holdout")
     parser.add_argument("--final", action="store_true")
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--config-dir", type=Path, help="Optional personal recipes; defaults are unchanged")
     parser.add_argument("--deliver", action="store_true")
     parser.add_argument("--smoke", action="store_true", help="two-epoch pipeline smoke, not a selected model")
     parser.add_argument("--verbose", action="store_true")
@@ -153,7 +168,8 @@ def main():
         output = args.output or Path(tempfile.mkdtemp(prefix="yuxin_experiments_"))
     print(f"Output root: {output}", flush=True)
     for name in names:
-        run_one(name, output, split=args.split, final=args.final, smoke=args.smoke, verbose=args.verbose)
+        run_one(name, output, split=args.split, final=args.final, smoke=args.smoke, verbose=args.verbose,
+                config_dir=args.config_dir)
 
 
 if __name__ == "__main__":

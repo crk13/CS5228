@@ -23,6 +23,8 @@ def verify_root(output, *, delivery=False):
     output = Path(output)
     train, test = load_train(), load_test()
     splits = {f.definition.name: f for f in get_splits(train, "rolling")}
+    fit_frames = {train.iloc[f.train_idx][DATE_COL].max(): train.iloc[f.train_idx] for f in splits.values()}
+    fit_frames[train[DATE_COL].max()] = train
     current_hashes = source_hashes()
     configs = sorted((output / "experiments").glob("*/config.json"))
     if not configs or (delivery and len(configs) > 3):
@@ -70,11 +72,25 @@ def verify_root(output, *, delivery=False):
                 continue
             assert state["origin"] == audit["origin"] and state["future_actuals_used"] is False
             prop = state.get("property", state)
-            inner = prop["inner"]
-            assert inner["enabled"] and inner["train_end"] < inner["valid_start"] <= inner["valid_end"]
-            assert inner["valid_end"] <= audit["origin"]
-            assert prop["selected_epochs"] >= 1
-            assert not {TARGET, "Id", "row_index", DATE_COL}.intersection(prop["numerical"] + prop["categorical"])
+            members = prop.get("members", [prop])
+            if "members" in prop:
+                assert prop["n_members"] == len(members) and prop["aggregation"] == "equal_weight_mean"
+                assert prop["n_members"] == len(config["yuxin"]["recipe"]["parameters"]["members"])
+            for member in members:
+                inner = member["inner"]
+                assert inner["enabled"] and inner["train_end"] < inner["valid_start"] <= inner["valid_end"]
+                assert inner["valid_end"] <= audit["origin"]
+                assert member["origin"] == audit["origin"] and member["future_actuals_used"] is False
+                assert member["selected_epochs"] >= 1
+                assert not {TARGET, "Id", "row_index", DATE_COL}.intersection(member["numerical"] + member["categorical"])
+                fit_dates = pd.PeriodIndex(fit_frames[audit["origin"]][DATE_COL], freq="M")
+                months = member.get("train_months")
+                keep = np.ones(len(fit_dates), dtype=bool) if months is None else fit_dates >= fit_dates.max()-(months-1)
+                assert member["train_rows"] == int(keep.sum())
+                assert inner["train_rows"] + inner["valid_rows"] == member["train_rows"]
+                if "available_rows" in member:
+                    assert member["available_rows"] == audit["train_rows"]
+                    assert member["fit_start"] == str(fit_dates[keep].min())
             if "market" in state:
                 market = state["market"]
                 assert market["origin"] == audit["origin"] and not market["future_actuals_used"]
@@ -146,11 +162,12 @@ def verify_shared_property(reports):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--roots", nargs="+", type=Path, default=[ROOT / "results/Yuxin"])
+    parser.add_argument("--summary-output", type=Path, default=Path(__file__).parent / "verification.json")
     args = parser.parse_args()
     reports = [(p, verify_root(p, delivery=p.resolve() == (ROOT / "results/Yuxin").resolve())) for p in args.roots]
     shared = verify_shared_property(reports)
     summary = {"status": "passed", "roots": {str(p): r for p, r in reports}, "shared_property": shared}
-    write_json(Path(__file__).parent / "verification.json", summary)
+    write_json(args.summary_output, summary)
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

@@ -2,6 +2,8 @@
 
 日期：2026-11-04。分支：`yuxin_time_series`。
 
+> 调参已完成并通过总验收，最新摘要见第 9 节，精确参数和全部方法见 [develop_tuning.md](develop_tuning.md)。以下第 1—8 节保留初验记录；原三个候选已归档，不代表当前成绩。
+
 **三个开发步骤已实现并实际运行，数据、公共接口、时间边界和交付格式检查通过。**
 Transformer、RNN、LSTM 各已生成两折完整验证预测及 50000 条测试预测。
 本次是初始配置的开发验收，不是调参完成或 Kaggle 排名验收；没有规定最低 RMSE，因此“格式/流程通过”与“优于基线”分别汇报。
@@ -21,8 +23,8 @@ Transformer、RNN、LSTM 各已生成两折完整验证预测及 50000 条测试
 - [神经网络模型包](src/models/yuxin_nn/estimators.py)：`TabularNNRegressor`、`MarketHybridRegressor`。
 - [个人运行说明](notebooks/Yuxin/README.md)、[实验入口](notebooks/Yuxin/run_experiments.py)、[配置目录](notebooks/Yuxin/configs/)。
 - [新增测试](tests/test_yuxin_nn.py)、[逐行交付核验](notebooks/Yuxin/verify_delivery.py)。
-- [所有模型比较](notebooks/Yuxin/comparison.csv)、[逐月误差](notebooks/Yuxin/monthly_errors.csv)。
-- [完整复核记录](notebooks/Yuxin/verification.json)、[三个正式候选](results/Yuxin/README.md)。
+- [初验模型比较](notebooks/Yuxin/archive/stage1_3/comparison.csv)、[初验逐月误差](notebooks/Yuxin/archive/stage1_3/monthly_errors.csv)。
+- [初验复核记录](notebooks/Yuxin/archive/stage1_3/verification.json)、[初验候选归档](notebooks/Yuxin/archive/stage1_3/results_Yuxin/README.md)。
 
 没有提前实现步骤 4 的时间 Transformer、多市场池化，以及后续融合/调参工作。表格 Transformer 已实现，它的 token 表示字段。
 本阶段只开公共 `basic` / `block`，因此未创建暂不使用的日历特征块或占用距离/宏观注册名。
@@ -116,9 +118,9 @@ MLP 的 A/B 早停轮数较少是内部时间验证的真实选择，没有用�
 |---|---:|---:|---:|---:|---|
 | 市场 carry＋属性 MLP | 493.493 | 477.729 | **485.611** | 104.8 | 个人验证目录 |
 | HistGradientBoosting | 497.937 | 480.545 | 489.241 | 5.9 | 个人验证目录 |
-| 市场 RNN＋属性 MLP | 497.557 | 482.783 | 490.170 | 101.9 | results/Yuxin |
-| 市场 LSTM＋属性 MLP | 498.832 | 481.537 | 490.184 | 102.0 | results/Yuxin |
-| 表格 Transformer | 515.646 | 484.467 | 500.056 | 708.2 | results/Yuxin |
+| 市场 RNN＋属性 MLP | 497.557 | 482.783 | 490.170 | 101.9 | 初验归档 |
+| 市场 LSTM＋属性 MLP | 498.832 | 481.537 | 490.184 | 102.0 | 初验归档 |
+| 表格 Transformer | 515.646 | 484.467 | 500.056 | 708.2 | 初验归档 |
 | 最近六个月分组中位数 | 524.659 | 506.237 | 515.448 | 1.2 | 个人验证目录 |
 | 原租金 embedding MLP | 661.392 | 571.097 | 616.244 | 95.6 | 个人验证目录 |
 
@@ -131,8 +133,8 @@ MLP 的 A/B 早停轮数较少是内部时间验证的真实选择，没有用�
 
 ## 6. 评测条件与复核证据
 
-最终 [完整复核 JSON](notebooks/Yuxin/verification.json) 的 status 为 `passed`，含两个目录的 7 个完整运行及共享属性检查。
-三个候选的 [独立交付复核](results/Yuxin/verification.json) 同样为 `passed`。
+初验 [完整复核 JSON](notebooks/Yuxin/archive/stage1_3/verification.json) 的 status 为 `passed`，含两个目录的 7 个完整运行及共享属性检查。
+初验三个候选的 [独立交付复核](notebooks/Yuxin/archive/stage1_3/results_Yuxin/verification.json) 同样为 `passed`。
 
 | 检查 | 实际结果 |
 |---|---|
@@ -170,7 +172,7 @@ run_id 使用 UTC，因此编号以 20261103T16 开头，对应本地 2026-11-04
 
 ## 8. 结果交付索引与复现
 
-正式三个候选位于 `results/Yuxin/`，恰好占用公共规范允许的三个运行：
+初验时三个候选位于 `results/Yuxin/`；现完整迁入 `notebooks/Yuxin/archive/stage1_3/results_Yuxin/`：
 
 | 模型 | run_id |
 |---|---|
@@ -182,15 +184,17 @@ run_id 使用 UTC，因此编号以 20261103T16 开头，对应本地 2026-11-04
 这些是原尺度租金，可按 `(fold,row_index)` 参与后续融合评估；没有用训练集拟合值冒充 OOF。
 MLP、carry 和公共基线保存在 `notebooks/Yuxin/validation/`，供核查与后续选择；它们不占正式候选目录名额。
 
-在仓库根目录复核现有产物：
+在仓库根目录复核历史初验产物（最新交付见第 9 节）：
 
 ```bash
 LOKY_MAX_CPU_COUNT=2 .venv/bin/python -m unittest discover -s tests -v
 .venv/bin/python -m src.data_cleaning.checks
 .venv/bin/python notebooks/Yuxin/verify_delivery.py \
-  --roots notebooks/Yuxin/validation results/Yuxin
+  --roots notebooks/Yuxin/validation notebooks/Yuxin/archive/stage1_3/results_Yuxin \
+  --summary-output notebooks/Yuxin/archive/stage1_3/recheck_verification.json
 .venv/bin/python notebooks/Yuxin/analyze_results.py \
-  --roots notebooks/Yuxin/validation results/Yuxin
+  --roots notebooks/Yuxin/validation notebooks/Yuxin/archive/stage1_3/results_Yuxin \
+  --output notebooks/Yuxin/archive/stage1_3/recheck_analysis
 ```
 
 重新训练应写新的开发目录，不覆盖现有交付：
@@ -203,3 +207,48 @@ LOKY_MAX_CPU_COUNT=2 .venv/bin/python -m unittest discover -s tests -v
 
 本轮按仓库规则做本地 Git 提交，不推送、不上传 Kaggle。
 后续应优先检验市场趋势/内部验证长度和模型互补性；没有在本阶段继续搜索外层分数或实现后续步骤。
+
+## 9. 本轮调参完成：步骤 1—3，不进入步骤 4
+
+本轮已实际执行 Optuna TPE、人工暖启动/局部搜索、内部时间早停，并补全所有时间网络剪枝候选的第二折；没有采用不适合本项目从头训练小网络的 QLoRA。
+单配置提升不足后，增加了**同一模型家族内最多 4 个配置的等权平均**；没有混入树、Ridge 或 KNN 预测。
+
+以下为独立重训、从完整 CSV 重算的开发 RMSE，单位 SGD；平均为公共 A/B 两折的简单平均：
+
+| 本轮选定方案 | A | B | 平均 | 比队友最佳树低 |
+|---|---:|---:|---:|---:|
+| 表格 Transformer（4 成员平均） | 487.952332 | 474.705755 | **481.329044** | 3.192360 |
+| carry＋4 成员属性 MLP | 486.307715 | 470.166964 | **478.237340** | 6.284065 |
+| RNN＋相同属性组合 | 486.398628 | 469.853216 | **478.125922** | 6.395482 |
+| LSTM＋相同属性组合 | 486.337890 | 469.919411 | **478.128651** | 6.392753 |
+| 队友 CatBoost 固定参考 | 492.874313 | 476.168495 | 484.521404 | — |
+
+参考来自树分支提交 `3dae63c`，本轮未重训队友模型。其种子 42、额外距离/COE 特征及环境与本轮不同，不能把方案分数差异直接归因于算法。
+**最佳单 carry=485.201787、单 Transformer=485.629277，尚未胜过 CatBoost；上表胜出的是同类平均版本。**
+RNN/LSTM 相对同属性 carry 仅改善约 0.11 SGD，彼此差约 0.003 SGD，不支持时间网络显著优于 carry 或彼此显著优劣的结论。
+
+公共 8 项＋个人 12 项，共 **20/20 测试再次通过**；清洗检查再次 `All checks passed.`。
+四个完整运行各有 82329 条验证及 50000 条测试预测，列/行号/日期/标签/Id 全部核对，预测有限、正值、原租金尺度。
+重算 RMSE 与 config/log 一致；独立重训与搜索的逐行预测最大差 **4.547473508864641e-13 SGD**。
+carry/RNN/LSTM 的属性训练及验证/测试比例预测一致，最大比例差 **4.440892098500626e-16**。
+近期窗口实际样本数由原 fold 日期复算；17 个数据 CSV 的哈希未变，公共文件未作个人适配修改，无权重或锁文件交付。
+
+最新入口：
+
+- [详细调参报告](develop_tuning.md)：搜索范围、条件最优边界、每个成员的精确配置入口、实际 epoch、耗时及局限。
+- [冻结参数](notebooks/Yuxin/tuning/configs/)、[四方案比较](notebooks/Yuxin/tuning/comparison.csv)、[最终逐行复核](notebooks/Yuxin/tuning/final_verification.json)。
+- [正式三个候选](results/Yuxin/README.md)：Transformer/RNN/LSTM，恰好 3 个运行。
+- `notebooks/Yuxin/tuning/final/` 保留全部四类完整输出，含 carry 对照；`tuning/pre_replay/` 保留补跑前的两个时间赢家。
+- 初验三个正式候选及原始分析文件保留在 `notebooks/Yuxin/archive/stage1_3/`，可恢复，未删除。
+
+长期复核无需临时搜索缓存：
+
+```bash
+export LOKY_MAX_CPU_COUNT=4 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+.venv/bin/python notebooks/Yuxin/verify_delivery.py \
+  --roots notebooks/Yuxin/tuning/final results/Yuxin \
+  --summary-output notebooks/Yuxin/tuning/recheck_verification.json
+```
+
+外层两折已经参与调参，存在选择偏差且区间重叠；以上不是无偏隐藏集估计，不证明全局最优，也不保证 Kaggle 排名。
+本轮未实施时间 Transformer、跨家族融合实验、Kaggle 上传或远端推送；最终交付按仓库要求本地提交 Git。
