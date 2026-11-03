@@ -30,7 +30,8 @@ def monthly_market(X, y):
 class MarketForecaster:
     def __init__(self, kind="carry", lookback=6, hidden_size=16, epochs=160,
                  learning_rate=0.005, damping=0.8, inner_months=6, patience=25,
-                 random_state=5228, threads=1):
+                 random_state=5228, threads=1, dropout=0.1, weight_decay=0.01,
+                 forecast_strength=1.0):
         self.kind = kind
         self.lookback = lookback
         self.hidden_size = hidden_size
@@ -41,6 +42,9 @@ class MarketForecaster:
         self.patience = patience
         self.random_state = random_state
         self.threads = threads
+        self.dropout = dropout
+        self.weight_decay = weight_decay
+        self.forecast_strength = forecast_strength
 
     def _rollout(self, history, horizons, network=None, center=None, scale=None):
         values = list(np.asarray(history, dtype=float))
@@ -58,7 +62,7 @@ class MarketForecaster:
                 window = (np.asarray(values[-self.lookback:]) - center) / scale
                 with torch.inference_mode():
                     change = float(network(torch.tensor(window[None, :, None], dtype=torch.float32))) * scale
-            value = max(1.0, values[-1] + change * self.damping ** horizon)
+            value = max(1.0, values[-1] + change * self.damping ** horizon * self.forecast_strength)
             if not np.isfinite(value):
                 raise ValueError("Nonfinite recursive market forecast")
             values.append(value)
@@ -70,8 +74,8 @@ class MarketForecaster:
         center = float(np.mean(history))
         scale = max(float(np.std(history)), 1.0)
         windows, targets, positions = monthly_windows(history, self.lookback, center, scale)
-        network = MarketEncoder(self.kind, self.hidden_size)
-        optimizer = torch.optim.AdamW(network.parameters(), lr=self.learning_rate, weight_decay=0.01)
+        network = MarketEncoder(self.kind, self.hidden_size, self.dropout)
+        optimizer = torch.optim.AdamW(network.parameters(), lr=self.learning_rate, weight_decay=self.weight_decay)
         best, best_epoch, stale, log = float("inf"), 1, 0, []
         for epoch in range(1, epochs + 1):
             network.train()
@@ -99,7 +103,7 @@ class MarketForecaster:
     def fit(self, table):
         if self.kind not in ("carry", "damped", "rnn", "lstm"):
             raise ValueError("Unknown market encoder")
-        if not 0 < self.damping <= 1 or self.lookback < 1 or self.inner_months < 1 or self.epochs < 1:
+        if not 0 < self.damping <= 1 or self.lookback < 1 or self.inner_months < 1 or self.epochs < 1 or not 0 < self.forecast_strength <= 1:
             raise ValueError("Invalid market forecast parameters")
         self.history_ = table["median"].copy()
         self.origin_ = self.history_.index[-1]
@@ -108,6 +112,8 @@ class MarketForecaster:
                        "lookback": self.lookback, "damping": self.damping,
                        "unobserved_months": int((~table.observed).sum()),
                        "future_actuals_used": False, "recursive": True}
+        self.audit_.update(dropout=self.dropout, weight_decay=self.weight_decay,
+                           forecast_strength=self.forecast_strength)
         if self.kind in ("carry", "damped"):
             self.selected_epochs_ = 0
             return self

@@ -29,17 +29,21 @@ def predict_network(network, numeric, categorical, batch_size=1024):
 
 
 def train_rows(network, arrays, y, *, epochs, batch_size, learning_rate, weight_decay,
-               seed, validation=None, patience=5, verbose=False):
-    loader = DataLoader(row_dataset(*arrays, y), batch_size=batch_size, shuffle=True,
+               seed, validation=None, patience=5, verbose=False, sample_weights=None):
+    dataset = row_dataset(*arrays, y)
+    if sample_weights is None:
+        sample_weights = np.ones(len(y), dtype=np.float32)
+    dataset = torch.utils.data.TensorDataset(*dataset.tensors, torch.as_tensor(sample_weights, dtype=torch.float32))
+    loader = DataLoader(dataset, batch_size=batch_size, shuffle=True,
                         generator=torch.Generator().manual_seed(seed), num_workers=0)
     optimizer = torch.optim.AdamW(network.parameters(), lr=learning_rate, weight_decay=weight_decay)
     history, best, best_epoch, stale = [], float("inf"), 1, 0
     for epoch in range(1, epochs + 1):
         network.train()
         total = 0.0
-        for numeric, categorical, target in loader:
+        for numeric, categorical, target, weight in loader:
             optimizer.zero_grad(set_to_none=True)
-            loss = (network(numeric, categorical) - target).square().mean()
+            loss = ((network(numeric, categorical) - target).square() * weight).mean()
             if not torch.isfinite(loss):
                 raise ValueError("Nonfinite NN training loss")
             loss.backward()

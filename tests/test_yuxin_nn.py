@@ -15,6 +15,7 @@ from src.experiment import run_experiment
 from src.features import FeaturePipeline
 from src.models.yuxin_nn import MarketHybridRegressor, TabularNNRegressor
 from src.models.yuxin_nn.datasets import monthly_windows
+from src.models.yuxin_nn.ensemble import NeuralFamilyEnsemble
 from src.models.yuxin_nn.market import MarketForecaster, monthly_market
 from src.models.yuxin_nn.preprocessing import TabularPreprocessor
 
@@ -143,6 +144,81 @@ class NeuralTests(unittest.TestCase):
         self.assertEqual(prediction[0], table["median"].iloc[-1])
         np.testing.assert_array_equal(prediction, [forecaster.predict_months([m])[0] for m in months])
         self.assertEqual(forecaster.origin_, table.index[-1])
+
+    def test_tuning_recent_window_and_weighting_are_fold_local(self):
+        raw = fixture()
+        X = FeaturePipeline(["basic", "block"]).fit_transform(raw)
+        model = TabularNNRegressor(epochs=2, inner_months=2, batch_size=64,
+                                   train_months=6, embedding_size=8, hidden_size=16,
+                                   market_normalize=True, loss_weighting="market").fit(X, raw.MONTHLY_RENT)
+        self.assertEqual(model.audit_["available_rows"], 153)
+        self.assertEqual(model.audit_["train_rows"], 18)
+        self.assertEqual(model.audit_["fit_start"], "2024-10")
+        self.assertEqual(model.audit_["inner"]["train_end"], "2025-01")
+        self.assertEqual(clone(model).embedding_size, 8)
+        weights = model._weights(X, raw.MONTHLY_RENT.to_numpy())
+        self.assertAlmostEqual(float(weights.mean()), 1., places=6)
+        self.assertTrue((weights > 0).all())
+        expected = np.repeat((1800 + np.arange(51) * 20.) ** 2, 3)
+        np.testing.assert_allclose(weights, expected / expected.mean(), atol=1e-6)
+        for bad in (0, -1):
+            with self.assertRaises(ValueError):
+                TabularNNRegressor(train_months=bad).fit(X, raw.MONTHLY_RENT)
+
+    def test_tuning_hybrid_parameters_clone_and_nonzero_forecast_shrinkage(self):
+        model = MarketHybridRegressor(property_dropout=0., embedding_size=16,
+                                       train_months=24, loss_weighting="market",
+                                       forecast_strength=.25, temporal_dropout=.2,
+                                       temporal_weight_decay=.001)
+        self.assertEqual(model.get_params(), clone(model).get_params())
+        table = monthly_market(fixture(), fixture().MONTHLY_RENT)
+        full = MarketForecaster("damped", damping=.5, forecast_strength=1.).fit(table)
+        small = MarketForecaster("damped", damping=.5, forecast_strength=.25).fit(table)
+        months = pd.period_range(full.origin_+1, full.origin_+16, freq="M").astype(str)
+        last = table["median"].iloc[-1]
+        np.testing.assert_allclose(small.predict_months(months)-last,
+                                   (full.predict_months(months)-last)*.25, atol=1e-9)
+        self.assertTrue((small.predict_months(months) != last).all())
+        with self.assertRaises(ValueError):
+            MarketForecaster("rnn", forecast_strength=0.).fit(table)
+
+    def test_same_family_ensemble_is_exact_mean_and_cloneable(self):
+        raw = fixture()
+        fold = get_splits(raw)[0]
+        pipeline = FeaturePipeline(["basic", "block"])
+        train = raw.iloc[fold.train_idx]
+        X, query = pipeline.fit_transform(train), pipeline.transform(raw.iloc[fold.valid_idx])
+        for kind in ("mlp", "transformer"):
+            params = dict(kind=kind, epochs=2, batch_size=64, hidden_size=16,
+                          d_model=8, nhead=2, layers=1, inner_months=2,
+                          market_normalize=True, random_state=5228, threads=1)
+            members = [params, dict(params, dropout=0.)]
+            model = NeuralFamilyEnsemble(members).fit(X, train.MONTHLY_RENT)
+            self.assertFalse(hasattr(clone(model), "property_"))
+            expected = np.mean([m.predict(query) for m in model.property_.models_], axis=0)
+            np.testing.assert_allclose(model.predict(query), expected, atol=1e-9, rtol=0)
+            np.testing.assert_allclose(model.predict(query), model.predict(query.iloc[::-1])[::-1], atol=.01, rtol=0)
+            np.testing.assert_array_equal(model.predict(query), model.predict(query.assign(MONTHLY_RENT=1e9)))
+
+    def test_ensemble_shared_runner_validation_labels_do_not_affect_predictions(self):
+        raw = fixture()
+        fold = get_splits(raw)[0]
+        changed = raw.copy()
+        changed.iloc[fold.valid_idx, changed.columns.get_loc("MONTHLY_RENT")] += 100000
+        for kind in ("mlp", "transformer"):
+            params = dict(kind=kind, epochs=2, batch_size=64, hidden_size=16,
+                          d_model=8, nhead=2, layers=1, inner_months=2,
+                          market_normalize=True, random_state=5228, threads=1)
+            estimator = NeuralFamilyEnsemble([params, dict(params, dropout=0.)])
+            predictions = []
+            for data in (raw, changed):
+                with tempfile.TemporaryDirectory() as directory, patch("src.experiment.load_train", return_value=data):
+                    result = run_experiment("ensemble", "test", ["basic", "block"], estimator,
+                                            output_dir=directory)
+                    saved = pd.read_csv(result.run_dir / "validation_predictions.csv")
+                    np.testing.assert_array_equal(saved.row_index, fold.valid_idx)
+                    predictions.append(saved.Predicted.to_numpy())
+            np.testing.assert_array_equal(*predictions)
 
 
 if __name__ == "__main__":

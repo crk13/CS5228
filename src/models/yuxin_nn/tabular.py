@@ -5,9 +5,9 @@ from torch import nn
 
 
 class EmbeddingMLP(nn.Module):
-    def __init__(self, numeric_width, cardinalities, hidden_size=128, dropout=0.1):
+    def __init__(self, numeric_width, cardinalities, hidden_size=128, dropout=0.1, embedding_size=0):
         super().__init__()
-        widths = [min(16, max(4, int(c ** 0.25) * 2)) for c in cardinalities]
+        widths = [embedding_size or min(16, max(4, int(c ** 0.25) * 2)) for c in cardinalities]
         self.embeddings = nn.ModuleList([nn.Embedding(c, w, padding_idx=0) for c, w in zip(cardinalities, widths)])
         width = numeric_width + sum(widths)
         self.net = nn.Sequential(nn.Linear(width, hidden_size), nn.ReLU(), nn.Dropout(dropout),
