@@ -1,8 +1,10 @@
 """P2 (statistical models): linear / Ridge experiments on the holdout split.
 
 Fit months: up to 2023-11. Validation: 2023-12 .. 2025-03 (same as src/cv.py HOLDOUT).
-Run from the repo root:  python notebooks/p2_linear_ridge.py
+Run from the repo root:  python notebooks/FXY/p2_linear_ridge.py
 """
+
+import pathlib
 
 import numpy as np
 import pandas as pd
@@ -11,14 +13,15 @@ from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.neighbors import BallTree
 from sklearn.preprocessing import OneHotEncoder
 
+ROOT_DIR = pathlib.Path(__file__).resolve().parents[2]
 DATE = "RENT_APPROVAL_DATE"
 TARGET = "MONTHLY_RENT"
 FIT_END, VALID_START = "2023-11", "2023-12"
 
 
 def load():
-    df = pd.read_csv("data_cleaned/train.csv", dtype={"BLOCK": str, "POSTAL_CODE": str})
-    mrt = pd.read_csv("data_cleaned/auxiliary/mrt_stations.csv")
+    df = pd.read_csv(ROOT_DIR / "data_cleaned" / "train.csv", dtype={"BLOCK": str, "POSTAL_CODE": str})
+    mrt = pd.read_csv(ROOT_DIR / "data_cleaned" / "auxiliary" / "mrt_stations.csv")
     mrt = mrt[mrt.STATUS == "open"].drop_duplicates(["LATITUDE", "LONGITUDE"])
     tree = BallTree(np.radians(mrt[["LATITUDE", "LONGITUDE"]].values), metric="haversine")
     dist, _ = tree.query(np.radians(df[["LATITUDE", "LONGITUDE"]].values), k=1)
@@ -170,7 +173,7 @@ def mrt_by_flat_type(fit, valid, level, alpha, cats):
     print(f"  split A RMSE with per-flat-type MRT_KM: {rmse(valid[TARGET], model.predict(b) * carry):.0f}")
 
 
-def plot_market_level(df, out_dir="notebooks/p2_figs"):
+def plot_market_level(df, out_dir=ROOT_DIR / "notebooks" / "FXY" / "p2_figs"):
     """Two figures: straight-line vs curve extensions of the market level into split A's validation months."""
     import os
     import matplotlib

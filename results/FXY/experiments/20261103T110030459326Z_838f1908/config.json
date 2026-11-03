@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-11-03T03:12:55.450348+00:00",
-  "run_id": "20261103T031255450348Z_85413051",
+  "timestamp": "2026-11-03T11:00:30.459326+00:00",
+  "run_id": "20261103T110030459326Z_838f1908",
   "name": "ridge_market_ratio_carry",
-  "author": "P2",
+  "author": "FXY",
   "features": [
     "block",
     "mrt_distance"
@@ -115,7 +115,7 @@
   ],
   "final_train_rows": 150000,
   "test_rows": 50000,
-  "submission_path": "submissions\\20261103T031255450348Z_85413051.csv",
+  "submission_path": "results/FXY/submissions/20261103T110030459326Z_838f1908.csv",
   "fold_rmse": {
     "holdout": 488.68975921824983,
     "rolling_2024_04": 471.94276062987916

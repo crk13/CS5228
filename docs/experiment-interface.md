@@ -69,12 +69,14 @@ print(result.fold_rmse, result.mean_rmse)
 
 运行时会打印每折 RMSE。结果自动追加到 [experiments/log.csv](../experiments/log.csv)，配置和验证预测写在 `result.run_dir` 下。
 
-**在 notebook 中使用**：`src` 需要能被导入。如果 notebook 放在 `notebooks/` 下，在第一个单元格执行：
+**在 notebook 中使用**：`src` 需要能被导入。notebook 放在 `notebooks/<成员名>/` 下时，在第一个单元格执行：
 
 ```python
 import sys, pathlib
-sys.path.insert(0, str(pathlib.Path.cwd().parent))  # 指向项目根目录
+sys.path.insert(0, str(pathlib.Path.cwd().parents[1]))  # notebooks/<成员名>/ → 项目根目录
 ```
+
+同目录下的 `.py` 脚本改用 `pathlib.Path(__file__).resolve().parents[2]`，这样从任何工作目录运行都能找到项目根目录。
 
 框架内部用项目根目录的绝对路径读写数据和产物，所以 notebook 放在哪里都不影响结果。
 
@@ -328,21 +330,23 @@ experiments/
 ├── log.csv                         # 所有人所有实验，一次运行一行   → 提交进 Git
 └── <run_id>/
     ├── config.json                 # 完整配置、每折行数和列名、依赖版本 → 提交进 Git
-    └── validation_predictions.csv  # 验证集预测，用于融合             → 不进 Git
-submissions/<run_id>.csv            # 仅 final=True 时生成              → 不进 Git
+    └── validation_predictions.csv  # 验证集预测，用于融合             → 默认目录不进 Git
+submissions/<run_id>.csv            # 仅 final=True 时生成              → 默认目录不进 Git
 ```
+
+交付给融合的运行写到 `results/<成员名>/` 下，产物全部进 Git，见 6.1。
 
 - **比较实验**：直接打开 `log.csv`，按 `split` 筛选后比较 `mean_rmse`。多人在不同分支上都追加了日志、合并时出现冲突，**保留双方的所有行**即可。
 - **融合（stacking）**：读取各模型的 `validation_predictions.csv`，按 `(fold, row_index)` 对齐。`row_index` 是该行在 train 中的位置行号。不要把 rolling 两折的预测混在一起，它们的验证区间是重叠的。
 
   ```python
-  a = pd.read_csv("experiments/<run_a>/validation_predictions.csv")
-  b = pd.read_csv("experiments/<run_b>/validation_predictions.csv")
+  a = pd.read_csv("results/<成员A>/experiments/<run_a>/validation_predictions.csv")
+  b = pd.read_csv("results/<成员B>/experiments/<run_b>/validation_predictions.csv")
   m = a.merge(b[["fold", "row_index", "Predicted"]], on=["fold", "row_index"], suffixes=("_a", "_b"))
   m = m[m["fold"] == "holdout"]
   ```
 
-  预测文件不进 Git。要融合别人的模型，用仓库中的代码在本地重跑他们的实验即可。
+  融合只使用各人按 6.1 交付到 `results/` 并已提交进 Git 的结果，不需要在本地重跑别人的实验。默认 `experiments/` 下的预测文件仍不进 Git。
 
 **常见报错**
 
@@ -359,6 +363,41 @@ submissions/<run_id>.csv            # 仅 final=True 时生成              → 
 | `could not convert string to float` | 把类别列直接传给了数值模型 | 在 Pipeline 中加入编码器 |
 | `predict must return one finite original-scale rent per row` | 预测中有 NaN 或无穷大，或者形状不对 | 检查未见类别的兜底逻辑；`log` 变换时检查是否溢出 |
 | `Experiment log is locked` | 上次运行被强行中断，留下了锁文件 | 确认没有其他实验在跑后，删除 `experiments/log.lock` |
+
+### 6.1 交付结果给融合
+
+进入融合的每个模型都必须这样运行，融合和最终提交只读取 `results/` 下的结果：
+
+```python
+from src.config import ROOT_DIR
+
+result = run_experiment(
+    "ridge_log_cbd", "<成员名>", ["basic", "cbd_distance", "town_rent"], ridge,
+    split="rolling", final=True,
+    output_dir=ROOT_DIR / "results" / "<成员名>",
+)
+```
+
+产物写在自己的目录下：
+
+```text
+results/<成员名>/
+├── experiments/
+│   ├── log.csv
+│   └── <run_id>/
+│       ├── config.json
+│       └── validation_predictions.csv
+└── submissions/<run_id>.csv
+```
+
+- **必须用 `split="rolling"` 和 `final=True`**：融合需要两折的验证预测，以及全量 train 训练后的 test 预测。
+- **全部提交进 Git**：`results/` 不受 `.gitignore` 影响。提交前用 `git check-ignore -v results/<成员名>/experiments/<run_id>/validation_predictions.csv results/<成员名>/submissions/<run_id>.csv` 确认，没有输出即不会被忽略。运行中断后遗留的 `log.lock` 不要提交。
+- **每人最多 3 个运行**：即 `results/<成员名>/experiments/` 下最多 3 个 `<run_id>` 目录。日常迭代仍写默认目录或临时目录，定稿后再写入 `results/`。多出的运行要删除其目录、提交文件和 `log.csv` 中对应的行。
+- **不要为交付修改公共文件**：包括 `src/` 下的框架代码、`.gitignore` 和共享的 `experiments/log.csv`。自己的特征和模型按第 3、4 节接入。
+- **不走框架的模型**（例如自写训练循环的神经网络）：手动输出相同格式的文件，放在相同位置，同样计入 3 个运行。
+  - `results/<成员名>/experiments/<run_id>/validation_predictions.csv`：使用 `get_splits(load_train(), "rolling")` 的两折，每折只用该折训练部分拟合；列和 `row_index` 含义见第 7 节"产物与提交格式"。
+  - `results/<成员名>/submissions/<run_id>.csv`：用全部 train 训练后预测 test，建议用 `src.experiment.write_submission` 写出以保证格式。
+  - `run_id` 自取，同一运行的两个文件使用同一个 `run_id`。
 
 ## 7. 接口规范（速查）
 
@@ -467,7 +506,7 @@ run_experiment(name, author, features: list[str], model,
 | `model` | 未拟合的模型，满足上述模型接口 |
 | `split` | `holdout` 或 `rolling` |
 | `final` | 默认 `False`；为 `True` 时，完成验证后用全量 train 重新训练并生成提交 |
-| `output_dir` | 产物根目录，默认是仓库根目录；可指定其他目录来隔离产物 |
+| `output_dir` | 产物根目录，默认是仓库根目录；可指定其他目录来隔离产物。交付给融合时为 `ROOT_DIR / "results" / "<成员名>"`（见 6.1） |
 
 - 每折及最终训练前，都会固定 Python 和 NumPy 的随机种子。
 - 模型各级参数中名为 `random_state` 的参数，统一设为 `SEED`。特征工厂也应遵守这一种子约定。
@@ -481,4 +520,4 @@ run_experiment(name, author, features: list[str], model,
 - **`config.json`**：保存运行信息、特征参数、模型参数、依赖版本，每折的边界、行数、列名和指标；启用 `final` 时还包括最终训练和提交信息。
 - **`validation_predictions.csv`**：列为 `row_index,fold,RENT_APPROVAL_DATE,MONTHLY_RENT,Predicted`。`row_index` 是该行在原始 train 中的位置行号。
 - **提交 CSV**：列严格为 `Id,Predicted`，没有额外的索引列，共 50000 行。`Id` 来自 loader 的 `test[ID_COL]`，保持测试集行顺序 0..49999。每行预测必须是有限值。
-- 预测 CSV 和提交 CSV 被 Git 忽略。配置和实验日志可以提交。框架不保存训练好的模型对象。
+- 默认 `experiments/`、`submissions/` 下的预测 CSV 和提交 CSV 被 Git 忽略，配置和实验日志可以提交。交付到 `results/<成员名>/` 的产物必须全部提交（见 6.1）。框架不保存训练好的模型对象。
