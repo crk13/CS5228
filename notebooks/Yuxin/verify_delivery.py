@@ -94,10 +94,14 @@ def verify_root(output, *, delivery=False):
             if "market" in state:
                 market = state["market"]
                 assert market["origin"] == audit["origin"] and not market["future_actuals_used"]
-                if market["kind"] in ("rnn", "lstm"):
+                if market["kind"] in ("rnn", "lstm", "transformer"):
                     assert market["last_input_month"] < market["last_target_month"] <= audit["origin"]
                     assert market["inner_train_end"] < market["inner_valid_start"]
                     assert market["windows"] == market["months"] - market["lookback"]
+                    if market["kind"] == "transformer":
+                        assert market["attention_mask"] == "causal"
+                        assert market["position_encoding"] == "window_relative_sinusoidal"
+                        assert market["d_model"] % market["nhead"] == 0
         checked.append({"model": config["yuxin"]["model_name"], "run_id": config["run_id"],
                         "fold_rmse": scores, "mean_rmse": mean,
                         "validation_rows": len(valid), "test_rows": len(submitted),
@@ -126,7 +130,8 @@ def verify_shared_property(reports):
     reference = pd.read_csv(carry_dir / "validation_predictions.csv")
     reference_audits = json.loads((carry_dir / "training_audit.json").read_text())
     deltas = {}
-    for name in ("market_rnn", "market_lstm"):
+    names = [name for name in ("market_rnn", "market_lstm", "market_transformer") if name in records]
+    for name in names:
         output, record = records[name]
         folder = output / "experiments" / record["run_id"]
         rows = pd.read_csv(folder / "validation_predictions.csv")

@@ -101,7 +101,7 @@ class MarketForecaster:
         return network, center, scale, log, best_epoch, positions
 
     def fit(self, table):
-        if self.kind not in ("carry", "damped", "rnn", "lstm"):
+        if self.kind not in ("carry", "damped", "rnn", "lstm", "transformer"):
             raise ValueError("Unknown market encoder")
         if not 0 < self.damping <= 1 or self.lookback < 1 or self.inner_months < 1 or self.epochs < 1 or not 0 < self.forecast_strength <= 1:
             raise ValueError("Invalid market forecast parameters")
@@ -114,12 +114,16 @@ class MarketForecaster:
                        "future_actuals_used": False, "recursive": True}
         self.audit_.update(dropout=self.dropout, weight_decay=self.weight_decay,
                            forecast_strength=self.forecast_strength)
+        if self.kind == "transformer":
+            self.audit_.update(position_encoding="window_relative_sinusoidal",
+                               attention_mask="causal", nhead=2, layers=1,
+                               d_model=self.hidden_size, feedforward_size=2*self.hidden_size)
         if self.kind in ("carry", "damped"):
             self.selected_epochs_ = 0
             return self
         history = self.history_.to_numpy(float)
         if len(history) <= self.lookback:
-            raise ValueError("Insufficient monthly history for RNN/LSTM")
+            raise ValueError("Insufficient monthly history for temporal encoder")
         prefix = len(history) - self.inner_months
         if prefix > self.lookback:
             _, _, _, self.selection_history_, selected, _ = self._fit_network(

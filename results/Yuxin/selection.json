@@ -1,0 +1,192 @@
+{
+  "status": "locked_and_verified",
+  "max_formal_runs": 3,
+  "selected": [
+    {
+      "model": "market_lstm",
+      "run_id": "20261103T180702083101Z_b8e1e8c0",
+      "fold_rmse": {
+        "holdout": 486.3378902453926,
+        "rolling_2024_04": 469.91941098556197
+      },
+      "mean_rmse": 478.1286506154773,
+      "validation_rows": 82329,
+      "test_rows": 50000,
+      "seconds": 525.5318047909532,
+      "frozen_recipe": "notebooks/Yuxin/tuning/configs/market_lstm.json",
+      "exact_training_source_commit": "55d2acba863c49f437be2bec716df192c11428b7",
+      "actual_epochs": [
+        {
+          "origin": "2023-11",
+          "available_rows": 102829,
+          "property_selected_epochs": [
+            11,
+            8,
+            13,
+            6
+          ],
+          "market_selected_epochs": 34
+        },
+        {
+          "origin": "2024-03",
+          "available_rows": 114842,
+          "property_selected_epochs": [
+            11,
+            5,
+            18,
+            3
+          ],
+          "market_selected_epochs": 10
+        },
+        {
+          "origin": "2025-03",
+          "available_rows": 150000,
+          "property_selected_epochs": [
+            31,
+            10,
+            10,
+            5
+          ],
+          "market_selected_epochs": 6
+        }
+      ],
+      "artifact_sha256": {
+        "results/Yuxin/experiments/20261103T180702083101Z_b8e1e8c0/config.json": "c5f6ae56f9c67ed4591510c7c8c6a5fbc74079b202748cd7c57ff1ce122cc05f",
+        "results/Yuxin/experiments/20261103T180702083101Z_b8e1e8c0/training_audit.json": "68fd4f5299641b90b9284fc5c70c93aff29c5611fec779dfd502f04c67dd92a0",
+        "results/Yuxin/experiments/20261103T180702083101Z_b8e1e8c0/validation_predictions.csv": "b7c98df58e3af0595f8031fea91382e17eefabbe92095bd5e92522bdcebbe998",
+        "results/Yuxin/submissions/20261103T180702083101Z_b8e1e8c0.csv": "1776cb03ad07dd8952519cd0d36068b16c8541744c09a69ba136c7cbeaf4e560",
+        "notebooks/Yuxin/tuning/configs/market_lstm.json": "0c874feef052feeffd999336304132a903599ced9ddcf5fc875e3b4195093e06"
+      }
+    },
+    {
+      "model": "market_rnn",
+      "run_id": "20261103T180702097497Z_0c01ed2c",
+      "fold_rmse": {
+        "holdout": 486.39862779560883,
+        "rolling_2024_04": 469.8532164875725
+      },
+      "mean_rmse": 478.12592214159065,
+      "validation_rows": 82329,
+      "test_rows": 50000,
+      "seconds": 527.693639291916,
+      "frozen_recipe": "notebooks/Yuxin/tuning/configs/market_rnn.json",
+      "exact_training_source_commit": "55d2acba863c49f437be2bec716df192c11428b7",
+      "actual_epochs": [
+        {
+          "origin": "2023-11",
+          "available_rows": 102829,
+          "property_selected_epochs": [
+            11,
+            8,
+            13,
+            6
+          ],
+          "market_selected_epochs": 14
+        },
+        {
+          "origin": "2024-03",
+          "available_rows": 114842,
+          "property_selected_epochs": [
+            11,
+            5,
+            18,
+            3
+          ],
+          "market_selected_epochs": 27
+        },
+        {
+          "origin": "2025-03",
+          "available_rows": 150000,
+          "property_selected_epochs": [
+            31,
+            10,
+            10,
+            5
+          ],
+          "market_selected_epochs": 3
+        }
+      ],
+      "artifact_sha256": {
+        "results/Yuxin/experiments/20261103T180702097497Z_0c01ed2c/config.json": "d4bb1f9a546962386df3542b7fabab9570ea84e00b92814290b527050b42536f",
+        "results/Yuxin/experiments/20261103T180702097497Z_0c01ed2c/training_audit.json": "e3daf469deb11158efc2ea963c69a33bc44c1cb41b44f81f9dd811122c218919",
+        "results/Yuxin/experiments/20261103T180702097497Z_0c01ed2c/validation_predictions.csv": "4463ea02665446303840c8a315a0622d0296ad27f4b8eca0f2432f5053476a49",
+        "results/Yuxin/submissions/20261103T180702097497Z_0c01ed2c.csv": "520ae41759fdee4dbd650fca85e40cd92b19709966a390d40247d4a9faa290db",
+        "notebooks/Yuxin/tuning/configs/market_rnn.json": "cdf28d4b609d4eb21346d6d7a1cd28c2b8f632072fb68d4963b9792d43447cba"
+      }
+    },
+    {
+      "model": "tabular_transformer",
+      "run_id": "20261103T181754695021Z_493b5f46",
+      "fold_rmse": {
+        "holdout": 487.9523321831707,
+        "rolling_2024_04": 474.7057551826037
+      },
+      "mean_rmse": 481.32904368288723,
+      "validation_rows": 82329,
+      "test_rows": 50000,
+      "seconds": 1810.7319422909059,
+      "frozen_recipe": "notebooks/Yuxin/tuning/configs/tabular_transformer.json",
+      "exact_training_source_commit": "aba5078a99326ca9e24edfee01db074c48a507cf",
+      "actual_epochs": [
+        {
+          "origin": "2023-11",
+          "available_rows": 102829,
+          "property_selected_epochs": [
+            8,
+            18,
+            15,
+            11
+          ],
+          "market_selected_epochs": 0
+        },
+        {
+          "origin": "2024-03",
+          "available_rows": 114842,
+          "property_selected_epochs": [
+            8,
+            22,
+            11,
+            11
+          ],
+          "market_selected_epochs": 0
+        },
+        {
+          "origin": "2025-03",
+          "available_rows": 150000,
+          "property_selected_epochs": [
+            19,
+            19,
+            22,
+            24
+          ],
+          "market_selected_epochs": 0
+        }
+      ],
+      "artifact_sha256": {
+        "results/Yuxin/experiments/20261103T181754695021Z_493b5f46/config.json": "aa6f46cb56fece86e23e79b33a55204a51ef129a4e7d1c857216f5c15a69da14",
+        "results/Yuxin/experiments/20261103T181754695021Z_493b5f46/training_audit.json": "aa2dd47586181f0f4b8dd3fe276a3713c7693a3dbde756b63221bef7855e6605",
+        "results/Yuxin/experiments/20261103T181754695021Z_493b5f46/validation_predictions.csv": "98be147cefc99b6159fbe7f8fdf0dc3aceb08ca41b40b7a095b1ecdb392e7ffa",
+        "results/Yuxin/submissions/20261103T181754695021Z_493b5f46.csv": "e47fd512fbe5efd693ef4433980b20e2da4fcc8ab697b69828fb0b6eb99bdbf5",
+        "notebooks/Yuxin/tuning/configs/tabular_transformer.json": "eab7eab86cd59e3213a4e7bdf4815ca0070df42fe78a3b415f96e8ffb36d07be"
+      }
+    }
+  ],
+  "policy": "Retain the three verified Transformer/RNN/LSTM families; do not add a fourth run",
+  "epoch_policy": "Frozen training hyperparameters and train-prefix time early stopping; fresh full-fold refit for selected epochs. Never choose epochs from outer validation.",
+  "temporal_transformer_not_promoted": {
+    "model": "market_transformer",
+    "run_id": "20261103T190543556826Z_a02818be",
+    "fold_rmse": {
+      "holdout": 486.66591523234996,
+      "rolling_2024_04": 469.9816896741002
+    },
+    "mean_rmse": 478.3238024532251,
+    "validation_rows": 82329,
+    "test_rows": 50000,
+    "seconds": 274.1071857920615,
+    "reason": "Did not beat matched-property carry; complete negative experiment retained in notebooks/Yuxin/stage4/full"
+  },
+  "carry_control_mean_rmse": 478.23733956324185,
+  "fusion_diagnostics": "notebooks/Yuxin/stage5; fixed-weight validation only, not an extra formal candidate",
+  "caveat": "LSTM is nearly redundant with RNN, retained for assigned-family comparison rather than claimed unique fusion value; hidden Kaggle score unknown"
+}

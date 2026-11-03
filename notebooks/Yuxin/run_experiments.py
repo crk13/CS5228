@@ -1,4 +1,4 @@
-"""Train stage 1-3 models with the unchanged shared experiment framework."""
+"""Train neural models with the unchanged shared experiment framework."""
 
 import argparse
 import hashlib
@@ -24,7 +24,7 @@ from src.models import group_median_model, hist_gradient_boosting_model
 from src.models.yuxin_nn import MarketHybridRegressor, TabularNNRegressor
 from src.models.yuxin_nn.ensemble import NeuralFamilyEnsemble
 
-MODELS = ("mlp", "tabular_transformer", "market_carry", "market_rnn", "market_lstm")
+MODELS = ("mlp", "tabular_transformer", "market_carry", "market_rnn", "market_lstm", "market_transformer")
 
 
 def write_json(path, value):

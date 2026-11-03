@@ -1,4 +1,4 @@
-# Yuxin 神经网络：开发阶段 1—3
+# Yuxin 神经网络：开发阶段 1—6
 
 实现说明和真实运行结果见根目录 `develop_test.md`；原始设计见 `develop.md`。
 最新调参报告为 `develop_tuning.md`，最新冻结参数为 `tuning/configs/`。
@@ -6,9 +6,9 @@
 公共数据/模型/验证接口以 `docs/experiment-interface.md` 为准。
 
 本目录使用公共 `basic`、`block` 特征，不读取额外宏观或设施数据。
-`src/models/yuxin_nn/` 提供 embedding MLP、表格特征 Transformer，以及共享属性 MLP 的市场 carry/RNN/LSTM。
+`src/models/yuxin_nn/` 提供 embedding MLP、表格特征 Transformer，以及共享属性 MLP 的市场 carry/RNN/LSTM/temporal Transformer。
 RNN/LSTM 的序列单位是全市月度租金中位数，不是单套房或交易行。
-时间 Transformer、多市场池化、距离/COE 消融尚未在本阶段实现。
+时间 Transformer 已在步骤 4 实现；多市场池化、距离/COE 消融没有加入本轮，不能写成已实现能力。
 
 ## 环境
 
@@ -76,7 +76,7 @@ python -m venv --system-site-packages .venv
 
 `tune_models.py` 使用 Optuna TPE 和首折 median pruning，原始配置保持不变。
 先搜索 carry 的属性回归器，再固定该属性模型，分别搜索 RNN/LSTM；Transformer 单独搜索。
-所有比较仍使用公共两折，不实现时间 Transformer。QLoRA 是大语言模型的低显存微调方法，不是本任务的超参数搜索器。
+该历史调参阶段使用公共两折，不包含时间 Transformer；后者见下方步骤 4—6。QLoRA 是大语言模型的低显存微调方法，不是本任务的超参数搜索器。
 
 本机混合 Conda/PyTorch 环境需要在启动进程前限制线程；以下命令均在项目根目录运行：
 
@@ -119,3 +119,48 @@ Transformer 冻结配置使用 `n_jobs=4` 并行独立成员，每个 torch 成�
 不依赖 `/tmp`；本轮缓存逐条比对的结论保存在 `tuning/final_verification.json`。
 这些外层折已经用于调参，因此是开发集成绩，不是无偏泛化估计；隐藏测试效果必须以 Kaggle 返回为准。
 有限 TPE 搜索只能交付已试候选中的最优组合，不证明全局最优，也不保证超过树模型。
+
+## 步骤 4—6：时间对照、互补性与锁定交付
+
+`compare_temporal.py` 先固定属性模型、L=6、hidden=8、训练预算及 rollout，比较 carry、阻尼趋势、RNN、LSTM、时间 Transformer；再完整评估 8 组短窗口 attention 参数。
+它复用已提交 carry 运行的属性 OOF 比例，只重训各折的市场编码器，**不是 12 次独立重训属性模型**。完整参数、原点、月度预测和训练证据保存在 `stage4/controlled_comparison.json`。
+时间 Transformer 是 1 层、2 头，带窗口相对正弦位置编码和因果 mask；输出一步增量，再在固定原点递归，不读取未来真实市场水平。
+
+最佳候选使用 L=6、d_model=8、lr=0.005、dropout=0.1、weight_decay=0.01、damping=0.8、strength=0.25、内部验证 12 月、最多 80 epoch/patience=25。
+独立公共框架完整重训的均值为 **478.323802**，未优于 carry **478.237340**；保留完整验证和 test，不晋升到正式目录。
+
+```bash
+export LOKY_MAX_CPU_COUNT=4 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+# 受控比较与冻结新时间模型配方
+.venv/bin/python notebooks/Yuxin/compare_temporal.py
+# 重训请写新的目录；stage4/full 中已有完整运行，不要重复追加
+.venv/bin/python notebooks/Yuxin/run_experiments.py \
+  --model market_transformer --config-dir notebooks/Yuxin/stage4/configs \
+  --split rolling --final --output /tmp/yuxin_stage4_reproduction
+```
+
+旧 `tune_models.py`/`finalize_tuning.py --prepare` 绑定步骤 1—3 的源码签名。新增时间编码器后，不应在旧研究上直接续跑；复核历史搜索用保存的日志/证据，复现已选方案使用 `tuning/configs/`，不要取消源码或数据哈希检查。
+
+`evaluate_complementarity.py` 仅读取当前 `results/Yuxin` 和队友固定提交下 `results/` 的正式预测来做融合；不读取队友训练拟合值、不 checkout 其他分支、不重训队友模型。
+carry 和未晋升的时间 Transformer 只加入误差/相关性分析，不作为团队融合输入。
+所有预测按 `(fold,row_index)` 一对一核对日期/标签；逐月、URA 大区、town、户型、单月预测跨度及 4 月跨度分组均输出 RMSE、MAE、bias、样本数。
+
+```bash
+# 复核已有产物，不重新训练：先误差/融合分析，再最终审计与锁定
+.venv/bin/python notebooks/Yuxin/evaluate_complementarity.py
+.venv/bin/python notebooks/Yuxin/finalize_stages.py
+```
+
+上述最终审计按已有路径读取 `stage4/full/`，要求该目录恰好一个完整时间 Transformer 运行。新路径重训的输出可先用 `verify_delivery.py --roots /tmp/yuxin_stage4_reproduction --summary-output /tmp/yuxin_stage4_recheck.json` 单独核验，勿覆盖现有证据。
+
+- `stage4/comparison.csv`、`stage4/verification.json`：12 个受控候选和独立重训逐行比对。
+- `stage5/group_errors.csv`、`residual_correlations.csv`：9 个基础/对照模型及 12 个固定平均组合的分组误差；相关性逐折计算。
+- `stage5/fixed_blends.csv`：三类正式神经网络 × Ridge/CatBoost/XGBoost/LightGBM 的全部 12 组 50:50 比较，含未改善的组合。
+- `stage5/forward_transfer.csv`：只用 A 折 2023-12—2024-03 的 12013 行校准一个凸权重，评估 B 折 2024-04—2025-03 的 35158 行；不使用 B 标签选择权重。
+- `stage5/diagnostic_blend_validation.csv` / `diagnostic_blend_test.csv`：RNN＋CatBoost 固定平均的实际两折验证/完整 test，**仅诊断，不是第 4 个正式运行**。
+- `stage5/verification.json`：队友 commit、run_id、来源哈希与范围；`independent_verification.json` 为独立算式复核。
+- `results/Yuxin/selection.json`：锁定三个正式候选，含每个成员 A/B/final 的实际 epoch、冻结配方及产物 SHA-256。
+
+RNN＋CatBoost 固定平均均值 **477.552001**，证明当前开发折上存在互补收益，但所有底层模型已进行外层调参，不能称为无偏嵌套或隐藏集验证。
+RNN/LSTM 残差相关接近 1；保留两者是负责家族的比较交付，不建议把三者等同为三个独立信息源。没有找到可读取的 KNN 正式预测，不提供虚构的 KNN 相关性。
+正式 RNN/LSTM 原训练源码精确对应 `55d2acb`，表格 Transformer 对应 `aba5078`；锁定脚本逐文件核对 Git blob 与运行保存的源码哈希，避免把新源码冒认为旧运行源码。
