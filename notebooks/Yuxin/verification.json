@@ -1,0 +1,125 @@
+{
+  "status": "passed",
+  "roots": {
+    "notebooks/Yuxin/validation": {
+      "status": "passed",
+      "seed": 5228,
+      "delivery": false,
+      "checked": [
+        {
+          "model": "baseline_median",
+          "run_id": "20261103T164425277451Z_3998e8d7",
+          "fold_rmse": {
+            "holdout": 524.659026899584,
+            "rolling_2024_04": 506.23742413793906
+          },
+          "mean_rmse": 515.4482255187615,
+          "validation_rows": 82329,
+          "test_rows": 50000,
+          "seconds": 1.1739762090146542
+        },
+        {
+          "model": "baseline_hist",
+          "run_id": "20261103T164426536392Z_954c8b28",
+          "fold_rmse": {
+            "holdout": 497.9370809504029,
+            "rolling_2024_04": 480.54470878259895
+          },
+          "mean_rmse": 489.2408948665009,
+          "validation_rows": 82329,
+          "test_rows": 50000,
+          "seconds": 5.878374500083737
+        },
+        {
+          "model": "mlp",
+          "run_id": "20261103T164713198395Z_678614b4",
+          "fold_rmse": {
+            "holdout": 661.391899743643,
+            "rolling_2024_04": 571.096924532439
+          },
+          "mean_rmse": 616.244412138041,
+          "validation_rows": 82329,
+          "test_rows": 50000,
+          "seconds": 95.60939062503166
+        },
+        {
+          "model": "market_carry",
+          "run_id": "20261103T164849123752Z_1fea3a13",
+          "fold_rmse": {
+            "holdout": 493.49318973206186,
+            "rolling_2024_04": 477.7286094161021
+          },
+          "mean_rmse": 485.61089957408194,
+          "validation_rows": 82329,
+          "test_rows": 50000,
+          "seconds": 104.83720116701443
+        }
+      ],
+      "all_validation_rows_labels_and_dates_exact": true,
+      "scores_recomputed": true,
+      "test_ids_exact": true,
+      "all_predictions_finite_positive_sgd": true,
+      "fold_local_training_audits_checked": true,
+      "data_hashes_unchanged": true,
+      "weights_included": false
+    },
+    "results/Yuxin": {
+      "status": "passed",
+      "seed": 5228,
+      "delivery": true,
+      "checked": [
+        {
+          "model": "tabular_transformer",
+          "run_id": "20261103T165254207013Z_e7366de1",
+          "fold_rmse": {
+            "holdout": 515.6457696668556,
+            "rolling_2024_04": 484.46706041871244
+          },
+          "mean_rmse": 500.056415042784,
+          "validation_rows": 82329,
+          "test_rows": 50000,
+          "seconds": 708.2382418749621
+        },
+        {
+          "model": "market_rnn",
+          "run_id": "20261103T165254212024Z_ae71e28f",
+          "fold_rmse": {
+            "holdout": 497.55712651787877,
+            "rolling_2024_04": 482.7825929205122
+          },
+          "mean_rmse": 490.1698597191955,
+          "validation_rows": 82329,
+          "test_rows": 50000,
+          "seconds": 101.89505674992688
+        },
+        {
+          "model": "market_lstm",
+          "run_id": "20261103T165436355139Z_16342354",
+          "fold_rmse": {
+            "holdout": 498.832061301521,
+            "rolling_2024_04": 481.5367628937916
+          },
+          "mean_rmse": 490.18441209765626,
+          "validation_rows": 82329,
+          "test_rows": 50000,
+          "seconds": 101.99279649998061
+        }
+      ],
+      "all_validation_rows_labels_and_dates_exact": true,
+      "scores_recomputed": true,
+      "test_ids_exact": true,
+      "all_predictions_finite_positive_sgd": true,
+      "fold_local_training_audits_checked": true,
+      "data_hashes_unchanged": true,
+      "weights_included": false
+    }
+  },
+  "shared_property": {
+    "checked": true,
+    "same_property_training_and_predictions": true,
+    "max_abs_ratio_deltas": {
+      "market_rnn": 4.440892098500626e-16,
+      "market_lstm": 4.440892098500626e-16
+    }
+  }
+}

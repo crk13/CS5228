@@ -1,0 +1,1 @@
+{"class": "tabular", "parameters": {"kind": "transformer", "epochs": 18, "d_model": 16, "nhead": 4, "layers": 1, "batch_size": 1024, "inner_months": 3, "patience": 4}}

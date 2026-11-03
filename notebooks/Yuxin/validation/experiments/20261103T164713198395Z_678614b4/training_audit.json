@@ -1,0 +1,539 @@
+[
+  {
+    "origin": "2023-11",
+    "train_rows": 102829,
+    "audit": {
+      "kind": "mlp",
+      "origin": "2023-11",
+      "train_rows": 102829,
+      "selected_epochs": 1,
+      "target": "rent",
+      "target_center": 2537.786577716403,
+      "target_scale": 714.9481479896343,
+      "numerical": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_MONTH",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED"
+      ],
+      "categorical": [
+        "TOWN",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "STREET",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "BLOCK_KEY"
+      ],
+      "cardinalities": [
+        28,
+        8,
+        21,
+        566,
+        158,
+        33,
+        7,
+        7219
+      ],
+      "device": "cpu",
+      "inner": {
+        "enabled": true,
+        "train_end": "2023-08",
+        "valid_start": "2023-09",
+        "valid_end": "2023-11",
+        "train_rows": 94118,
+        "valid_rows": 8711,
+        "selection_metric": "RMSE_SGD",
+        "preprocessing_fit_on_inner_train_only": true
+      },
+      "future_actuals_used": false
+    },
+    "selection_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.5960395885536249,
+        "inner_rmse_sgd": 609.7615698968557
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.4897032490943702,
+        "inner_rmse_sgd": 617.0211195019465
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.47525676917035764,
+        "inner_rmse_sgd": 620.9321458843483
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.4676344589175672,
+        "inner_rmse_sgd": 626.6683113133018
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.4625154322002137,
+        "inner_rmse_sgd": 639.6446044865969
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.4579997830118714,
+        "inner_rmse_sgd": 621.7090201959901
+      }
+    ],
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.5900969708436178
+      }
+    ],
+    "inference_probe_max_abs_delta_sgd": 4.261423055140767e-05
+  },
+  {
+    "origin": "2024-03",
+    "train_rows": 114842,
+    "audit": {
+      "kind": "mlp",
+      "origin": "2024-03",
+      "train_rows": 114842,
+      "selected_epochs": 3,
+      "target": "rent",
+      "target_center": 2594.474007767193,
+      "target_scale": 731.3940449416438,
+      "numerical": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_MONTH",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED"
+      ],
+      "categorical": [
+        "TOWN",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "STREET",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "BLOCK_KEY"
+      ],
+      "cardinalities": [
+        28,
+        8,
+        21,
+        566,
+        158,
+        33,
+        7,
+        7543
+      ],
+      "device": "cpu",
+      "inner": {
+        "enabled": true,
+        "train_end": "2023-12",
+        "valid_start": "2024-01",
+        "valid_end": "2024-03",
+        "train_rows": 105837,
+        "valid_rows": 9005,
+        "selection_metric": "RMSE_SGD",
+        "preprocessing_fit_on_inner_train_only": true
+      },
+      "future_actuals_used": false
+    },
+    "selection_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.5876957630229102,
+        "inner_rmse_sgd": 616.7841744765334
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.477868927514669,
+        "inner_rmse_sgd": 618.08415453205
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.4669706844117851,
+        "inner_rmse_sgd": 612.625410929471
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.460293316865173,
+        "inner_rmse_sgd": 663.490105143823
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.45313924941458655,
+        "inner_rmse_sgd": 624.1275441156546
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.44810337917213183,
+        "inner_rmse_sgd": 637.7905160909061
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.4446139545932753,
+        "inner_rmse_sgd": 650.3939566598303
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.44094239588224754,
+        "inner_rmse_sgd": 634.9002149116036
+      }
+    ],
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.5847418892377555
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.4761759753275689
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.46448817425851147
+      }
+    ],
+    "inference_probe_max_abs_delta_sgd": 4.359448212198913e-05
+  },
+  {
+    "origin": "2025-03",
+    "train_rows": 150000,
+    "audit": {
+      "kind": "mlp",
+      "origin": "2025-03",
+      "train_rows": 150000,
+      "selected_epochs": 28,
+      "target": "rent",
+      "target_center": 2719.0368933333334,
+      "target_scale": 749.7285972485079,
+      "numerical": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_MONTH",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED"
+      ],
+      "categorical": [
+        "TOWN",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "STREET",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "BLOCK_KEY"
+      ],
+      "cardinalities": [
+        28,
+        8,
+        21,
+        571,
+        158,
+        33,
+        7,
+        8136
+      ],
+      "device": "cpu",
+      "inner": {
+        "enabled": true,
+        "train_end": "2024-12",
+        "valid_start": "2025-01",
+        "valid_end": "2025-03",
+        "train_rows": 141076,
+        "valid_rows": 8924,
+        "selection_metric": "RMSE_SGD",
+        "preprocessing_fit_on_inner_train_only": true
+      },
+      "future_actuals_used": false
+    },
+    "selection_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.5493231859593555,
+        "inner_rmse_sgd": 529.1484234624476
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.45906347210178294,
+        "inner_rmse_sgd": 508.31884926898755
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.4451721955807216,
+        "inner_rmse_sgd": 487.4079942114872
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.43638410656353954,
+        "inner_rmse_sgd": 475.0318247608309
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.42909152455932753,
+        "inner_rmse_sgd": 470.2374673211626
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.4245774216286403,
+        "inner_rmse_sgd": 467.88240220514894
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.4200469040884863,
+        "inner_rmse_sgd": 465.571575892094
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.4167074796696767,
+        "inner_rmse_sgd": 464.38973084828837
+      },
+      {
+        "epoch": 9,
+        "train_mse": 0.4129114172024589,
+        "inner_rmse_sgd": 465.2828870263871
+      },
+      {
+        "epoch": 10,
+        "train_mse": 0.4105833396697937,
+        "inner_rmse_sgd": 463.080893328231
+      },
+      {
+        "epoch": 11,
+        "train_mse": 0.40687171509786485,
+        "inner_rmse_sgd": 461.75993510645435
+      },
+      {
+        "epoch": 12,
+        "train_mse": 0.4036760396693284,
+        "inner_rmse_sgd": 458.92488232716875
+      },
+      {
+        "epoch": 13,
+        "train_mse": 0.40108499533162945,
+        "inner_rmse_sgd": 459.20487098068344
+      },
+      {
+        "epoch": 14,
+        "train_mse": 0.39841483276206513,
+        "inner_rmse_sgd": 461.0073027530393
+      },
+      {
+        "epoch": 15,
+        "train_mse": 0.3960405657431615,
+        "inner_rmse_sgd": 460.76873977780275
+      },
+      {
+        "epoch": 16,
+        "train_mse": 0.39336554842437477,
+        "inner_rmse_sgd": 458.31228047385935
+      },
+      {
+        "epoch": 17,
+        "train_mse": 0.3897980712731265,
+        "inner_rmse_sgd": 459.9016624559249
+      },
+      {
+        "epoch": 18,
+        "train_mse": 0.38817845239097537,
+        "inner_rmse_sgd": 459.8667794939787
+      },
+      {
+        "epoch": 19,
+        "train_mse": 0.38553932855359013,
+        "inner_rmse_sgd": 457.7561757054106
+      },
+      {
+        "epoch": 20,
+        "train_mse": 0.3836031308138711,
+        "inner_rmse_sgd": 457.7943805916572
+      },
+      {
+        "epoch": 21,
+        "train_mse": 0.3823621661335398,
+        "inner_rmse_sgd": 457.29394119194995
+      },
+      {
+        "epoch": 22,
+        "train_mse": 0.379346719563925,
+        "inner_rmse_sgd": 457.94198477356474
+      },
+      {
+        "epoch": 23,
+        "train_mse": 0.37786618496343544,
+        "inner_rmse_sgd": 458.1321107204634
+      },
+      {
+        "epoch": 24,
+        "train_mse": 0.3753409441687785,
+        "inner_rmse_sgd": 456.04721606850944
+      },
+      {
+        "epoch": 25,
+        "train_mse": 0.3735503545437872,
+        "inner_rmse_sgd": 456.23146801093407
+      },
+      {
+        "epoch": 26,
+        "train_mse": 0.37249230873159206,
+        "inner_rmse_sgd": 460.43227562111946
+      },
+      {
+        "epoch": 27,
+        "train_mse": 0.37069564780087355,
+        "inner_rmse_sgd": 460.74891388599093
+      },
+      {
+        "epoch": 28,
+        "train_mse": 0.3689676923772652,
+        "inner_rmse_sgd": 454.9393985541524
+      },
+      {
+        "epoch": 29,
+        "train_mse": 0.3677647000417883,
+        "inner_rmse_sgd": 460.5355772256342
+      },
+      {
+        "epoch": 30,
+        "train_mse": 0.3655907395160203,
+        "inner_rmse_sgd": 456.6615399132014
+      }
+    ],
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.5654189493783315
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.45307582593282064
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.4398597042878469
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.43122547671953837
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.4247586150582631
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.4188925860214233
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.4141761523469289
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.4097156615289052
+      },
+      {
+        "epoch": 9,
+        "train_mse": 0.4062883366203308
+      },
+      {
+        "epoch": 10,
+        "train_mse": 0.4029164363447825
+      },
+      {
+        "epoch": 11,
+        "train_mse": 0.3996542011706034
+      },
+      {
+        "epoch": 12,
+        "train_mse": 0.39723575461069743
+      },
+      {
+        "epoch": 13,
+        "train_mse": 0.39375098590215046
+      },
+      {
+        "epoch": 14,
+        "train_mse": 0.39092297242164614
+      },
+      {
+        "epoch": 15,
+        "train_mse": 0.38817283136049907
+      },
+      {
+        "epoch": 16,
+        "train_mse": 0.38522737345059715
+      },
+      {
+        "epoch": 17,
+        "train_mse": 0.38331885341008504
+      },
+      {
+        "epoch": 18,
+        "train_mse": 0.3807554713598887
+      },
+      {
+        "epoch": 19,
+        "train_mse": 0.37865131107966105
+      },
+      {
+        "epoch": 20,
+        "train_mse": 0.37664119162241616
+      },
+      {
+        "epoch": 21,
+        "train_mse": 0.3742937231318156
+      },
+      {
+        "epoch": 22,
+        "train_mse": 0.37280558782577516
+      },
+      {
+        "epoch": 23,
+        "train_mse": 0.37097093432744344
+      },
+      {
+        "epoch": 24,
+        "train_mse": 0.36842111452738446
+      },
+      {
+        "epoch": 25,
+        "train_mse": 0.367652324180603
+      },
+      {
+        "epoch": 26,
+        "train_mse": 0.3663195540428162
+      },
+      {
+        "epoch": 27,
+        "train_mse": 0.3648532128588359
+      },
+      {
+        "epoch": 28,
+        "train_mse": 0.36308349854151406
+      }
+    ],
+    "inference_probe_max_abs_delta_sgd": 8.937461370805977e-05
+  }
+]
