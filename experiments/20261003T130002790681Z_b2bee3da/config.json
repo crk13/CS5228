@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-10-03T13:00:02.790681+00:00",
+  "run_id": "20261003T130002790681Z_b2bee3da",
+  "name": "recent_group_median",
+  "author": "baseline",
+  "features": [],
+  "feature_parameters": {},
+  "model": "src.models.base.ModelWrapper",
+  "parameters": {
+    "columns": [
+      "TOWN",
+      "FLAT_TYPE",
+      "RENT_APPROVAL_DATE"
+    ],
+    "estimator": {
+      "class": "src.models.baselines.RecentMedianRegressor",
+      "parameters": {
+        "months": 6
+      }
+    },
+    "target_transform": "none"
+  },
+  "split": "holdout",
+  "seed": 5228,
+  "final": false,
+  "versions": {
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "sklearn": "1.6.1"
+  },
+  "folds": [
+    {
+      "name": "holdout",
+      "train_start": "2021-01",
+      "train_end": "2023-11",
+      "valid_start": "2023-12",
+      "valid_end": "2025-03",
+      "train_rows": 102829,
+      "valid_rows": 47171,
+      "rmse": 524.659026899584,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL"
+      ]
+    }
+  ],
+  "fold_rmse": {
+    "holdout": 524.659026899584
+  },
+  "mean_rmse": 524.659026899584
+}

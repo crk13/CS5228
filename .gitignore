@@ -15,3 +15,8 @@ venv/
 # OS / Editor
 .DS_Store
 Thumbs.db
+
+# Generated experiment artifacts (config and log.csv remain shareable)
+experiments/*/validation_predictions.csv
+experiments/log.lock
+submissions/*.csv
