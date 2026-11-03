@@ -1,7 +1,7 @@
 """Combine original flat columns and explicitly enabled feature blocks."""
 
 import pandas as pd
-from sklearn.utils.validation import check_is_fitted
+from sklearn.exceptions import NotFittedError
 
 from src.data_cleaning import NUM_COLS, CAT_COLS, TARGET, ID_COL
 from .block import BLOCK_COLUMNS
@@ -48,7 +48,9 @@ class FeaturePipeline:
         return self._combine(inputs, outputs)
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
-        check_is_fitted(self, "columns_")
+        # Not a BaseEstimator: sklearn>=1.7 check_is_fitted requires __sklearn_tags__.
+        if not hasattr(self, "columns_"):
+            raise NotFittedError("FeaturePipeline is not fitted; call fit or fit_transform first")
         result = self._transform(df)
         if list(result.columns) != self.columns_:
             raise ValueError("Feature columns changed between fit and transform")
