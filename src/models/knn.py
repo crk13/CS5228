@@ -55,7 +55,7 @@ class RentKNNRegressor(RegressorMixin, BaseEstimator):
     - geo_km: latitude/longitude in km with one shared scale, so distance is isotropic.
     - clip_month: rows after the last training month use that month's MONTH_INDEX.
     - level="market": learn y / monthly mean y; predict times the mean of the last level_months.
-    - base="ridge": a Ridge on one-hot flat type, model and town plus area and lease gives the
+    - base="ridge": a Ridge on one-hot ridge_categorical and standardized ridge_numeric gives the
       main prediction, and KNN smooths its residual.
     - by_flat_type: a separate neighbour index per FLAT_TYPE_ORDINAL.
     - tune: choose k and feature weights by coordinate search on the last inner_months of the
@@ -64,7 +64,8 @@ class RentKNNRegressor(RegressorMixin, BaseEstimator):
 
     def __init__(self, features=tuple(KNN_COLUMNS), n_neighbors=80, weights="distance",
                  feature_weights=None, geo_km=False, clip_month=False, level="none", level_months=3,
-                 base="none", alpha=1.0, by_flat_type=False, tune=False, inner_months=6,
+                 base="none", alpha=1.0, ridge_categorical=RIDGE_CATEGORICAL, ridge_numeric=RIDGE_NUMERIC,
+                 by_flat_type=False, tune=False, inner_months=6,
                  k_grid=(20, 40, 80, 160), weight_grid=(0.0, 0.5, 1.0, 2.0)):
         self.features = features
         self.n_neighbors = n_neighbors
@@ -76,6 +77,8 @@ class RentKNNRegressor(RegressorMixin, BaseEstimator):
         self.level_months = level_months
         self.base = base
         self.alpha = alpha
+        self.ridge_categorical = ridge_categorical
+        self.ridge_numeric = ridge_numeric
         self.by_flat_type = by_flat_type
         self.tune = tune
         self.inner_months = inner_months
@@ -104,8 +107,8 @@ class RentKNNRegressor(RegressorMixin, BaseEstimator):
         return (Z * pd.Series(self.feature_weights_)).to_numpy()
 
     def _ridge_frame(self, X):
-        frame = X[list(RIDGE_CATEGORICAL)].astype(str)
-        return frame.join(X[list(RIDGE_NUMERIC)].astype(float))
+        frame = X[list(self.ridge_categorical)].astype(str)
+        return frame.join(X[list(self.ridge_numeric)].astype(float))
 
     def _groups(self, X):
         if self.by_flat_type:
@@ -152,8 +155,9 @@ class RentKNNRegressor(RegressorMixin, BaseEstimator):
             self.reference_ = float(levels.iloc[-self.level_months:].mean())
         if self.base == "ridge":
             self.ridge_ = make_pipeline(ColumnTransformer([
-                ("categorical", OneHotEncoder(handle_unknown="ignore"), list(RIDGE_CATEGORICAL)),
-                ("numeric", StandardScaler(), list(RIDGE_NUMERIC)),
+                ("categorical", OneHotEncoder(handle_unknown="ignore"), list(self.ridge_categorical)),
+                ("numeric", make_pipeline(SimpleImputer(strategy="median"), StandardScaler()),
+                 list(self.ridge_numeric)),
             ]), Ridge(alpha=self.alpha))
             frame = self._ridge_frame(X)
             target = target - self.ridge_.fit(frame, target).predict(frame)
@@ -192,5 +196,5 @@ def rent_knn_model(target_transform: str = "none", **params) -> ModelWrapper:
     if estimator.by_flat_type:
         columns.append("FLAT_TYPE_ORDINAL")
     if estimator.base == "ridge":
-        columns += [*RIDGE_CATEGORICAL, *RIDGE_NUMERIC]
+        columns += [*estimator.ridge_categorical, *estimator.ridge_numeric]
     return ModelWrapper(estimator, list(dict.fromkeys(columns)), target_transform)

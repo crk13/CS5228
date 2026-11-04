@@ -1,0 +1,202 @@
+{
+  "timestamp": "2026-11-04T11:05:17.176853+00:00",
+  "run_id": "20261104T110517176853Z_913a37c2",
+  "name": "knn_v3 aux",
+  "author": "P1",
+  "features": [
+    "basic",
+    "block",
+    "p1_aux"
+  ],
+  "feature_parameters": {
+    "basic": {},
+    "block": {},
+    "p1_aux": {
+      "macro_lag": 1
+    }
+  },
+  "model": "src.models.base.ModelWrapper",
+  "parameters": {
+    "columns": [
+      "LATITUDE",
+      "LONGITUDE",
+      "FLOOR_AREA_SQM",
+      "FLAT_TYPE_ORDINAL",
+      "REMAINING_LEASE",
+      "MONTH_INDEX",
+      "FLAT_AGE",
+      "MAX_FLOOR",
+      "AUX_MRT_KM",
+      "FLAT_TYPE",
+      "FLAT_MODEL",
+      "TOWN",
+      "AUX_MALL_KM",
+      "AUX_CBD_KM"
+    ],
+    "estimator": {
+      "class": "src.models.knn.RentKNNRegressor",
+      "parameters": {
+        "alpha": 1.0,
+        "base": "ridge",
+        "by_flat_type": false,
+        "clip_month": false,
+        "feature_weights": null,
+        "features": [
+          "LATITUDE",
+          "LONGITUDE",
+          "FLOOR_AREA_SQM",
+          "FLAT_TYPE_ORDINAL",
+          "REMAINING_LEASE",
+          "MONTH_INDEX",
+          "FLAT_AGE",
+          "MAX_FLOOR",
+          "AUX_MRT_KM"
+        ],
+        "geo_km": false,
+        "inner_months": 6,
+        "k_grid": [
+          20,
+          40,
+          80,
+          160
+        ],
+        "level": "none",
+        "level_months": 3,
+        "n_neighbors": 80,
+        "ridge_categorical": [
+          "FLAT_TYPE",
+          "FLAT_MODEL",
+          "TOWN"
+        ],
+        "ridge_numeric": [
+          "FLOOR_AREA_SQM",
+          "REMAINING_LEASE",
+          "AUX_MRT_KM",
+          "AUX_MALL_KM",
+          "AUX_CBD_KM"
+        ],
+        "tune": false,
+        "weight_grid": [
+          0.0,
+          0.5,
+          1.0,
+          2.0
+        ],
+        "weights": "distance"
+      }
+    },
+    "target_transform": "none"
+  },
+  "split": "rolling",
+  "seed": 5228,
+  "final": true,
+  "versions": {
+    "numpy": "2.1.3",
+    "pandas": "2.2.3",
+    "sklearn": "1.6.1"
+  },
+  "folds": [
+    {
+      "name": "holdout",
+      "train_start": "2021-01",
+      "train_end": "2023-11",
+      "valid_start": "2023-12",
+      "valid_end": "2025-03",
+      "train_rows": 102829,
+      "valid_rows": 47171,
+      "rmse": 500.0407996977121,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "AUX_MRT_KM",
+        "AUX_MRT_N1KM",
+        "AUX_MRT_LINES_1KM",
+        "AUX_RAIL_KM",
+        "AUX_CBD_KM",
+        "AUX_MALL_KM",
+        "AUX_MALL_N1KM",
+        "AUX_PRI_KM",
+        "AUX_PRI_N1KM",
+        "AUX_HDB_N500M",
+        "AUX_COE",
+        "AUX_SGX_INDEX",
+        "AUX_PROPERTY_INDEX"
+      ]
+    },
+    {
+      "name": "rolling_2024_04",
+      "train_start": "2021-01",
+      "train_end": "2024-03",
+      "valid_start": "2024-04",
+      "valid_end": "2025-03",
+      "train_rows": 114842,
+      "valid_rows": 35158,
+      "rmse": 484.52350456085946,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "AUX_MRT_KM",
+        "AUX_MRT_N1KM",
+        "AUX_MRT_LINES_1KM",
+        "AUX_RAIL_KM",
+        "AUX_CBD_KM",
+        "AUX_MALL_KM",
+        "AUX_MALL_N1KM",
+        "AUX_PRI_KM",
+        "AUX_PRI_N1KM",
+        "AUX_HDB_N500M",
+        "AUX_COE",
+        "AUX_SGX_INDEX",
+        "AUX_PROPERTY_INDEX"
+      ]
+    }
+  ],
+  "final_train_rows": 150000,
+  "test_rows": 50000,
+  "submission_path": "D:\\DSML\\CS_5228\\Project_export\\results\\P1\\submissions\\20261104T110517176853Z_913a37c2.csv",
+  "fold_rmse": {
+    "holdout": 500.0407996977121,
+    "rolling_2024_04": 484.52350456085946
+  },
+  "mean_rmse": 492.2821521292858
+}
