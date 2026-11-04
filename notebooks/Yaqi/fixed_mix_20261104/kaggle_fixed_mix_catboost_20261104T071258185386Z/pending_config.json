@@ -1,0 +1,151 @@
+{
+  "kind": "catboost",
+  "seed": 42,
+  "features": [
+    "basic",
+    "block",
+    "distance",
+    "macro_coe"
+  ],
+  "parameters": {
+    "estimator": {
+      "class": "src.models.fixed_mix.FixedMixTargetRegressor",
+      "parameters": {
+        "estimator": {
+          "class": "src.models.base.ModelWrapper",
+          "parameters": {
+            "columns": [
+              "FLOOR_AREA_SQM",
+              "LEASE_COMMENCE_DATE",
+              "RENT_MONTH",
+              "MONTH_INDEX",
+              "FLAT_AGE",
+              "REMAINING_LEASE",
+              "FLAT_TYPE_ORDINAL",
+              "LATITUDE",
+              "LONGITUDE",
+              "MAX_FLOOR",
+              "YEAR_COMPLETED",
+              "DIST_MRT_OPEN_KM",
+              "DIST_MALL_KM",
+              "DIST_PRIMARY_SCHOOL_KM",
+              "MACRO_COE_A_LAG1",
+              "MACRO_COE_B_LAG1",
+              "MACRO_COE_C_LAG1",
+              "MACRO_COE_E_LAG1",
+              "TOWN",
+              "FLAT_TYPE",
+              "FLAT_MODEL",
+              "STREET",
+              "SUBZONE",
+              "PLANNING_AREA",
+              "REGION",
+              "POSTAL_CODE",
+              "BLOCK"
+            ],
+            "estimator": {
+              "class": "sklearn.pipeline.Pipeline",
+              "parameters": {
+                "memory": null,
+                "steps": [
+                  [
+                    "prepare",
+                    {
+                      "class": "src.models.trees.NativeFrame",
+                      "parameters": {
+                        "categorical": [
+                          "TOWN",
+                          "FLAT_TYPE",
+                          "FLAT_MODEL",
+                          "STREET",
+                          "SUBZONE",
+                          "PLANNING_AREA",
+                          "REGION",
+                          "POSTAL_CODE",
+                          "BLOCK"
+                        ],
+                        "numeric": [
+                          "FLOOR_AREA_SQM",
+                          "LEASE_COMMENCE_DATE",
+                          "RENT_MONTH",
+                          "MONTH_INDEX",
+                          "FLAT_AGE",
+                          "REMAINING_LEASE",
+                          "FLAT_TYPE_ORDINAL",
+                          "LATITUDE",
+                          "LONGITUDE",
+                          "MAX_FLOOR",
+                          "YEAR_COMPLETED",
+                          "DIST_MRT_OPEN_KM",
+                          "DIST_MALL_KM",
+                          "DIST_PRIMARY_SCHOOL_KM",
+                          "MACRO_COE_A_LAG1",
+                          "MACRO_COE_B_LAG1",
+                          "MACRO_COE_C_LAG1",
+                          "MACRO_COE_E_LAG1"
+                        ],
+                        "strings": true
+                      }
+                    }
+                  ],
+                  [
+                    "regressor",
+                    {
+                      "class": "src.models.trees.CatBoostAdapter",
+                      "parameters": {
+                        "categorical": [
+                          "TOWN",
+                          "FLAT_TYPE",
+                          "FLAT_MODEL",
+                          "STREET",
+                          "SUBZONE",
+                          "PLANNING_AREA",
+                          "REGION",
+                          "POSTAL_CODE",
+                          "BLOCK"
+                        ],
+                        "depth": 7,
+                        "iterations": 1000,
+                        "l2_leaf_reg": 10.0,
+                        "learning_rate": 0.04,
+                        "random_state": 42,
+                        "threads": 4
+                      }
+                    }
+                  ]
+                ],
+                "transform_input": null,
+                "verbose": false
+              }
+            },
+            "target_transform": "none"
+          }
+        },
+        "groups": [
+          "2-room",
+          "3-room",
+          "4-room",
+          "5-room",
+          "executive"
+        ]
+      }
+    },
+    "months": 24
+  },
+  "versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "scikit-learn": "1.9.1",
+    "catboost": "1.2.10",
+    "threadpoolctl": "3.7.0"
+  },
+  "validation_source": {
+    "variant": "fixed_mix_last",
+    "split_a": 491.0508888729039,
+    "split_b": 474.6228339794364,
+    "mean_rmse": 482.8368614261701,
+    "run_id": "20261104T064937430441Z_eb083457",
+    "run_dir": "outputs/Yaqi/fixed_mix_catboost_20261104T064729648979Z/experiments/20261104T064937430441Z_eb083457"
+  },
+  "stage": "final refit only; existing time-validation fits are not repeated"
+}

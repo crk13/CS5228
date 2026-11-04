@@ -5,6 +5,7 @@
 | 内容 | 入口 |
 |---|---|
 | 给组员做融合的三个正式模型 | [results/Yaqi](../../results/Yaqi/README.md) |
+| 固定房型指数归一化：三模型实验及CatBoost提交 | [fixed_mix_20261104](fixed_mix_20261104/README.md) |
 | 新旧43条实验记录统一索引 | [experiment_catalog.csv](experiment_catalog.csv) |
 | 早期13组算法、窗口、地址实验 | [history/20261022](history/20261022/README.md) |
 | 后续30组位置、经济特征实验 | [history/20261103](history/20261103/README.md) |

@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "data_files_unchanged": 17,
+  "both_variants_actually_trained": true,
+  "raw_reference_scores_reproduced": true,
+  "scores_recomputed_from_predictions": true,
+  "labels_rows_dates_verified": true,
+  "paired_validation_rows": 82329,
+  "all_predictions_original_sgd": true,
+  "index_fit_inside_recent_window": true,
+  "validation_labels_not_used_in_index_or_forecast": true,
+  "models_saved": false,
+  "formal_results_replaced": false
+}
