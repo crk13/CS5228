@@ -1,0 +1,120 @@
+[
+  {
+    "fold": "holdout",
+    "training_end": "2023-11",
+    "blocks": {
+      "distance": {
+        "unit": "km",
+        "distance": "great-circle, not walking distance",
+        "historical_opening_dates_available": false,
+        "facility_status": "provided file snapshot, not historical reconstruction",
+        "non_mrt_lines_excluded": [
+          "bp",
+          "pe",
+          "ptc",
+          "pw",
+          "rts",
+          "se",
+          "stc",
+          "sw"
+        ],
+        "facilities": {
+          "DIST_MRT_OPEN_KM": {
+            "records": 225,
+            "unique_coordinates": 192
+          },
+          "DIST_MALL_KM": {
+            "records": 113,
+            "unique_coordinates": 113
+          },
+          "DIST_PRIMARY_SCHOOL_KM": {
+            "records": 179,
+            "unique_coordinates": 177
+          }
+        }
+      },
+      "macro_coe": {
+        "origin": "2023-11",
+        "available_through": "2023-10",
+        "publication_assumption": "one complete calendar month of delay",
+        "future_real_observations_used": false,
+        "forecast": "last",
+        "trend_window": 12,
+        "damping": 0.8,
+        "max_log_slope": 0.03,
+        "coe_last_observation": "2023-10",
+        "log_slopes": {
+          "MACRO_COE_A_LAG1": 0.018223897295704925,
+          "MACRO_COE_B_LAG1": 0.02462549475963369,
+          "MACRO_COE_C_LAG1": 0.004313789082481888,
+          "MACRO_COE_E_LAG1": 0.025648145909122195
+        },
+        "columns": [
+          "MACRO_COE_A_LAG1",
+          "MACRO_COE_B_LAG1",
+          "MACRO_COE_C_LAG1",
+          "MACRO_COE_E_LAG1"
+        ]
+      }
+    }
+  },
+  {
+    "fold": "rolling_2024_04",
+    "training_end": "2024-03",
+    "blocks": {
+      "distance": {
+        "unit": "km",
+        "distance": "great-circle, not walking distance",
+        "historical_opening_dates_available": false,
+        "facility_status": "provided file snapshot, not historical reconstruction",
+        "non_mrt_lines_excluded": [
+          "bp",
+          "pe",
+          "ptc",
+          "pw",
+          "rts",
+          "se",
+          "stc",
+          "sw"
+        ],
+        "facilities": {
+          "DIST_MRT_OPEN_KM": {
+            "records": 225,
+            "unique_coordinates": 192
+          },
+          "DIST_MALL_KM": {
+            "records": 113,
+            "unique_coordinates": 113
+          },
+          "DIST_PRIMARY_SCHOOL_KM": {
+            "records": 179,
+            "unique_coordinates": 177
+          }
+        }
+      },
+      "macro_coe": {
+        "origin": "2024-03",
+        "available_through": "2024-02",
+        "publication_assumption": "one complete calendar month of delay",
+        "future_real_observations_used": false,
+        "forecast": "last",
+        "trend_window": 12,
+        "damping": 0.8,
+        "max_log_slope": 0.03,
+        "coe_last_observation": "2024-02",
+        "log_slopes": {
+          "MACRO_COE_A_LAG1": -0.018577370992816165,
+          "MACRO_COE_B_LAG1": -0.008236757216888822,
+          "MACRO_COE_C_LAG1": -0.014291060677783565,
+          "MACRO_COE_E_LAG1": -0.006463314202549896
+        },
+        "columns": [
+          "MACRO_COE_A_LAG1",
+          "MACRO_COE_B_LAG1",
+          "MACRO_COE_C_LAG1",
+          "MACRO_COE_E_LAG1"
+        ]
+      }
+    }
+  }
+]

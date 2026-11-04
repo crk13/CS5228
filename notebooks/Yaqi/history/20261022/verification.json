@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "models_checked": [
+    "reference_all",
+    "rf_all",
+    "extra_all",
+    "hist_all",
+    "lightgbm_all",
+    "xgboost_all",
+    "catboost_all",
+    "lightgbm_12m",
+    "lightgbm_24m",
+    "catboost_12m",
+    "catboost_24m",
+    "lightgbm_regularized_24m",
+    "catboost_address_24m"
+  ],
+  "scores_recomputed_from_predictions": true,
+  "validation_rows_and_targets_verified": true,
+  "source_files_unchanged": 17,
+  "submission_rows": 50000,
+  "submission_ids_match_example": true,
+  "submission_predictions_finite": true,
+  "best_model": "catboost_address_24m"
+}

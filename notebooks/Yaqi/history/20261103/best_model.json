@@ -1,0 +1,82 @@
+{
+  "name": "catboost_location_coe",
+  "kind": "catboost",
+  "scenario": "location_coe",
+  "features": [
+    "basic",
+    "block",
+    "distance",
+    "macro_coe"
+  ],
+  "seed": 42,
+  "split_a": 492.87431277402214,
+  "split_b": 476.1684953624768,
+  "mean_rmse": 484.52140406824947,
+  "validation_run_id": "20261103T064800758768Z_fad60b21",
+  "selection": "lowest A/B development mean among 30 declared candidates from five model families",
+  "submission": "outputs/location_economy_20261103/submissions/best_feature_model.csv",
+  "model": "outputs/location_economy_20261103/models/best_feature_model.joblib",
+  "available_train_rows": 150000,
+  "actual_fit_rows": 71040,
+  "fit_start": "2023-04",
+  "fit_end": "2025-03",
+  "test_rows": 50000,
+  "ids_match_example": true,
+  "reload_matches_submission": true,
+  "feature_audit": {
+    "distance": {
+      "unit": "km",
+      "distance": "great-circle, not walking distance",
+      "historical_opening_dates_available": false,
+      "facility_status": "provided file snapshot, not historical reconstruction",
+      "non_mrt_lines_excluded": [
+        "bp",
+        "pe",
+        "ptc",
+        "pw",
+        "rts",
+        "se",
+        "stc",
+        "sw"
+      ],
+      "facilities": {
+        "DIST_MRT_OPEN_KM": {
+          "records": 225,
+          "unique_coordinates": 192
+        },
+        "DIST_MALL_KM": {
+          "records": 113,
+          "unique_coordinates": 113
+        },
+        "DIST_PRIMARY_SCHOOL_KM": {
+          "records": 179,
+          "unique_coordinates": 177
+        }
+      }
+    },
+    "macro_coe": {
+      "origin": "2025-03",
+      "available_through": "2025-02",
+      "publication_assumption": "one complete calendar month of delay",
+      "future_real_observations_used": false,
+      "forecast": "last",
+      "trend_window": 12,
+      "damping": 0.8,
+      "max_log_slope": 0.03,
+      "coe_last_observation": "2025-02",
+      "log_slopes": {
+        "MACRO_COE_A_LAG1": 0.005710752222871733,
+        "MACRO_COE_B_LAG1": 0.01281405394762197,
+        "MACRO_COE_C_LAG1": -0.005762462587188767,
+        "MACRO_COE_E_LAG1": 0.0134958788619272
+      },
+      "columns": [
+        "MACRO_COE_A_LAG1",
+        "MACRO_COE_B_LAG1",
+        "MACRO_COE_C_LAG1",
+        "MACRO_COE_E_LAG1"
+      ]
+    }
+  },
+  "compared_experiments": 30
+}

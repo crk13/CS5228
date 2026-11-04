@@ -32,4 +32,4 @@ test = pd.read_csv(root / "submissions" / (cat["run_id"] + ".csv"))
 
 所有预测均处于原始月租金尺度（SGD）。数据、行序、标签、分数、训练/验证分离、提交编号及文件完整性检查见 [verification.json](verification.json)。本目录不含模型权重、压缩包或训练数据源文件。
 
-下午全部30组实验汇总及RF/ExtraTrees分析见 [个人实验目录](../../notebooks/Yaqi/README.md)。源码与复现命令也在该目录。
+新旧两阶段共43条实验配置记录、历史预测及RF/ExtraTrees分析见 [个人实验目录](../../notebooks/Yaqi/README.md)。历史归档不增加此处的正式运行数量。源码与统一复现命令也在个人目录。

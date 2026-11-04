@@ -1,0 +1,302 @@
+"""Controlled base -> location -> economy experiments on the team's A/B splits."""
+
+import argparse
+import hashlib
+import importlib.metadata
+import json
+import os
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache/matplotlib"))
+
+import joblib
+import numpy as np
+import pandas as pd
+from threadpoolctl import threadpool_limits
+
+import src.features.distance  # Register optional blocks explicitly.
+import src.features.macro
+from src.config import SEED
+from src.cv import DATE_COL, get_splits
+from src.data_cleaning import load_train, load_test, TARGET
+from src.experiment import run_experiment, write_submission, _json_value, _new_model
+from src.features import FeaturePipeline
+from src.features.distance import DISTANCE_COLUMNS
+from src.features.macro import COE_COLUMNS, STOCK_COLUMNS
+from src.models.trees import tree_model
+from scripts.train_trees import source_hashes, environment, error_tables
+
+SCENARIOS = {
+    "base": {"blocks": [], "numeric": []},
+    "location": {"blocks": ["distance"], "numeric": DISTANCE_COLUMNS},
+    "location_coe": {"blocks": ["distance", "macro_coe"], "numeric": DISTANCE_COLUMNS + COE_COLUMNS},
+    "location_stocks": {"blocks": ["distance", "macro_stocks"], "numeric": DISTANCE_COLUMNS + STOCK_COLUMNS},
+    "location_economy_last": {"blocks": ["distance", "macro"], "numeric": DISTANCE_COLUMNS + COE_COLUMNS + STOCK_COLUMNS},
+    "location_economy_damped": {"blocks": ["distance", "macro_damped"], "numeric": DISTANCE_COLUMNS + COE_COLUMNS + STOCK_COLUMNS},
+}
+LABELS = {"base": "原有特征", "location": "加入设施距离", "location_coe": "位置＋COE",
+          "location_stocks": "位置＋股票", "location_economy_last": "位置＋COE＋股票（持平预测）",
+          "location_economy_damped": "位置＋COE＋股票（阻尼趋势）"}
+
+
+def write_json(path, value):
+    path = Path(path)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
+    temporary.replace(path)
+
+
+def build(kind, scenario, threads):
+    # Keep model parameters and training window FIXED across feature stages.
+    model = tree_model(kind, months=24, address=True, threads=threads,
+                       extra_numeric=tuple(SCENARIOS[scenario]["numeric"]))
+    if kind in ("rf", "extra"):
+        # Keep all selected source columns while bounding the one-hot width.
+        # Category grouping is fitted inside the current training window only.
+        model.set_params(estimator__estimator__prepare__categorical__onehot__max_categories=32)
+    return model
+
+
+def blocks(scenario):
+    return ["basic", "block"] + SCENARIOS[scenario]["blocks"]
+
+
+def audit_scenario(train, scenario, output):
+    audits, month_tables = [], []
+    for fold in get_splits(train, "rolling"):
+        fitted = FeaturePipeline(blocks(scenario)).fit(train.iloc[fold.train_idx])
+        entry = {"fold": fold.definition.name, "training_end": fold.definition.train_end, "blocks": {}}
+        for name, block in fitted.blocks:
+            if hasattr(block, "audit_"):
+                entry["blocks"][name] = block.audit_
+            if hasattr(block, "history_"):
+                assert block.available_through_ < pd.Period(fold.definition.train_end, freq="M")
+                months = pd.period_range("2021-01", "2026-07", freq="M").astype(str)
+                frame = pd.DataFrame({DATE_COL: months})
+                values = block.transform(frame)
+                values.insert(0, DATE_COL, months)
+                values.insert(0, "fold", fold.definition.name)
+                values["available_through"] = str(block.available_through_)
+                values["covariate_is_forecast"] = (pd.PeriodIndex(months, freq="M") - 1) > block.available_through_
+                month_tables.append(values)
+        audits.append(entry)
+    write_json(output / f"audit_{scenario}.json", audits)
+    if month_tables:
+        pd.concat(month_tables, ignore_index=True).to_csv(output / f"covariates_{scenario}.csv", index=False)
+
+
+def summarize(records, output):
+    good = [r for r in records if r["status"] == "complete"]
+    if not good:
+        return
+    frame = pd.DataFrame(good)
+    for kind in frame.kind.unique():
+        mask = frame.kind.eq(kind)
+        subset = frame.loc[mask]
+        base = subset.loc[subset.scenario.eq("base"), "mean_rmse"]
+        location = subset.loc[subset.scenario.eq("location"), "mean_rmse"]
+        frame.loc[mask, "change_vs_base"] = frame.loc[mask, "mean_rmse"] - base.iloc[0] if len(base) else np.nan
+        frame.loc[mask, "change_vs_location"] = frame.loc[mask, "mean_rmse"] - location.iloc[0] if len(location) else np.nan
+    frame.to_csv(output / "comparison.csv", index=False)
+    lines = ["# 位置与经济特征：分阶段树模型实验", "",
+             f"随机种子 {SEED}；相同 A/B 时间窗口、最近 24 个月训练、地址字段开启，模型参数在各特征阶段不变。",
+             "本表包含实际完成的模型：" + "、".join(frame.kind.unique()) + "。先完成基础与位置阶段，再尝试经济数据。房龄已在基础特征中，没有重复添加。",
+             "", "| 模型 | 特征阶段 | A RMSE | B RMSE | 平均 RMSE | 相对原有特征变化 | 相对位置阶段变化 |",
+             "|---|---|---:|---:|---:|---:|---:|"]
+    for row in frame.itertuples():
+        lines.append(f"| {row.kind} | {LABELS[row.scenario]} | {row.split_a:.3f} | {row.split_b:.3f} | {row.mean_rmse:.3f} | {row.change_vs_base:+.3f} | {row.change_vs_location:+.3f} |")
+    best = frame.loc[frame.mean_rmse.idxmin()]
+    lines += ["", f"本次候选中平均 RMSE 最低：**{best['name']}，{best.mean_rmse:.3f} SGD**。",
+              "变化列为新阶段减对照阶段，负数表示误差降低。新增特征没有预设一定有效。",
+              "", "## 验证与可得性口径", "",
+              "- A：训练截至 2023-11，验证 2023-12—2025-03；B：训练截至 2024-03，验证 2024-04—2025-03。两个验证窗口重叠，平均为两折 RMSE 简单平均。",
+              "- MRT 只取文件 STATUS=open，排除 LRT 与 RTS，按坐标去重；小学只取 MAINLEVEL_CODE=primary。距离为大圆直线距离（km），不是步行距离。",
+              "- 地铁、商场、小学没有历史启用日期。位置特征是提供文件的设施快照，不能称为严格重建历史可用设施的回测。宏观截断检查也不能消除这项设施时间口径限制。",
+              "- COE 按月份、类别平均竞价 QUOTA_PREMIUM。股票只使用 SGD 的 SGX 股票，按公司计算日 CLOSE 的月均值，再以首月固定股票集合及首月价格归一为 100，取等权均值；不使用 ADJUSTED_CLOSE，不混合不同币种，不是正式 STI 指数。",
+              "- 假设月度经济数据延迟一个完整日历月可得；文件没有发布时间，无法进一步核验真实发布时点。A 只用到 2023-10，B 只用到 2024-02；最终训练只用到 2025-02。",
+              "- 训练记录 t 使用 t-1 月经济特征。对于固定截止点后的整个验证/测试期间，只使用截止点历史值的持平预测，或预设 12 月窗口、0.8 阻尼、每月对数斜率上限 ±0.03 的趋势预测；不使用验证/测试期实测经济数据。",
+              "- 股票固定集合在第一可见月份确定，避免用后续覆盖或表现筛选股票；缺月只向前填充。首个租赁月份没有前月数据，保持缺失。",
+              "- 全部编码、缺失处理、经济历史截断及经济预测参数均在当前训练折拟合。没有用验证标签早停或调参。",
+              "- 补充的随机森林与 ExtraTrees 沿用 160 棵树、最大深度 24、叶子最少 8 条、max_features=0.8。模型选定的输入字段全部保留；one-hot 每字段最多 32 类，低频类别合并，词表及分组只在训练窗口拟合。这个编码预算在六阶段固定，与原始首轮无限类别上限的森林实现有区别，不能直接将两轮差值归因于新增特征。",
+              "- 这些 A/B 窗口用于阶段选择，分数属于开发验证结果，不是未参与选择的独立评估，也不是 Kaggle 成绩。",
+              "- 保留全部租金标签、重复记录与原始行序。旧 outputs/trees/ 的历史实验不覆盖。",
+              "", "## 文件", "",
+              "comparison.csv：逐模型、逐阶段分数；experiments/：公共日志、配置与逐行验证预测；audit_*.json：来源与时间截断；covariates_*.csv：各折历史及未来经济输入。",
+              "*_by_*.csv：按月份、地区、房型的误差；best_model.json：推荐配置和提交路径；models/：完整特征流水线与模型；verification.json：重算分数、行序、数据哈希及提交核对。"]
+    if (output / "figures/stage_comparison.png").exists():
+        lines += ["", "![分阶段比较](figures/stage_comparison.png)"]
+    (output / "FEATURE_REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def plot_results(output):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    frame = pd.read_csv(output / "comparison.csv")
+    order = list(SCENARIOS)
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5), layout="constrained")
+    for ax, metric, title in zip(axes, ["split_a", "split_b", "mean_rmse"], ["Split A", "Split B", "Mean of A/B"]):
+        for kind, group in frame.groupby("kind", sort=False):
+            group = group.set_index("scenario").reindex(order)
+            ax.plot(range(len(order)), group[metric], marker="o", label=kind)
+        ax.set_xticks(range(len(order)), ["Base", "Location", "+COE", "+Stocks", "+Both\nlast", "+Both\ndamped"], rotation=35, ha="right")
+        ax.set(title=title, ylabel="RMSE (SGD; lower is better)")
+        ax.grid(alpha=.25)
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="outside upper center", ncol=3, frameon=False)
+    folder = output / "figures"
+    folder.mkdir(exist_ok=True)
+    fig.savefig(folder / "stage_comparison.png", dpi=160)
+    plt.close(fig)
+
+
+def verify(records, train, before, output):
+    checked = []
+    folds = {fold.definition.name: fold for fold in get_splits(train, "rolling")}
+    for record in records:
+        if record["status"] != "complete":
+            continue
+        directory = ROOT / record["run_dir"]
+        config = json.loads((directory / "config.json").read_text(encoding="utf-8"))
+        prediction = pd.read_csv(directory / "validation_predictions.csv")
+        required = set(SCENARIOS[record["scenario"]]["numeric"])
+        actual = set(config["parameters"]["estimator"]["parameters"]["columns"])
+        assert required <= actual, (record["name"], "features were not selected by model")
+        scores = []
+        for name, group in prediction.groupby("fold", sort=False):
+            fold = folds[name]
+            np.testing.assert_array_equal(group.row_index, fold.valid_idx)
+            np.testing.assert_array_equal(group.MONTHLY_RENT, train.iloc[fold.valid_idx][TARGET])
+            np.testing.assert_array_equal(group.RENT_APPROVAL_DATE, train.iloc[fold.valid_idx][DATE_COL])
+            score = float(np.sqrt(np.mean((group.MONTHLY_RENT - group.Predicted) ** 2)))
+            np.testing.assert_allclose(score, config["fold_rmse"][name], atol=1e-9, rtol=0)
+            scores.append(score)
+        np.testing.assert_allclose(np.mean(scores), record["mean_rmse"], atol=1e-9, rtol=0)
+        checked.append(record["name"])
+    assert source_hashes() == before, "Source datasets changed"
+    write_json(output / "verification.json", {"status": "passed", "experiments_checked": checked,
+               "scores_recomputed": True, "validation_rows_and_targets_match": True,
+               "new_features_reach_model": True, "datasets_unchanged": len(before),
+               "macro_future_actuals_used": False, "facility_historical_dates_available": False})
+
+
+def export_best(records, train, output, threads):
+    good = [r for r in records if r["status"] == "complete"]
+    winner = min(good, key=lambda r: r["mean_rmse"])
+    scenario, kind = winner["scenario"], winner["kind"]
+    print(f"Final training: {winner['name']}", flush=True)
+    pipeline = FeaturePipeline(blocks(scenario))
+    X = pipeline.fit_transform(train)
+    model = build(kind, scenario, threads).fit(X, train[TARGET])
+    test = load_test()
+    prediction = model.predict(pipeline.transform(test))
+    path = write_submission(test, prediction, output / "submissions/best_feature_model.csv")
+    sample = pd.read_csv(ROOT / "data/example-submission.csv")
+    submitted = pd.read_csv(path)
+    assert list(submitted) == list(sample)
+    np.testing.assert_array_equal(submitted.Id, sample.Id)
+    folder = output / "models"
+    folder.mkdir(exist_ok=True)
+    artifact = folder / "best_feature_model.joblib"
+    joblib.dump({"features": pipeline, "model": model, "scenario": scenario, "kind": kind,
+                 "seed": SEED, "actual_fit_rows": model.fit_rows_, "fit_start": model.fit_start_,
+                 "fit_end": model.fit_end_}, artifact, compress=3)
+    restored = joblib.load(artifact)
+    repeated = restored["model"].predict(restored["features"].transform(test))
+    np.testing.assert_allclose(repeated, submitted.Predicted, atol=1e-6, rtol=0)
+    write_json(output / "best_model.json", {"name": winner["name"], "kind": kind, "scenario": scenario,
+               "features": blocks(scenario), "seed": SEED,
+               "split_a": winner["split_a"], "split_b": winner["split_b"], "mean_rmse": winner["mean_rmse"],
+               "validation_run_id": winner["run_id"], "selection": "lowest A/B development mean among declared candidates",
+               "submission": path.relative_to(ROOT).as_posix(), "model": artifact.relative_to(ROOT).as_posix(),
+               "available_train_rows": len(train), "actual_fit_rows": model.fit_rows_,
+               "fit_start": model.fit_start_, "fit_end": model.fit_end_,
+               "test_rows": len(test), "ids_match_example": True, "reload_matches_submission": True,
+               "feature_audit": {name: block.audit_ for name, block in pipeline.blocks if hasattr(block, "audit_")}})
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--models", nargs="+", choices=["catboost", "lightgbm", "xgboost", "rf", "extra"],
+                        default=["catboost", "lightgbm", "xgboost"])
+    parser.add_argument("--stages", nargs="+", choices=list(SCENARIOS), default=list(SCENARIOS))
+    parser.add_argument("--output", default="outputs/location_economy_20261103")
+    parser.add_argument("--threads", type=int, default=4)
+    parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--final", action="store_true")
+    args = parser.parse_args()
+    if args.threads < 1:
+        parser.error("threads must be positive")
+    output = ROOT / args.output
+    output.mkdir(parents=True, exist_ok=True)
+    before = source_hashes()
+    environment(output)
+    signature = {"data": before, "seed": SEED, "threads": args.threads,
+                 "source": {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                            for p in sorted((ROOT / "src").rglob("*.py"))},
+                 "versions": {name: importlib.metadata.version(name) for name in (
+                     "numpy", "pandas", "scikit-learn", "catboost", "lightgbm", "xgboost")}}
+    manifest = output / "runs.json"
+    records = json.loads(manifest.read_text(encoding="utf-8")) if args.resume and manifest.exists() else []
+    if records and signature != json.loads((output / "signature.json").read_text(encoding="utf-8")):
+        raise ValueError("Data, source, environment or settings changed; choose a new --output")
+    # Source hashes alone do not detect recipe changes in this entry script.
+    # Confirm that EVERY reused run has exactly the current serialized recipe.
+    for record in records:
+        if record["status"] != "complete":
+            continue
+        config = json.loads((ROOT / record["run_dir"] / "config.json").read_text(encoding="utf-8"))
+        expected = _json_value(_new_model(build(record["kind"], record["scenario"], args.threads)).get_params(deep=False))
+        if expected != config["parameters"]:
+            raise ValueError(f"Model recipe changed for {record['name']}; use a new --output")
+    write_json(output / "signature.json", signature)
+    train = load_train()
+    failed = []
+    with threadpool_limits(limits=args.threads):
+        for scenario in SCENARIOS:
+            if scenario not in args.stages:
+                continue
+            audit_scenario(train, scenario, output)
+            for kind in args.models:
+                name = f"{kind}_{scenario}"
+                if any(r["name"] == name and r["status"] == "complete" for r in records):
+                    print(f"Reusing {name}", flush=True)
+                    continue
+                print(f"Starting {name}; blocks={blocks(scenario)}", flush=True)
+                start = time.monotonic()
+                try:
+                    result = run_experiment("yaqi_features_" + name, "Yaqi", blocks(scenario),
+                                            build(kind, scenario, args.threads), split="rolling", output_dir=output)
+                    record = {"name": name, "scenario": scenario, "kind": kind, "status": "complete",
+                              "split_a": result.fold_rmse["holdout"], "split_b": result.fold_rmse["rolling_2024_04"],
+                              "mean_rmse": result.mean_rmse, "seconds": time.monotonic() - start,
+                              "run_id": result.run_id, "run_dir": result.run_dir.relative_to(ROOT).as_posix()}
+                    error_tables(result.run_dir / "validation_predictions.csv", output, name)
+                except Exception as exc:
+                    import traceback
+                    traceback.print_exc()
+                    failed.append(name)
+                    record = {"name": name, "scenario": scenario, "kind": kind, "status": "failed", "error": repr(exc)}
+                records.append(record)
+                write_json(manifest, records)
+                summarize(records, output)
+        verify(records, train, before, output)
+        if args.final and any(r["status"] == "complete" for r in records):
+            export_best(records, train, output, args.threads)
+    assert source_hashes() == before
+    plot_results(output)
+    summarize(records, output)
+    write_json(output / "integrity.json", {"unchanged": True, "hashes": before,
+               "completed_at": datetime.now(timezone.utc).isoformat()})
+    if failed:
+        raise SystemExit(f"Failed experiments: {failed}; successful results are preserved")
+    print(f"Complete: {output / 'FEATURE_REPORT.md'}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,179 @@
+"""Run from any directory using the VS Code selected Python interpreter."""
+
+import argparse
+import hashlib
+import importlib.metadata
+import json
+import platform
+import subprocess
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+import numpy as np
+import pandas as pd
+from threadpoolctl import threadpool_limits
+
+from src.config import SEED
+from src.cv import get_splits
+from src.data_cleaning import load_train
+from src.experiment import run_experiment
+from src.models.trees import candidates, tree_model
+
+
+def source_hashes():
+    paths = sorted((ROOT / "data").rglob("*.csv")) + sorted((ROOT / "data_cleaned").rglob("*.csv"))
+    return {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+
+
+def environment(output):
+    installed = {d.metadata["Name"]: d.version for d in importlib.metadata.distributions()}
+    frozen = subprocess.check_output([sys.executable, "-m", "pip", "freeze"], text=True)
+    (ROOT / "requirements.txt").write_text(frozen, encoding="utf-8")
+    (output / "environment.json").write_text(json.dumps({
+        "python_executable": sys.executable, "python": platform.python_version(),
+        "versions": installed, "seed": SEED, "source_commit": "6eb4f01fb38391d6dad0f0c959ec3a293442af86",
+    }, indent=2), encoding="utf-8")
+
+
+def error_tables(prediction_path, output, name):
+    prediction = pd.read_csv(prediction_path)
+    train = load_train()
+    lookup = train[["TOWN", "FLAT_TYPE"]].copy()
+    lookup["row_index"] = np.arange(len(train))
+    prediction = prediction.merge(lookup, on="row_index", how="left", validate="many_to_one", sort=False)
+    prediction["squared_error"] = (prediction.MONTHLY_RENT - prediction.Predicted) ** 2
+    prediction["error"] = prediction.Predicted - prediction.MONTHLY_RENT
+    for column in ("RENT_APPROVAL_DATE", "TOWN", "FLAT_TYPE"):
+        table = prediction.groupby(["fold", column], dropna=False).agg(
+            rows=("squared_error", "size"), mse=("squared_error", "mean"), bias=("error", "mean")
+        ).reset_index()
+        table["rmse"] = np.sqrt(table.pop("mse"))
+        table.to_csv(output / f"{name}_by_{column.lower()}.csv", index=False)
+
+
+def write_report(records, output):
+    good = [r for r in records if r.get("status") == "complete"]
+    if not good:
+        return
+    frame = pd.DataFrame(good).sort_values("mean_rmse")
+    frame.to_csv(output / "comparison.csv", index=False)
+    lines = ["# Yaqi：树模型实验结果", "", f"随机种子：{SEED}。以下分数来自实际运行，单位 SGD，越低越好。",
+             "", "| 实验 | split A RMSE | split B RMSE | 两折平均 | 秒数 |",
+             "|---|---:|---:|---:|---:|"]
+    for row in frame.itertuples():
+        b = f"{row.split_b:.3f}" if pd.notna(row.split_b) else "未运行"
+        lines.append(f"| {row.name} | {row.split_a:.3f} | {b} | {row.mean_rmse:.3f} | {row.seconds:.1f} |")
+    lines += ["", "## 解释与限制", "",
+              "- split A：训练 2021-01—2023-11，验证 2023-12—2025-03。",
+              "- split B：训练 2021-01—2024-03，验证 2024-04—2025-03。",
+              "- 两个验证区间有重叠；平均值是两折 RMSE 简单平均，不是独立测试集成绩。",
+              "- 原仓库历史分数使用种子 5228；本次按项目规则改为 42，参考模型也重新运行。",
+              "- reference/hist 沿用参考模型列；其余模型额外使用 STREET 和类别 FLAT_TYPE。",
+              "- 比较算法时先看 all；12m/24m 是训练历史长度消融。address 额外使用邮编与楼号。",
+              "- 所有编码、填补、类别词表和近期窗口仅从当前训练折拟合；没有外部目标编码。",
+              "- CatBoost 使用库内部的类别统计；未向模型传入验证集标签，不使用外部验证早停。",
+              "- 不使用宏观未来实测值、设施快照或队友尚未实现的特征模块。",
+              "- 候选参数和轮数预先列在 src/models/trees.py；这是一组有限搜索，不是最优性证明。",
+              "- 两折被用于模型选择，分数属于开发验证结果；不能称为未参与调参的泛化评估。",
+              "- 树模型不能据此保证 2026 年时间趋势外推；Kaggle 分数需实际上传后确认。",
+              "- 保留重复记录、极端租金、测试集全部记录与顺序。",
+              "", "## 产物", "", "comparison.csv 为逐模型汇总；experiments/ 内保存公共框架配置及逐行验证预测。",
+              "每个模型有按月份、地区、房型的误差表，可交给 P1 做误差分析与融合。",
+              "使用 --final 时仅对当前候选中平均 RMSE 最低的模型做全量重训，并校验提交样例的 Id。",
+              ""]
+    (output / "TREE_REPORT.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="P3 tree models on shared chronological splits")
+    parser.add_argument("--stage", choices=["compare", "tune", "all"], default="all")
+    parser.add_argument("--models", nargs="+", help="Candidate names or kinds, e.g. lightgbm catboost")
+    parser.add_argument("--split", choices=["holdout", "rolling"], default="rolling")
+    parser.add_argument("--threads", type=int, default=4)
+    parser.add_argument("--final", action="store_true", help="Refit best on all train and write submission")
+    parser.add_argument("--output", default="outputs/trees")
+    parser.add_argument("--resume", action="store_true", help="Reuse completed candidates in this output directory")
+    args = parser.parse_args()
+    if args.threads < 1:
+        parser.error("--threads must be positive")
+    output = ROOT / args.output
+    output.mkdir(parents=True, exist_ok=True)
+    before = source_hashes()
+    environment(output)
+    selected = [c for c in candidates(args.stage) if not args.models or c["name"] in args.models or c["kind"] in args.models]
+    if not selected:
+        parser.error("No candidates matched --models")
+    manifest = output / "runs.json"
+    records = json.loads(manifest.read_text(encoding="utf-8")) if args.resume and manifest.exists() else []
+    # Resume is permitted only for exactly the same sources, settings and split.
+    signature = {"hashes": before, "split": args.split, "threads": args.threads, "seed": SEED,
+                 "model_code": hashlib.sha256((ROOT / "src/models/trees.py").read_bytes()).hexdigest(),
+                 "source_code": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
+                                 for p in sorted((ROOT / "src").rglob("*.py"))},
+                 "versions": {p: importlib.metadata.version(p) for p in (
+                     "numpy", "pandas", "scikit-learn", "lightgbm", "xgboost", "catboost")}}
+    signature_path = output / "signature.json"
+    if records and json.loads(signature_path.read_text(encoding="utf-8")) != signature:
+        raise ValueError("Resume settings or data changed; use a new --output")
+    signature_path.write_text(json.dumps(signature, indent=2), encoding="utf-8")
+    failures = []
+    with threadpool_limits(limits=args.threads):
+        for specification in selected:
+            if any(r["name"] == specification["name"] and r["status"] == "complete" for r in records):
+                print(f"Reusing {specification['name']}", flush=True)
+                continue
+            name = specification["name"]
+            params = {k: v for k, v in specification.items() if k != "name"}
+            print(f"Starting {name}: {params}", flush=True)
+            start = time.monotonic()
+            try:
+                result = run_experiment("yaqi_" + name, "Yaqi", ["basic", "block"],
+                                        tree_model(**params, threads=args.threads), split=args.split,
+                                        output_dir=output)
+                record = {"name": name, "specification": specification, "status": "complete",
+                          "split_a": result.fold_rmse["holdout"],
+                          "split_b": result.fold_rmse.get("rolling_2024_04"),
+                          "mean_rmse": result.mean_rmse, "seconds": time.monotonic() - start,
+                          "run_id": result.run_id, "run_dir": str(result.run_dir.relative_to(ROOT))}
+                error_tables(result.run_dir / "validation_predictions.csv", output, name)
+            except Exception as exc:
+                import traceback
+                traceback.print_exc()
+                record = {"name": name, "specification": specification, "status": "failed", "error": repr(exc)}
+                failures.append(name)
+            records.append(record)
+            manifest.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8")
+            write_report(records, output)
+        good = [r for r in records if r["status"] == "complete" and r["name"] in {c["name"] for c in selected}]
+        if args.final and good:
+            best = min(good, key=lambda r: r["mean_rmse"])
+            params = {k: v for k, v in best["specification"].items() if k != "name"}
+            print(f"Final refit: {best['name']}", flush=True)
+            result = run_experiment("yaqi_final_" + best["name"], "Yaqi", ["basic", "block"],
+                                    tree_model(**params, threads=args.threads), split=args.split,
+                                    final=True, output_dir=output)
+            submission = pd.read_csv(result.submission_path)
+            example = pd.read_csv(ROOT / "data/example-submission.csv")
+            if list(submission.columns) != list(example.columns) or not np.array_equal(submission.Id, example.Id):
+                raise ValueError("Submission columns/Id differ from example")
+            (output / "best_model.json").write_text(json.dumps({
+                "name": best["name"], "specification": params, "seed": SEED,
+                "validation": result.fold_rmse, "mean_rmse": result.mean_rmse,
+                "submission": str(result.submission_path.relative_to(ROOT)), "run_id": result.run_id,
+                "generated_at": datetime.now(timezone.utc).isoformat(),
+            }, indent=2), encoding="utf-8")
+    if source_hashes() != before:
+        raise RuntimeError("Source data changed during training")
+    (output / "integrity.json").write_text(json.dumps({"unchanged": True, "hashes": before}, indent=2), encoding="utf-8")
+    if failures:
+        raise SystemExit(f"Failed candidates: {failures}; see runs.json. Successful results were preserved.")
+    print(f"Finished. Report: {output / 'TREE_REPORT.md'}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

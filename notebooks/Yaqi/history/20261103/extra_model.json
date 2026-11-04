@@ -1,0 +1,29 @@
+{
+  "kind": "extra",
+  "scenario": "location",
+  "split_a": 502.873855076677,
+  "split_b": 484.6172257176056,
+  "mean_rmse": 493.7455403971413,
+  "validation_run_id": "20261103T074845285184Z_b6e78b5f",
+  "features": [
+    "basic",
+    "block",
+    "distance"
+  ],
+  "available_train_rows": 150000,
+  "model": "outputs/location_economy_20261103/models/extra_best_model.joblib",
+  "submission": "outputs/location_economy_20261103/submissions/extra_best_model.csv",
+  "seed": 42,
+  "threads": 4,
+  "onehot_max_categories": 32,
+  "onehot_min_frequency": 10,
+  "encoded_feature_count": 233,
+  "raw_feature_count": 23,
+  "actual_fit_rows": 71040,
+  "fit_start": "2023-04",
+  "fit_end": "2025-03",
+  "test_rows": 50000,
+  "submission_ids_match_example": true,
+  "reload_matches_submission": true,
+  "importance_grouped_to_raw_fields": true
+}

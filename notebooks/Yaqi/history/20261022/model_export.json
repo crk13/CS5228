@@ -1,0 +1,6 @@
+{
+  "path": "outputs\\trees\\models\\best_tree.joblib",
+  "model": "catboost_address_24m",
+  "prediction_rows_checked": 50000,
+  "reload_matches_submission": true
+}
