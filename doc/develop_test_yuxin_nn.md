@@ -1,8 +1,8 @@
-# Yuxin 开发验收：develop.md §8.1 的步骤 1—6
+# Yuxin 开发验收：develop_yuxin_nn.md §8.1 的步骤 1—6
 
 日期：2026-11-04。分支：`yuxin_time_series`。
 
-> 最新步骤 4—6 的结果与复核见第 10 节；步骤 1—3 调参见第 9 节及 [develop_tuning.md](develop_tuning.md)。第 1—8 节保留初验记录；原三个候选已归档，不代表当前成绩。历史章节中的“未实施步骤 4/融合”仅描述当时状态。
+> 最新步骤 4—6 的结果与复核见第 10 节；步骤 1—3 调参见第 9 节及 [develop_tuning_yuxin_nn.md](develop_tuning_yuxin_nn.md)。第 1—8 节保留初验记录；原三个候选已归档，不代表当前成绩。历史章节中的“未实施步骤 4/融合”仅描述当时状态。
 
 **三个开发步骤已实现并实际运行，数据、公共接口、时间边界和交付格式检查通过。**
 Transformer、RNN、LSTM 各已生成两折完整验证预测及 50000 条测试预测。
@@ -12,7 +12,7 @@ Transformer、RNN、LSTM 各已生成两折完整验证预测及 50000 条测试
 
 执行 `git fetch origin --prune` 后，远程 main 已更新到公共框架提交。
 在个人分支执行 `git merge --ff-only origin/merge-data-cleaning`，从 `7def64e` 快进到 `32213c435466bf4b081efef9bdcd10a73856b5b5`。
-分支名称保持不变，原有 `develop.md` 保留，没有合入队友的个人实验、结果包或树模型源码。
+分支名称保持不变，`doc/develop_yuxin_nn.md` 保留，没有合入队友的个人实验、结果包或树模型源码。
 
 公共基底提供了 `data_cleaned/`、loader、`FeaturePipeline`、时间切分、模型接口、实验运行器和测试。
 之后的开发仅新增个人模型、个人运行/核验入口、测试和文档。
@@ -20,11 +20,11 @@ Transformer、RNN、LSTM 各已生成两折完整验证预测及 50000 条测试
 
 实际入口：
 
-- [神经网络模型包](src/models/yuxin_nn/estimators.py)：`TabularNNRegressor`、`MarketHybridRegressor`。
-- [个人运行说明](notebooks/Yuxin/README.md)、[实验入口](notebooks/Yuxin/run_experiments.py)、[配置目录](notebooks/Yuxin/configs/)。
-- [新增测试](tests/test_yuxin_nn.py)、[逐行交付核验](notebooks/Yuxin/verify_delivery.py)。
-- [初验模型比较](notebooks/Yuxin/archive/stage1_3/comparison.csv)、[初验逐月误差](notebooks/Yuxin/archive/stage1_3/monthly_errors.csv)。
-- [初验复核记录](notebooks/Yuxin/archive/stage1_3/verification.json)、[初验候选归档](notebooks/Yuxin/archive/stage1_3/results_Yuxin/README.md)。
+- [神经网络模型包](../src/models/yuxin_nn/estimators.py)：`TabularNNRegressor`、`MarketHybridRegressor`。
+- [个人运行说明](../notebooks/Yuxin/README.md)、[实验入口](../notebooks/Yuxin/run_experiments.py)、[配置目录](../notebooks/Yuxin/configs/)。
+- [新增测试](../tests/test_yuxin_nn.py)、[逐行交付核验](../notebooks/Yuxin/verify_delivery.py)。
+- [初验模型比较](../notebooks/Yuxin/archive/stage1_3/comparison.csv)、[初验逐月误差](../notebooks/Yuxin/archive/stage1_3/monthly_errors.csv)。
+- [初验复核记录](../notebooks/Yuxin/archive/stage1_3/verification.json)、[初验候选归档](../notebooks/Yuxin/archive/stage1_3/results_Yuxin/README.md)。
 
 没有提前实现步骤 4 的时间 Transformer、多市场池化，以及后续融合/调参工作。表格 Transformer 已实现，它的 token 表示字段。
 本阶段只开公共 `basic` / `block`，因此未创建暂不使用的日历特征块或占用距离/宏观注册名。
@@ -133,8 +133,8 @@ MLP 的 A/B 早停轮数较少是内部时间验证的真实选择，没有用�
 
 ## 6. 评测条件与复核证据
 
-初验 [完整复核 JSON](notebooks/Yuxin/archive/stage1_3/verification.json) 的 status 为 `passed`，含两个目录的 7 个完整运行及共享属性检查。
-初验三个候选的 [独立交付复核](notebooks/Yuxin/archive/stage1_3/results_Yuxin/verification.json) 同样为 `passed`。
+初验 [完整复核 JSON](../notebooks/Yuxin/archive/stage1_3/verification.json) 的 status 为 `passed`，含两个目录的 7 个完整运行及共享属性检查。
+初验三个候选的 [独立交付复核](../notebooks/Yuxin/archive/stage1_3/results_Yuxin/verification.json) 同样为 `passed`。
 
 | 检查 | 实际结果 |
 |---|---|
@@ -235,9 +235,9 @@ carry/RNN/LSTM 的属性训练及验证/测试比例预测一致，最大比例�
 
 最新入口：
 
-- [详细调参报告](develop_tuning.md)：搜索范围、条件最优边界、每个成员的精确配置入口、实际 epoch、耗时及局限。
-- [冻结参数](notebooks/Yuxin/tuning/configs/)、[四方案比较](notebooks/Yuxin/tuning/comparison.csv)、[最终逐行复核](notebooks/Yuxin/tuning/final_verification.json)。
-- [正式三个候选](results/Yuxin/README.md)：Transformer/RNN/LSTM，恰好 3 个运行。
+- [详细调参报告](develop_tuning_yuxin_nn.md)：搜索范围、条件最优边界、每个成员的精确配置入口、实际 epoch、耗时及局限。
+- [冻结参数](../notebooks/Yuxin/tuning/configs/)、[四方案比较](../notebooks/Yuxin/tuning/comparison.csv)、[最终逐行复核](../notebooks/Yuxin/tuning/final_verification.json)。
+- [正式三个候选](../results/Yuxin/README.md)：Transformer/RNN/LSTM，恰好 3 个运行。
 - `notebooks/Yuxin/tuning/final/` 保留全部四类完整输出，含 carry 对照；`tuning/pre_replay/` 保留补跑前的两个时间赢家。
 - 初验三个正式候选及原始分析文件保留在 `notebooks/Yuxin/archive/stage1_3/`，可恢复，未删除。
 
@@ -277,14 +277,14 @@ export LOKY_MAX_CPU_COUNT=4 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXI
 | LSTM（L=6） | 487.182244 | 469.964375 | 478.573310 |
 | temporal Transformer（L=6） | 487.036876 | 469.954575 | 478.495726 |
 
-这些是复用 carry 运行中**已拟合属性模型的 OOF 比例**、独立重训市场编码器的廉价受控实验，不是重复训练 12 组属性网络。来源 commit/run_id/预测哈希与逐折市场审计保存在 [受控实验记录](notebooks/Yuxin/stage4/controlled_comparison.json)。
+这些是复用 carry 运行中**已拟合属性模型的 OOF 比例**、独立重训市场编码器的廉价受控实验，不是重复训练 12 组属性网络。来源 commit/run_id/预测哈希与逐折市场审计保存在 [受控实验记录](../notebooks/Yuxin/stage4/controlled_comparison.json)。
 RNN/LSTM 的本表 L=6 配方不是第 9 节各自已调优的 L=12 配方，不能混为同一运行或声称 attention 优于调优后的 recurrence。
 
-随后只对 Transformer 做有限单因素消融：从上述匹配配置出发，分别试 L=3、d=16、lr=0.001、damping=0.95、strength=0.5、dropout=0.2、inner=12。共 **8 组 attention / 12 个总候选**，每组都完成两折，没有剪枝缺折；完整分数见 [comparison.csv](notebooks/Yuxin/stage4/comparison.csv)。
+随后只对 Transformer 做有限单因素消融：从上述匹配配置出发，分别试 L=3、d=16、lr=0.001、damping=0.95、strength=0.5、dropout=0.2、inner=12。共 **8 组 attention / 12 个总候选**，每组都完成两折，没有剪枝缺折；完整分数见 [comparison.csv](../notebooks/Yuxin/stage4/comparison.csv)。
 最好 attention 是 **inner=12，其余保持匹配设置**，均值 478.323802；这是已试配方中的最优，不是全局最优。
 它比同属性 carry 高 0.086463 SGD，也没有优于此前调优的 RNN/LSTM，因此不晋升正式候选。
 
-为排除缓存组装掩盖问题，使用冻结 [market_transformer.json](notebooks/Yuxin/stage4/configs/market_transformer.json)，经未修改的公共框架独立重训全部属性成员及市场模型：
+为排除缓存组装掩盖问题，使用冻结 [market_transformer.json](../notebooks/Yuxin/stage4/configs/market_transformer.json)，经未修改的公共框架独立重训全部属性成员及市场模型：
 
 | 项目 | 独立重训结果 |
 |---|---|
@@ -300,20 +300,20 @@ RNN/LSTM 的本表 L=6 配方不是第 9 节各自已调优的 L=12 配方，不
 | 与缓存受控预测最大绝对差 | **1.3642420526593924e-12 SGD** |
 
 属性成员训练曲线/审计与 carry/RNN/LSTM 一致；两折验证及最终 test 的属性比例最大差为 **4.440892098500626e-16**。
-完整输出在 `notebooks/Yuxin/stage4/full/`，最终证明见 [stage4/verification.json](notebooks/Yuxin/stage4/verification.json)。本轮没有增加多市场池化/距离/COE：主线已经能检验时间编码器，月度样本很少且细分市场稀疏，未额外扩展该实验范围。
+完整输出在 `notebooks/Yuxin/stage4/full/`，最终证明见 [stage4/verification.json](../notebooks/Yuxin/stage4/verification.json)。本轮没有增加多市场池化/距离/COE：主线已经能检验时间编码器，月度样本很少且细分市场稀疏，未额外扩展该实验范围。
 
 ### 10.2 步骤 5：统一误差与残差相关性
 
-[evaluate_complementarity.py](notebooks/Yuxin/evaluate_complementarity.py) 从正式提交产物读取：本分支三个神经网络、FXY Ridge（`6e7ffcb`）、Yaqi 三个树（`3dae63c`）。
+[evaluate_complementarity.py](../notebooks/Yuxin/evaluate_complementarity.py) 从正式提交产物读取：本分支三个神经网络、FXY Ridge（`6e7ffcb`）、Yaqi 三个树（`3dae63c`）。
 逐个验证 rolling/final 条件，按 `(fold,row_index)` 一对一对齐，再逐行核对日期和真实标签；读取完整 test 并核对 50000 个 Id。没有读取队友的训练拟合预测，也没有重训其模型。
 另外将 carry 与未晋升的时间 Transformer 纳入误差/相关性分析，**不将这两个开发对照作为团队融合输入**。
 
 输出覆盖 9 个基础/对照模型及 12 个固定平均组合：
 
-- [group_errors.csv](notebooks/Yuxin/stage5/group_errors.csv)：**2877 行**，逐月、URA 大区、town、户型、单月 horizon、4 月 horizon_bin，共 6 个维度；保留每组 N、RMSE、MAE、bias（预测−真实，SGD）。
-- [fold_scores.csv](notebooks/Yuxin/stage5/fold_scores.csv)：逐模型逐折，不把两折重叠样本混为一个总体分数。
-- [residual_correlations.csv](notebooks/Yuxin/stage5/residual_correlations.csv)：9 个模型两两、两折分别计算，**72 条 Pearson 残差相关性**。
-- [verification.json](notebooks/Yuxin/stage5/verification.json)：来源完整 commit/run_id、SHA-256、行号与目标核对、范围及局限。
+- [group_errors.csv](../notebooks/Yuxin/stage5/group_errors.csv)：**2877 行**，逐月、URA 大区、town、户型、单月 horizon、4 月 horizon_bin，共 6 个维度；保留每组 N、RMSE、MAE、bias（预测−真实，SGD）。
+- [fold_scores.csv](../notebooks/Yuxin/stage5/fold_scores.csv)：逐模型逐折，不把两折重叠样本混为一个总体分数。
+- [residual_correlations.csv](../notebooks/Yuxin/stage5/residual_correlations.csv)：9 个模型两两、两折分别计算，**72 条 Pearson 残差相关性**。
+- [verification.json](../notebooks/Yuxin/stage5/verification.json)：来源完整 commit/run_id、SHA-256、行号与目标核对、范围及局限。
 
 以 RNN 为例：
 
@@ -333,7 +333,7 @@ RNN/LSTM 高度冗余，相关性低一些也不自动等于融合一定更好�
 
 ### 10.3 步骤 5：实际融合，而不只看相关性
 
-将三个正式神经网络分别与 Ridge/CatBoost/XGBoost/LightGBM **固定 50:50 平均**，不在这些评估行拟合权重。全部 12 组均保留在 [fixed_blends.csv](notebooks/Yuxin/stage5/fixed_blends.csv)，其中 10 组均值低于更好的单个组成模型，2 组没有改善。
+将三个正式神经网络分别与 Ridge/CatBoost/XGBoost/LightGBM **固定 50:50 平均**，不在这些评估行拟合权重。全部 12 组均保留在 [fixed_blends.csv](../notebooks/Yuxin/stage5/fixed_blends.csv)，其中 10 组均值低于更好的单个组成模型，2 组没有改善。
 代表性结果如下，完整表还包含其余组合：
 
 | 固定平均 | A | B | 平均 | 比较好的组成模型低 |
@@ -345,12 +345,12 @@ RNN/LSTM 高度冗余，相关性低一些也不自动等于融合一定更好�
 | RNN＋LightGBM | 488.449107 | 470.544833 | 479.496970 | **−1.371048（退化）** |
 
 因此只能说：**这些开发折上，特定神经网络与队友模型具有实测互补收益，并非所有平均都改善。**
-保存了 RNN＋CatBoost 固定平均的实际 [验证 CSV](notebooks/Yuxin/stage5/diagnostic_blend_validation.csv) 与 [test CSV](notebooks/Yuxin/stage5/diagnostic_blend_test.csv)，分别 82329 / 50000 行。
+保存了 RNN＋CatBoost 固定平均的实际 [验证 CSV](../notebooks/Yuxin/stage5/diagnostic_blend_validation.csv) 与 [test CSV](../notebooks/Yuxin/stage5/diagnostic_blend_test.csv)，分别 82329 / 50000 行。
 它们是诊断产物，不是第四个正式运行；未用新 blend 分数改写任何基础模型的原分数。
 
 另做前向权重迁移：只用 A 折 **2023-12—2024-03 的 12013 行**，解析求一个凸权重 w∈[0,1]，不加截距；然后固定 w，评估 B 折 **2024-04—2025-03 的 35158 行**。
 例如 RNN＋CatBoost 的 RNN 权重为 0.516588，B RMSE=469.552473，低于 B 上 RNN 的 469.853216；RNN＋XGBoost 权重 0.670898，B RMSE=468.432592。
-全部 12 组见 [forward_transfer.csv](notebooks/Yuxin/stage5/forward_transfer.csv)，没有用 B 标签求权重，也没有将 A 的未来验证月份反过来校准 B。
+全部 12 组见 [forward_transfer.csv](../notebooks/Yuxin/stage5/forward_transfer.csv)，没有用 B 标签求权重，也没有将 A 的未来验证月份反过来校准 B。
 
 **重要边界：**固定平均不拟合权重，前向权重也不读取其评估月份标签；但底层模型此前的超参数已经用外层两折选过，仍存在选择偏差。
 这不是完全嵌套、全新未见标签的泛化实验；同时比较多个组合也有挑选效应。两折时间重叠、队友种子/特征/环境不同，不宣称统计显著或算法因果优劣，不能保证 Kaggle 隐藏集提升。
@@ -358,7 +358,7 @@ RNN/LSTM 高度冗余，相关性低一些也不自动等于融合一定更好�
 ### 10.4 步骤 6：正式候选、配置和轮数锁定
 
 正式 `results/Yuxin/` **仍恰好 3 个运行**；未覆盖原 config/验证/test，未新增第四个运行，既有历史归档保持原样。
-本次新建 [selection.json](results/Yuxin/selection.json)，逐文件锁定 SHA-256、冻结 JSON 配方、实际训练轮数和精确可恢复的原训练源码：
+本次新建 [selection.json](../results/Yuxin/selection.json)，逐文件锁定 SHA-256、冻结 JSON 配方、实际训练轮数和精确可恢复的原训练源码：
 
 | 正式候选 | run_id | 配方 | 原训练源码 |
 |---|---|---|---|
@@ -401,7 +401,7 @@ carry 和新时间模型开发输出不占正式名额；诊断 blend 也不新�
 | 公共文件边界 | 未改框架、公共清洗/特征、共享日志、公共 requirements 或 `.gitignore`；根 README 按用户要求补充 |
 | 仓库产物 | 正式仍 3 运行，无权重/锁文件；旧结果未删除或覆盖，全部新实现与产物本地提交 Git |
 
-最终证明：[stage4/verification.json](notebooks/Yuxin/stage4/verification.json)、[stage5/independent_verification.json](notebooks/Yuxin/stage5/independent_verification.json)、[正式选择清单](results/Yuxin/selection.json)。
+最终证明：[stage4/verification.json](../notebooks/Yuxin/stage4/verification.json)、[stage5/independent_verification.json](../notebooks/Yuxin/stage5/independent_verification.json)、[正式选择清单](../results/Yuxin/selection.json)。
 
 在根目录复核现有完整结果（不重新训练，不需临时 HPO 缓存）：
 
@@ -413,5 +413,5 @@ export LOKY_MAX_CPU_COUNT=4 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXI
 .venv/bin/python notebooks/Yuxin/finalize_stages.py
 ```
 
-重新训练时间 Transformer 或正式候选时，务必使用新输出目录，命令见 [个人 README](notebooks/Yuxin/README.md)。
+重新训练时间 Transformer 或正式候选时，务必使用新输出目录，命令见 [个人 README](../notebooks/Yuxin/README.md)。
 旧 `tune_models.py` / `finalize_tuning.py --prepare` 的源码签名绑定历史研究；新时间模块加入后，不应直接续跑旧 SQLite 或取消哈希保护。冻结配置重训与长期 CSV 审计不依赖旧 `/tmp` 缓存。

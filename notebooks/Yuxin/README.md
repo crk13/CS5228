@@ -1,7 +1,7 @@
 # Yuxin 神经网络：开发阶段 1—6
 
-实现说明和真实运行结果见根目录 `develop_test.md`；原始设计见 `develop.md`。
-最新调参报告为 `develop_tuning.md`，最新冻结参数为 `tuning/configs/`。
+实现说明和真实运行结果见`doc/develop_test_yuxin_nn.md`；原始设计见 `doc/develop_yuxin_nn.md`。
+最新调参报告为 `doc/develop_tuning_yuxin_nn.md`，最新冻结参数为 `tuning/configs/`。
 `configs/` 保留初验配置；不带最新 `--config-dir` 的旧命令不会运行本轮优化组合。
 公共数据/模型/验证接口以 `docs/experiment-interface.md` 为准。
 

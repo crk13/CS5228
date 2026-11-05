@@ -1,7 +1,7 @@
 # Yuxin：调优后的三个正式候选
 
 三个运行均使用公共 rolling 两折及 `final=True`；实际预测已逐行复核，见 [verification.json](verification.json)。
-完整方法、参数、搜索边界和证据见 [develop_tuning.md](../../develop_tuning.md)，初验与最新摘要见 [develop_test.md](../../develop_test.md)。
+完整方法、参数、搜索边界和证据见 [develop_tuning.md](../../doc/develop_tuning_yuxin_nn.md)，初验与最新摘要见 [develop_test.md](../../doc/develop_test_yuxin_nn.md)。
 
 | 模型 | run_id | A RMSE | B RMSE | 平均 RMSE |
 |---|---|---:|---:|---:|

@@ -7,4 +7,4 @@
 
 历史 JSON 中的原输出目录反映当时位置；现在按此归档目录读取。
 原基线、原 MLP 和原 carry 仍在 `notebooks/Yuxin/validation/`。
-最新正式候选在 `results/Yuxin/`，最新调参说明见 [develop_tuning.md](../../../../develop_tuning.md)。
+最新正式候选在 `results/Yuxin/`，最新调参说明见 [develop_tuning.md](../../../../doc/develop_tuning_yuxin_nn.md)。

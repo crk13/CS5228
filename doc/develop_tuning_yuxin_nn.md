@@ -1,6 +1,6 @@
 # Yuxin：步骤 1—3 调参及验收
 
-日期：2026-11-04；分支：`yuxin_time_series`。本轮仅调优已有表格 Transformer、carry、市场 RNN/LSTM，不实施 `develop.md` §8.1 步骤 4 的时间 Transformer。
+日期：2026-11-04；分支：`yuxin_time_series`。本轮仅调优已有表格 Transformer、carry、市场 RNN/LSTM，不实施 `doc/develop_yuxin_nn.md` §8.1 步骤 4 的时间 Transformer。
 
 状态：四类模型搜索、独立重训及完整输出复核均已通过；三个正式候选已更新，旧结果可恢复地归档。未实施步骤 4、未上传 Kaggle、未推送远端。
 
@@ -127,7 +127,7 @@ RNN 的 A/B/全量时间轮数为 **14/27/3**，LSTM 为 **34/10/6**。最终全
 共保留 130 条 Optuna 记录：87 COMPLETE、42 PRUNED、1 FAIL；其中含 33 次时间候选重放，不是 130 组不同参数。
 本轮实际评估 96 组不同配置；carry/Transformer 尚有 9 组只完成首折的剪枝候选，未用于两折最优或同类成员选择。
 
-验收证据为 [最终逐行复核](notebooks/Yuxin/tuning/final_verification.json)、[四个完整运行复核](notebooks/Yuxin/tuning/final/verification.json)、[正式候选复核](results/Yuxin/verification.json)。
+验收证据为 [最终逐行复核](../notebooks/Yuxin/tuning/final_verification.json)、[四个完整运行复核](../notebooks/Yuxin/tuning/final/verification.json)、[正式候选复核](../results/Yuxin/verification.json)。
 
 - 20/20 测试通过，含公共契约、标签扰动、缺失/未知类别、clone、同种子复现、固定原点及串并行等价性；公共清洗检查再次 `All checks passed.`。
 - 每运行验证文件 82329 行（A=47171、B=35158），列、原行号、日期、真实标签逐行匹配，键唯一；RMSE 与 config/log 一致，容差 1e-8。
@@ -147,7 +147,7 @@ RNN 的 A/B/全量时间轮数为 **14/27/3**，LSTM 为 **34/10/6**。最终全
 
 `tuning/final/` 同时保存全部四个完整运行，正式目录只复制三个网络候选，符合每人最多 3 个运行的团队规范，不代表多训练了三个模型。
 原始三个正式候选和初验比较/误差/复核文件保存在 `notebooks/Yuxin/archive/stage1_3/`；没有覆盖初验数据。
-冻结参数在 [配置目录](notebooks/Yuxin/tuning/configs/)，最新四模型比较在 [comparison.csv](notebooks/Yuxin/tuning/comparison.csv)。完整候选日志和旧时间赢家均保留。
+冻结参数在 [配置目录](../notebooks/Yuxin/tuning/configs/)，最新四模型比较在 [comparison.csv](../notebooks/Yuxin/tuning/comparison.csv)。完整候选日志和旧时间赢家均保留。
 
 在项目根目录复核现有交付，不依赖临时搜索数据库：
 

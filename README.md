@@ -101,7 +101,7 @@ CS5228/
 
 ## Yuxin 神经网络与步骤 4—6
 
-已完成 `develop.md` §8.1 的六个步骤；本次新增短窗口 temporal Transformer、逐月/地区/户型/预测跨度误差、残差相关性及实际融合检验。完整验收和局限见 [develop_test.md 第 10 节](develop_test.md)。
+已完成 `doc/develop_yuxin_nn.md` §8.1 的六个步骤；本次新增短窗口 temporal Transformer、逐月/地区/户型/预测跨度误差、残差相关性及实际融合检验。完整验收和局限见 [develop_test_yuxin_nn.md 第 10 节](doc/develop_test_yuxin_nn.md)。
 
 | 冻结的正式候选 | Rolling 平均 RMSE（SGD） |
 |---|---:|
@@ -139,6 +139,6 @@ python -m venv --system-site-packages .venv
 | [Agent 开发与测试命令](AGENTS.md) | 常用命令、验证方法和开发入口 |
 | [Kaggle 任务说明原文](CS5228-2610%20Project%20_%20Kaggle.mhtml) | 本地保存的比赛说明 |
 | [共享实验日志](experiments/log.csv) | 各模型的配置和验证结果 |
-| [Yuxin 开发方案](develop.md) / [验收记录](develop_test.md) | 六步实施要求、实际结果与边界 |
-| [Yuxin 调参报告](develop_tuning.md) | 步骤 1—3 的有限搜索及冻结参数 |
+| [Yuxin 开发方案](doc/develop_yuxin_nn.md) / [验收记录](doc/develop_test_yuxin_nn.md) | 六步实施要求、实际结果与边界 |
+| [Yuxin 调参报告](doc/develop_tuning_yuxin_nn.md) | 步骤 1—3 的有限搜索及冻结参数 |
 | [Yuxin 运行说明](notebooks/Yuxin/README.md) / [正式候选](results/Yuxin/README.md) | 神经网络复现、步骤 4—6 与交付索引 |

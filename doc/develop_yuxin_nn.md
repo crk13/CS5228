@@ -245,7 +245,7 @@ A 的原点是 2023-11，整个后续 16 月都不能逐月读入验证真实租
 
 ```text
 CS5228/
-├── develop.md                         # 本文
+├── doc/develop_yuxin_nn.md             # 本文
 ├── data/                              # 现有原始数据
 ├── data_cleaned/                       # 复用公共基底
 ├── docs/experiment-interface.md        # 公共唯一接口协议

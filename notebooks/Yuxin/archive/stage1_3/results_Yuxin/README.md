@@ -2,7 +2,7 @@
 
 本目录按公共 `docs/experiment-interface.md` 的交付格式保存三个运行：
 表格 Transformer、市场 RNN＋属性 MLP、市场 LSTM＋属性 MLP。
-完整实测结果、局限性和检查证据见根目录 `develop_test.md`。
+完整实测结果、局限性和检查证据见`doc/develop_test_yuxin_nn.md`。
 
 | 模型 | run_id | A RMSE | B RMSE | 平均 RMSE |
 |---|---|---:|---:|---:|
