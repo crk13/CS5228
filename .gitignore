@@ -20,3 +20,8 @@ Thumbs.db
 experiments/*/validation_predictions.csv
 experiments/log.lock
 submissions/*.csv
+
+# Per-run prediction/submission copies under notebooks are dev artifacts,
+# the shareable delivery lives in results/<member>/
+notebooks/**/validation_predictions.csv
+notebooks/**/submissions/*.csv

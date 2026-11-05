@@ -1,7 +1,7 @@
 {
   "timestamp": "2026-11-03T18:17:54.695021+00:00",
   "run_id": "20261103T181754695021Z_493b5f46",
-  "name": "yuxin_tabular_transformer",
+  "name": "yuxin_tabular_transformer_carry",
   "author": "Yuxin",
   "features": [
     "basic",
@@ -11,7 +11,9 @@
     "basic": {},
     "block": {}
   },
-  "model": "__main__.AuditRecorder",
+  "model": "src.models.yuxin_nn.ensemble.NeuralFamilyEnsemble",
+  "model_wrapper": "AuditRecorder (run script in notebooks/Yuxin)",
+  "market_encoder": "carry",
   "parameters": {
     "audit_dir": "temporary; training evidence is in training_audit.json",
     "estimator": {

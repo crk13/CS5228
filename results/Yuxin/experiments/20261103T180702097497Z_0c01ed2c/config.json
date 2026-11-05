@@ -11,7 +11,9 @@
     "basic": {},
     "block": {}
   },
-  "model": "__main__.AuditRecorder",
+  "model": "src.models.yuxin_nn.ensemble.NeuralFamilyEnsemble",
+  "model_wrapper": "AuditRecorder (run script in notebooks/Yuxin)",
+  "market_encoder": "rnn",
   "parameters": {
     "audit_dir": "temporary; training evidence is in training_audit.json",
     "estimator": {
