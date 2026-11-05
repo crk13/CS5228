@@ -1,0 +1,6 @@
+submission,test_mean,public_lb,date
+fusion_et_L1.csv,3201.80,435.80800,2026-11-05
+fusion_et_L2.csv,3149.43,438.16271,2026-11-05
+fusion_et_L3.csv,3188.17,435.00380,2026-11-05
+fusion_nnls_L1.csv,3201.80,436.15406,2026-11-05
+fusion_stack3_L1.csv,3201.80,435.47903,2026-11-05
