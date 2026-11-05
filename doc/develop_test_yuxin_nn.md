@@ -300,7 +300,7 @@ RNN/LSTM 的本表 L=6 配方不是第 9 节各自已调优的 L=12 配方，不
 | 与缓存受控预测最大绝对差 | **1.3642420526593924e-12 SGD** |
 
 属性成员训练曲线/审计与 carry/RNN/LSTM 一致；两折验证及最终 test 的属性比例最大差为 **4.440892098500626e-16**。
-完整输出在 `notebooks/Yuxin/stage4/full/`，最终证明见 [stage4/verification.json](../notebooks/Yuxin/stage4/verification.json)。本轮没有增加多市场池化/距离/COE：主线已经能检验时间编码器，月度样本很少且细分市场稀疏，未额外扩展该实验范围。
+配置、训练审计与验证摘要保留在 `notebooks/Yuxin/stage4/full/`（逐折预测 CSV 按 `.gitignore` 不再提交），最终证明见 [stage4/verification.json](../notebooks/Yuxin/stage4/verification.json)。本轮没有增加多市场池化/距离/COE：主线已经能检验时间编码器，月度样本很少且细分市场稀疏，未额外扩展该实验范围。
 
 ### 10.2 步骤 5：统一误差与残差相关性
 

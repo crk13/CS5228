@@ -128,7 +128,7 @@ python -m venv --system-site-packages .venv
 
 已有 `.venv` 时可跳过创建；这是个人环境，不提交 Git。进一步的训练、环境设置和复现命令见 [Yuxin README](notebooks/Yuxin/README.md)。
 [正式交付](results/Yuxin/README.md) 恰好保留三个运行；[选择与配置锁定清单](results/Yuxin/selection.json) 记录参数文件、实际训练轮数、原训练源码提交和产物哈希。
-分组误差与融合诊断位于 `notebooks/Yuxin/stage5/`，不是额外正式交付；新时间模型的完整验证/test 输出位于 `notebooks/Yuxin/stage4/full/`。
+分组误差与融合诊断位于 `notebooks/Yuxin/stage5/`，不是额外正式交付；新时间模型的配置、训练审计与验证摘要位于 `notebooks/Yuxin/stage4/full/`，逐折预测 CSV 按 `.gitignore` 不再提交。
 
 ## 重要文档
 

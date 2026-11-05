@@ -11,7 +11,7 @@
     "basic": {},
     "block": {}
   },
-  "model": "__main__.AuditRecorder",
+  "model": "AuditRecorder (run script in notebooks/Yuxin)",
   "parameters": {
     "audit_dir": "temporary; training evidence is in training_audit.json",
     "estimator": {

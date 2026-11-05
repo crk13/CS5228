@@ -10,6 +10,8 @@
 | 市场 LSTM＋相同属性成员 | 20261103T180702083101Z_b8e1e8c0 | 486.337890 | 469.919411 | **478.128651** |
 
 单位 SGD，越低越好。三者开发均值低于固定 CatBoost 参考 484.521404；但这是同类平均版本，不是单网络成绩，也不是 Kaggle 隐藏分数。
+
+记录规范化（合并后清理）：`config.json` 与 `log.csv` 中 `model` 改为实际的 `src.models.yuxin_nn.ensemble.NeuralFamilyEnsemble`（原记录为运行脚本里的包装器 `__main__.AuditRecorder`），并新增 `model_wrapper` 与 `market_encoder` 两个字段；第三行运行的 `name` 由 `yuxin_tabular_transformer` 改为 `yuxin_tabular_transformer_carry`，与其 `encoder: carry` 的配方一致；`parameters.audit_dir` 的 `/var/folders/…` 本机临时路径替换为说明性文本。预测与提交文件未改动。
 两折已用于调参，区间重叠，不能把 82329 行当作独立无偏测试样本。队友参考使用不同种子、环境及额外特征，不能据此作算法因果排名。
 
 每个 `experiments/<run_id>/` 有 config、training_audit、validation_predictions；对应 `submissions/<run_id>.csv` 有完整 50000 行 `Id,Predicted`。
@@ -19,7 +21,7 @@ carry 同属性对照均值为 **478.237340**，完整结果在 `notebooks/Yuxin
 RNN/LSTM 相对 carry 只改善约 0.11 SGD，主要提升来自属性模型调参与平均。序列是全市月度租金中位数，不是单套房。
 
 原三个初始候选可从 `notebooks/Yuxin/archive/stage1_3/results_Yuxin/` 恢复；重放前的时间赢家另存 `notebooks/Yuxin/tuning/pre_replay/`。
-步骤 4 的时间 Transformer 已实现并完整训练，均值 478.323802，未优于同属性 carry，保留在 `notebooks/Yuxin/stage4/full/`，不增加第四个正式运行。
+步骤 4 的时间 Transformer 已实现并完整训练，均值 478.323802，未优于同属性 carry，配置与审计保留在 `notebooks/Yuxin/stage4/full/`（预测 CSV 不再提交），不增加第四个正式运行。
 步骤 5 的固定 RNN＋CatBoost 平均均值 477.552001；12 个组合、前向权重检验和逐组误差见 `notebooks/Yuxin/stage5/`。这些是开发诊断，不是另一个正式运行或 Kaggle 分数。
 RNN 与 LSTM 残差相关性约 0.99994—0.99996，保留两家族用于比较，不宣称它们带来独立融合收益。
 

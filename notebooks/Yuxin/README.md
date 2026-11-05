@@ -133,7 +133,7 @@ Transformer 冻结配置使用 `n_jobs=4` 并行独立成员，每个 torch 成�
 export LOKY_MAX_CPU_COUNT=4 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
 # 受控比较与冻结新时间模型配方
 .venv/bin/python notebooks/Yuxin/compare_temporal.py
-# 重训请写新的目录；stage4/full 中已有完整运行，不要重复追加
+# 重训请写新的目录；stage4/full 只保留该运行的 config 与审计，预测 CSV 不再提交
 .venv/bin/python notebooks/Yuxin/run_experiments.py \
   --model market_transformer --config-dir notebooks/Yuxin/stage4/configs \
   --split rolling --final --output /tmp/yuxin_stage4_reproduction
@@ -151,7 +151,7 @@ carry 和未晋升的时间 Transformer 只加入误差/相关性分析，不作
 .venv/bin/python notebooks/Yuxin/finalize_stages.py
 ```
 
-上述最终审计按已有路径读取 `stage4/full/`，要求该目录恰好一个完整时间 Transformer 运行。新路径重训的输出可先用 `verify_delivery.py --roots /tmp/yuxin_stage4_reproduction --summary-output /tmp/yuxin_stage4_recheck.json` 单独核验，勿覆盖现有证据。
+上述最终审计需要 `stage4/full/` 的 `validation_predictions.csv`；该文件已按 `.gitignore` 排除，重跑审计需按冻结配置在新目录重训（如 `/tmp/yuxin_stage4_reproduction`）后再核验，勿覆盖现有 config 与审计。核验命令： `verify_delivery.py --roots /tmp/yuxin_stage4_reproduction --summary-output /tmp/yuxin_stage4_recheck.json` 单独核验，勿覆盖现有证据。
 
 - `stage4/comparison.csv`、`stage4/verification.json`：12 个受控候选和独立重训逐行比对。
 - `stage5/group_errors.csv`、`residual_correlations.csv`：9 个基础/对照模型及 12 个固定平均组合的分组误差；相关性逐折计算。
