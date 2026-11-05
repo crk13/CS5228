@@ -1,0 +1,234 @@
+{
+  "members": [
+    20,
+    7,
+    15,
+    4
+  ],
+  "n_members": 4,
+  "fold_rmse": {
+    "holdout": 486.3077146465668,
+    "rolling_2024_04": 470.1669644799169
+  },
+  "mean_rmse": 478.23733956324185,
+  "method": "greedy_forward",
+  "cache_files": [
+    "/tmp/yuxin_hpo_22d30b833508/carry_selected_0.npz",
+    "/tmp/yuxin_hpo_22d30b833508/carry_selected_1.npz"
+  ],
+  "parameters": {
+    "members": [
+      {
+        "kind": "mlp",
+        "market_normalize": true,
+        "epochs": 60,
+        "hidden_size": 256,
+        "embedding_size": 16,
+        "d_model": 32,
+        "nhead": 4,
+        "layers": 1,
+        "dropout": 0.1,
+        "batch_size": 1024,
+        "learning_rate": 0.000672894122778305,
+        "weight_decay": 5.283064500325875e-05,
+        "min_frequency": 3,
+        "inner_months": 3,
+        "patience": 7,
+        "train_months": null,
+        "loss_weighting": "uniform",
+        "threads": 1,
+        "random_state": 5228
+      },
+      {
+        "kind": "mlp",
+        "market_normalize": true,
+        "epochs": 60,
+        "hidden_size": 256,
+        "embedding_size": 16,
+        "d_model": 32,
+        "nhead": 4,
+        "layers": 1,
+        "dropout": 0.0,
+        "batch_size": 512,
+        "learning_rate": 0.0037928122106431223,
+        "weight_decay": 0.013783836177564662,
+        "min_frequency": 1,
+        "inner_months": 3,
+        "patience": 7,
+        "train_months": null,
+        "loss_weighting": "uniform",
+        "threads": 1,
+        "random_state": 5228
+      },
+      {
+        "kind": "mlp",
+        "market_normalize": true,
+        "epochs": 60,
+        "hidden_size": 128,
+        "embedding_size": 8,
+        "d_model": 32,
+        "nhead": 4,
+        "layers": 1,
+        "dropout": 0.05,
+        "batch_size": 512,
+        "learning_rate": 0.003,
+        "weight_decay": 0.001,
+        "min_frequency": 10,
+        "inner_months": 3,
+        "patience": 7,
+        "train_months": null,
+        "loss_weighting": "uniform",
+        "threads": 1,
+        "random_state": 5228
+      },
+      {
+        "kind": "mlp",
+        "market_normalize": true,
+        "epochs": 60,
+        "hidden_size": 128,
+        "embedding_size": 8,
+        "d_model": 32,
+        "nhead": 4,
+        "layers": 1,
+        "dropout": 0.0,
+        "batch_size": 1024,
+        "learning_rate": 0.002,
+        "weight_decay": 0.0001,
+        "min_frequency": 3,
+        "inner_months": 6,
+        "patience": 7,
+        "train_months": 24,
+        "loss_weighting": "uniform",
+        "threads": 1,
+        "random_state": 5228
+      }
+    ],
+    "encoder": "carry",
+    "random_state": 5228
+  },
+  "class": "ensemble",
+  "phase": "carry",
+  "trial": "greedy_forward_4",
+  "signature": "22d30b83350813c81444e9d61d682ed938453ead0dd31dd2a903a3a2758127f1",
+  "data_hashes": {
+    "data/auxiliary/sg-coe-prices.csv": "e32fccd39da32780b6b7f35d069c813ed3edb0c110ea60761656bcee58d501a5",
+    "data/auxiliary/sg-hdb-block.csv": "e6ccc60c1f901f8f476eb6fe14c07ef5941d2afd06a081a1e4c00f717da27f83",
+    "data/auxiliary/sg-mrt-stations.csv": "899460b39fb251bd6883fffc9e6a772081f8e5217a657550afc3c49cfdcd3227",
+    "data/auxiliary/sg-schools.csv": "118c7ce8d96bbc934bd53655e73e6d0848c27853a625394ecc6a67a5af54f192",
+    "data/auxiliary/sg-shopping-malls.csv": "00e05b0176ac412695fc4ce1fc5a5338a1993593ffaffe26156dc2ea04ddf2c8",
+    "data/auxiliary/sg-stock-prices.csv": "c52fef9f33cfcb11285e2b9546124e02f32488e563af44e9fb3a505d10e2edff",
+    "data/example-submission.csv": "ab751676b2bfc6121ac3543075d4f2c8978a6d73a14a3442a1bb7bdbf7867678",
+    "data/test.csv": "dfc407406d957bbf7c2f005e5d9852b1bfc6546cd4186f07e6824d8e03e64cfc",
+    "data/train.csv": "6d7a417de72112361f8353659ba6fe44a442b07465b488aff1b03f7ec1ea3ba6",
+    "data_cleaned/auxiliary/coe_prices.csv": "42df3febbacf2c71a9fa1bffd75d881a41b73b7dada1739d4767b4e5c80e0415",
+    "data_cleaned/auxiliary/hdb_blocks.csv": "a57ef543ac39113b73aca3b4d19517ca4a3821389291edc431d2d9a634edffa3",
+    "data_cleaned/auxiliary/mrt_stations.csv": "5aef7f8b2a32a7a7b57958da0f1b7ceefe6bceb01c8f31469a11471a9882e5aa",
+    "data_cleaned/auxiliary/schools.csv": "cb7cbb37c2275c870ba8492a6d25f156e7cb3a3b61f91b3d69fed0933ac64b75",
+    "data_cleaned/auxiliary/shopping_malls.csv": "cc70e888c9a76f943b4d6ec3fe122ea430feb1eb3b415c72cd526952fcc839a6",
+    "data_cleaned/auxiliary/stock_prices.csv": "a8b3beb0aa8e23348ec92e1335aa1958b12c2360ae772649ba7a9a1184d6fe22",
+    "data_cleaned/test.csv": "e65c1a5deadc630b5d5f3c49102c61ed2012a541e67c56ec7127a5aecaa84a78",
+    "data_cleaned/train.csv": "73598b2bbc2d6e193346c0c96d89cda21e80eb3ed72089bbb6ff58c6cba2a4f5"
+  },
+  "beats_best_tree": true,
+  "selection": "best K=1..4 equal-weight top-K or greedy-forward candidates within one family",
+  "selection_bias": "ranking and K selected on public development folds, not independent test",
+  "candidates": [
+    {
+      "members": [
+        20
+      ],
+      "n_members": 1,
+      "fold_rmse": {
+        "holdout": 492.57903180872904,
+        "rolling_2024_04": 477.8245411967133
+      },
+      "mean_rmse": 485.2017865027212,
+      "method": "top_k"
+    },
+    {
+      "members": [
+        20,
+        24
+      ],
+      "n_members": 2,
+      "fold_rmse": {
+        "holdout": 490.2990307373922,
+        "rolling_2024_04": 474.13556407135553
+      },
+      "mean_rmse": 482.2172974043739,
+      "method": "top_k"
+    },
+    {
+      "members": [
+        20,
+        24,
+        23
+      ],
+      "n_members": 3,
+      "fold_rmse": {
+        "holdout": 490.82063011128076,
+        "rolling_2024_04": 474.29558365475486
+      },
+      "mean_rmse": 482.5581068830178,
+      "method": "top_k"
+    },
+    {
+      "members": [
+        20,
+        24,
+        23,
+        21
+      ],
+      "n_members": 4,
+      "fold_rmse": {
+        "holdout": 491.2880537488038,
+        "rolling_2024_04": 474.68936149016696
+      },
+      "mean_rmse": 482.98870761948535,
+      "method": "top_k"
+    },
+    {
+      "members": [
+        20,
+        7
+      ],
+      "n_members": 2,
+      "fold_rmse": {
+        "holdout": 487.6545824195956,
+        "rolling_2024_04": 473.1464033541347
+      },
+      "mean_rmse": 480.40049288686515,
+      "method": "greedy_forward"
+    },
+    {
+      "members": [
+        20,
+        7,
+        15
+      ],
+      "n_members": 3,
+      "fold_rmse": {
+        "holdout": 487.1692264493094,
+        "rolling_2024_04": 470.8466439252155
+      },
+      "mean_rmse": 479.00793518726243,
+      "method": "greedy_forward"
+    },
+    {
+      "members": [
+        20,
+        7,
+        15,
+        4
+      ],
+      "n_members": 4,
+      "fold_rmse": {
+        "holdout": 486.3077146465668,
+        "rolling_2024_04": 470.1669644799169
+      },
+      "mean_rmse": 478.23733956324185,
+      "method": "greedy_forward"
+    }
+  ],
+  "forward_candidate_evaluations": 45
+}

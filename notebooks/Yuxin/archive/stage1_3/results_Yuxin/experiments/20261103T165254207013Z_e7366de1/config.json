@@ -1,0 +1,175 @@
+{
+  "timestamp": "2026-11-03T16:52:54.207013+00:00",
+  "run_id": "20261103T165254207013Z_e7366de1",
+  "name": "yuxin_tabular_transformer",
+  "author": "Yuxin",
+  "features": [
+    "basic",
+    "block"
+  ],
+  "feature_parameters": {
+    "basic": {},
+    "block": {}
+  },
+  "model": "__main__.AuditRecorder",
+  "parameters": {
+    "audit_dir": "temporary; training evidence is in training_audit.json",
+    "estimator": {
+      "class": "src.models.yuxin_nn.estimators.TabularNNRegressor",
+      "parameters": {
+        "batch_size": 1024,
+        "d_model": 16,
+        "dropout": 0.1,
+        "epochs": 18,
+        "hidden_size": 128,
+        "inner_months": 3,
+        "kind": "transformer",
+        "layers": 1,
+        "learning_rate": 0.001,
+        "market_normalize": false,
+        "min_frequency": 5,
+        "nhead": 4,
+        "patience": 4,
+        "random_state": 5228,
+        "threads": 1,
+        "verbose": true,
+        "weight_decay": 0.01
+      }
+    }
+  },
+  "split": "rolling",
+  "seed": 5228,
+  "final": true,
+  "versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "sklearn": "1.5.1"
+  },
+  "folds": [
+    {
+      "name": "holdout",
+      "train_start": "2021-01",
+      "train_end": "2023-11",
+      "valid_start": "2023-12",
+      "valid_end": "2025-03",
+      "train_rows": 102829,
+      "valid_rows": 47171,
+      "rmse": 515.6457696668556,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION"
+      ]
+    },
+    {
+      "name": "rolling_2024_04",
+      "train_start": "2021-01",
+      "train_end": "2024-03",
+      "valid_start": "2024-04",
+      "valid_end": "2025-03",
+      "train_rows": 114842,
+      "valid_rows": 35158,
+      "rmse": 484.46706041871244,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION"
+      ]
+    }
+  ],
+  "final_train_rows": 150000,
+  "test_rows": 50000,
+  "submission_path": "submissions/20261103T165254207013Z_e7366de1.csv",
+  "fold_rmse": {
+    "holdout": 515.6457696668556,
+    "rolling_2024_04": 484.46706041871244
+  },
+  "mean_rmse": 500.056415042784,
+  "yuxin": {
+    "model_name": "tabular_transformer",
+    "seconds": 708.2382418749621,
+    "versions": {
+      "numpy": "1.26.4",
+      "pandas": "2.2.2",
+      "scikit-learn": "1.5.1",
+      "torch": "2.15.0"
+    },
+    "python": "3.12.7",
+    "platform": "macOS-15.7.9-arm64-arm-64bit",
+    "device": "cpu",
+    "seed": 5228,
+    "torch_deterministic": true,
+    "smoke_only": false,
+    "features": [
+      "basic",
+      "block"
+    ],
+    "data_hashes": {
+      "data/auxiliary/sg-coe-prices.csv": "e32fccd39da32780b6b7f35d069c813ed3edb0c110ea60761656bcee58d501a5",
+      "data/auxiliary/sg-hdb-block.csv": "e6ccc60c1f901f8f476eb6fe14c07ef5941d2afd06a081a1e4c00f717da27f83",
+      "data/auxiliary/sg-mrt-stations.csv": "899460b39fb251bd6883fffc9e6a772081f8e5217a657550afc3c49cfdcd3227",
+      "data/auxiliary/sg-schools.csv": "118c7ce8d96bbc934bd53655e73e6d0848c27853a625394ecc6a67a5af54f192",
+      "data/auxiliary/sg-shopping-malls.csv": "00e05b0176ac412695fc4ce1fc5a5338a1993593ffaffe26156dc2ea04ddf2c8",
+      "data/auxiliary/sg-stock-prices.csv": "c52fef9f33cfcb11285e2b9546124e02f32488e563af44e9fb3a505d10e2edff",
+      "data/example-submission.csv": "ab751676b2bfc6121ac3543075d4f2c8978a6d73a14a3442a1bb7bdbf7867678",
+      "data/test.csv": "dfc407406d957bbf7c2f005e5d9852b1bfc6546cd4186f07e6824d8e03e64cfc",
+      "data/train.csv": "6d7a417de72112361f8353659ba6fe44a442b07465b488aff1b03f7ec1ea3ba6",
+      "data_cleaned/auxiliary/coe_prices.csv": "42df3febbacf2c71a9fa1bffd75d881a41b73b7dada1739d4767b4e5c80e0415",
+      "data_cleaned/auxiliary/hdb_blocks.csv": "a57ef543ac39113b73aca3b4d19517ca4a3821389291edc431d2d9a634edffa3",
+      "data_cleaned/auxiliary/mrt_stations.csv": "5aef7f8b2a32a7a7b57958da0f1b7ceefe6bceb01c8f31469a11471a9882e5aa",
+      "data_cleaned/auxiliary/schools.csv": "cb7cbb37c2275c870ba8492a6d25f156e7cb3a3b61f91b3d69fed0933ac64b75",
+      "data_cleaned/auxiliary/shopping_malls.csv": "cc70e888c9a76f943b4d6ec3fe122ea430feb1eb3b415c72cd526952fcc839a6",
+      "data_cleaned/auxiliary/stock_prices.csv": "a8b3beb0aa8e23348ec92e1335aa1958b12c2360ae772649ba7a9a1184d6fe22",
+      "data_cleaned/test.csv": "e65c1a5deadc630b5d5f3c49102c61ed2012a541e67c56ec7127a5aecaa84a78",
+      "data_cleaned/train.csv": "73598b2bbc2d6e193346c0c96d89cda21e80eb3ed72089bbb6ff58c6cba2a4f5"
+    },
+    "model_source_hashes": {
+      "src/models/yuxin_nn/__init__.py": "a7093727b80b5f929b076783cb8308d5c544480872de63353507d7b112cc78f1",
+      "src/models/yuxin_nn/datasets.py": "e73947fbb3216cd89cfd82c642136792f595b51faa5e27847ffda7d61148e2b8",
+      "src/models/yuxin_nn/estimators.py": "9d8b8e778b9bafe189d618b0e84457903f773b0e8e187909ffb3cff6598f5f2e",
+      "src/models/yuxin_nn/market.py": "24e32b68dc7df04b5fb90c18fe3020fb61991b663c4649b8691a56eac09a4c0a",
+      "src/models/yuxin_nn/preprocessing.py": "8414c9e21bcaa0b65da9a186181c5e81c096080d720b7b27a48b139b0d9fc695",
+      "src/models/yuxin_nn/tabular.py": "10d03eb6d4ee112f1a1b7ab76b28491f1367f5614dbc99413341da6f8162ab5e",
+      "src/models/yuxin_nn/temporal.py": "90383f610915e5d0000593f8bc7578398a14137bc7b8c5ac9e5335408910cb16",
+      "src/models/yuxin_nn/training.py": "0acf66671ad405b2173c9734933f0479df030a0712d5731a50b0a598406f5dde"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "seed": 5228,
+  "delivery": false,
+  "checked": [
+    {
+      "model": "market_transformer",
+      "run_id": "20261103T190543556826Z_a02818be",
+      "fold_rmse": {
+        "holdout": 486.66591523234996,
+        "rolling_2024_04": 469.9816896741002
+      },
+      "mean_rmse": 478.3238024532251,
+      "validation_rows": 82329,
+      "test_rows": 50000,
+      "seconds": 274.1071857920615
+    }
+  ],
+  "all_validation_rows_labels_and_dates_exact": true,
+  "scores_recomputed": true,
+  "test_ids_exact": true,
+  "all_predictions_finite_positive_sgd": true,
+  "fold_local_training_audits_checked": true,
+  "data_hashes_unchanged": true,
+  "weights_included": false
+}

@@ -2,7 +2,7 @@
 
 CS5228 小组项目，参加 Kaggle 私有比赛 **CS5228-2610 Project**。根据新加坡 HDB 组屋属性预测月租金 `MONTHLY_RENT`，任务为回归，评估指标为原始租金尺度的 **RMSE**（SGD）。
 
-课程要求对使用或不使用的每类信息，尤其辅助数据，给出论证；报告与分数同等重要。目前已完成基础数据清洗、公共实验框架和两个参考基线，其余模型与特征由组员接入。
+课程要求对使用或不使用的每类信息，尤其辅助数据，给出论证；报告与分数同等重要。目前已完成基础数据清洗、公共实验框架和两个参考基线。本分支 `yuxin_time_series` 还包含 Yuxin 的神经网络、时间编码器对照及融合诊断；其他组员的结果通过固定 Git 提交读取，不代表其全部代码已合并到本分支。
 
 ## 快速开始
 
@@ -19,7 +19,7 @@ python -m src.run_baseline
 ## 项目结构
 
 ```text
-Project_export/
+CS5228/
 ├── README.md                       # 项目介绍与使用入口
 ├── AGENTS.md                       # Agent 常用命令与文档入口
 ├── docs/
@@ -39,13 +39,15 @@ Project_export/
 ├── src/
 │   ├── data_cleaning/              # 清洗、schema、loader 与数据校验
 │   ├── features/                   # 特征实现与注册表
-│   ├── models/                     # 模型实现与参考基线
+│   ├── models/                     # 参考基线；yuxin_nn/ 为个人神经网络包
 │   ├── config.py                   # 项目路径与随机种子
 │   ├── cv.py                       # 验证方案实现
 │   ├── experiment.py               # 实验运行与产物保存
 │   └── run_baseline.py              # 基线入口
 ├── tests/
-│   └── test_framework.py
+│   ├── test_framework.py
+│   ├── test_yuxin_nn.py
+│   └── test_yuxin_analysis.py
 ├── experiments/
 │   ├── log.csv                     # 共享实验日志
 │   └── <run_id>/                    # 每次运行的配置与验证预测
@@ -73,6 +75,8 @@ Project_export/
 
 各组员共用实验框架，以便比较模型表现和进行消融实验。新增模型库由相应负责人维护依赖。
 
+本分支新增的实际负责范围：**Yuxin — 表格 Transformer、市场 RNN/LSTM、时间 Transformer 及同属性 carry 对照**。上表保留公共角色分工，不据此替换其他组员职责。
+
 ## 协作与目录约定
 
 `main` 是所有人开发的基底。每个新模型或特征从 `main` 新开分支（建议命名 `<成员名>-<主题>`），完成后通过 PR 合并回 `main`；不要直接修改公共框架来适配个人模型，框架问题单独提出。
@@ -95,6 +99,37 @@ Project_export/
 | 最近六个月分组中位数 | 524.659 | 515.448 |
 | HistGradientBoosting | 497.937 | 489.241 |
 
+## Yuxin 神经网络与步骤 4—6
+
+已完成 `doc/develop_yuxin_nn.md` §8.1 的六个步骤；本次新增短窗口 temporal Transformer、逐月/地区/户型/预测跨度误差、残差相关性及实际融合检验。完整验收和局限见 [develop_test_yuxin_nn.md 第 10 节](doc/develop_test_yuxin_nn.md)。
+
+| 冻结的正式候选 | Rolling 平均 RMSE（SGD） |
+|---|---:|
+| 市场 RNN＋4 成员属性 MLP 平均 | 478.125922 |
+| 市场 LSTM＋相同属性组合 | 478.128651 |
+| 4 成员表格 Transformer 平均 | 481.329044 |
+
+这是同类配置平均方案，不是单网络分数。表格 Transformer 的 token 是字段；temporal Transformer 的 token 是历史月份，两者不是同一种实验。
+新时间 Transformer 的完整开发均值 **478.323802**，未优于相同属性 carry **478.237340**，因此保留负结果，不替换上述三个正式候选。
+RNN 与队友 CatBoost 固定 50:50 平均的开发均值为 **477.552001**，比 RNN 自身低约 0.574 SGD；不意味着所有组合都有效，完整 12 组比较见 [固定融合诊断](notebooks/Yuxin/stage5/fixed_blends.csv)。
+
+外层折已经参与调参，A/B 区间重叠；上述均为开发成绩，不是无偏测试估计或 Kaggle 隐藏分数。队友采用的种子、环境和额外特征存在差异。没有上传 Kaggle，也未推送远端。
+
+复核已保存结果（项目根目录）：
+
+```bash
+export LOKY_MAX_CPU_COUNT=4 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1
+python -m venv --system-site-packages .venv
+.venv/bin/python -m pip install -r notebooks/Yuxin/requirements.txt
+.venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python notebooks/Yuxin/evaluate_complementarity.py
+.venv/bin/python notebooks/Yuxin/finalize_stages.py
+```
+
+已有 `.venv` 时可跳过创建；这是个人环境，不提交 Git。进一步的训练、环境设置和复现命令见 [Yuxin README](notebooks/Yuxin/README.md)。
+[正式交付](results/Yuxin/README.md) 恰好保留三个运行；[选择与配置锁定清单](results/Yuxin/selection.json) 记录参数文件、实际训练轮数、原训练源码提交和产物哈希。
+分组误差与融合诊断位于 `notebooks/Yuxin/stage5/`，不是额外正式交付；新时间模型的完整验证/test 输出位于 `notebooks/Yuxin/stage4/full/`。
+
 ## 重要文档
 
 | 文档 | 内容 |
@@ -104,3 +139,6 @@ Project_export/
 | [Agent 开发与测试命令](AGENTS.md) | 常用命令、验证方法和开发入口 |
 | [Kaggle 任务说明原文](CS5228-2610%20Project%20_%20Kaggle.mhtml) | 本地保存的比赛说明 |
 | [共享实验日志](experiments/log.csv) | 各模型的配置和验证结果 |
+| [Yuxin 开发方案](doc/develop_yuxin_nn.md) / [验收记录](doc/develop_test_yuxin_nn.md) | 六步实施要求、实际结果与边界 |
+| [Yuxin 调参报告](doc/develop_tuning_yuxin_nn.md) | 步骤 1—3 的有限搜索及冻结参数 |
+| [Yuxin 运行说明](notebooks/Yuxin/README.md) / [正式候选](results/Yuxin/README.md) | 神经网络复现、步骤 4—6 与交付索引 |

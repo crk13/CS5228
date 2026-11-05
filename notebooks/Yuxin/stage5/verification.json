@@ -1,0 +1,138 @@
+{
+  "status": "passed",
+  "validation_rows": 82329,
+  "test_rows": 50000,
+  "aligned_models": 9,
+  "formal_fusion_input_models": [
+    "market_lstm",
+    "market_rnn",
+    "tabular_transformer",
+    "ridge",
+    "catboost",
+    "xgboost",
+    "lightgbm"
+  ],
+  "fixed_blends": 12,
+  "forward_diagnostics": 12,
+  "all_keys_dates_labels_exact": true,
+  "group_populations_reconciled": true,
+  "rolling_folds_kept_separate": true,
+  "no_training_fitted_predictions_used": true,
+  "transfer_evaluation_labels_used_for_weights": false,
+  "saved_blend": "half_market_rnn_catboost",
+  "data_hashes": {
+    "data/auxiliary/sg-coe-prices.csv": "e32fccd39da32780b6b7f35d069c813ed3edb0c110ea60761656bcee58d501a5",
+    "data/auxiliary/sg-hdb-block.csv": "e6ccc60c1f901f8f476eb6fe14c07ef5941d2afd06a081a1e4c00f717da27f83",
+    "data/auxiliary/sg-mrt-stations.csv": "899460b39fb251bd6883fffc9e6a772081f8e5217a657550afc3c49cfdcd3227",
+    "data/auxiliary/sg-schools.csv": "118c7ce8d96bbc934bd53655e73e6d0848c27853a625394ecc6a67a5af54f192",
+    "data/auxiliary/sg-shopping-malls.csv": "00e05b0176ac412695fc4ce1fc5a5338a1993593ffaffe26156dc2ea04ddf2c8",
+    "data/auxiliary/sg-stock-prices.csv": "c52fef9f33cfcb11285e2b9546124e02f32488e563af44e9fb3a505d10e2edff",
+    "data/example-submission.csv": "ab751676b2bfc6121ac3543075d4f2c8978a6d73a14a3442a1bb7bdbf7867678",
+    "data/test.csv": "dfc407406d957bbf7c2f005e5d9852b1bfc6546cd4186f07e6824d8e03e64cfc",
+    "data/train.csv": "6d7a417de72112361f8353659ba6fe44a442b07465b488aff1b03f7ec1ea3ba6",
+    "data_cleaned/auxiliary/coe_prices.csv": "42df3febbacf2c71a9fa1bffd75d881a41b73b7dada1739d4767b4e5c80e0415",
+    "data_cleaned/auxiliary/hdb_blocks.csv": "a57ef543ac39113b73aca3b4d19517ca4a3821389291edc431d2d9a634edffa3",
+    "data_cleaned/auxiliary/mrt_stations.csv": "5aef7f8b2a32a7a7b57958da0f1b7ceefe6bceb01c8f31469a11471a9882e5aa",
+    "data_cleaned/auxiliary/schools.csv": "cb7cbb37c2275c870ba8492a6d25f156e7cb3a3b61f91b3d69fed0933ac64b75",
+    "data_cleaned/auxiliary/shopping_malls.csv": "cc70e888c9a76f943b4d6ec3fe122ea430feb1eb3b415c72cd526952fcc839a6",
+    "data_cleaned/auxiliary/stock_prices.csv": "a8b3beb0aa8e23348ec92e1335aa1958b12c2360ae772649ba7a9a1184d6fe22",
+    "data_cleaned/test.csv": "e65c1a5deadc630b5d5f3c49102c61ed2012a541e67c56ec7127a5aecaa84a78",
+    "data_cleaned/train.csv": "73598b2bbc2d6e193346c0c96d89cda21e80eb3ed72089bbb6ff58c6cba2a4f5"
+  },
+  "sources": [
+    {
+      "model": "market_lstm",
+      "commit": "aba5078a99326ca9e24edfee01db074c48a507cf",
+      "run_id": "20261103T180702083101Z_b8e1e8c0",
+      "validation_path": "results/Yuxin/experiments/20261103T180702083101Z_b8e1e8c0/validation_predictions.csv",
+      "validation_sha256": "b7c98df58e3af0595f8031fea91382e17eefabbe92095bd5e92522bdcebbe998",
+      "test_path": "results/Yuxin/submissions/20261103T180702083101Z_b8e1e8c0.csv",
+      "test_sha256": "1776cb03ad07dd8952519cd0d36068b16c8541744c09a69ba136c7cbeaf4e560",
+      "seed": 5228
+    },
+    {
+      "model": "market_rnn",
+      "commit": "aba5078a99326ca9e24edfee01db074c48a507cf",
+      "run_id": "20261103T180702097497Z_0c01ed2c",
+      "validation_path": "results/Yuxin/experiments/20261103T180702097497Z_0c01ed2c/validation_predictions.csv",
+      "validation_sha256": "4463ea02665446303840c8a315a0622d0296ad27f4b8eca0f2432f5053476a49",
+      "test_path": "results/Yuxin/submissions/20261103T180702097497Z_0c01ed2c.csv",
+      "test_sha256": "520ae41759fdee4dbd650fca85e40cd92b19709966a390d40247d4a9faa290db",
+      "seed": 5228
+    },
+    {
+      "model": "tabular_transformer",
+      "commit": "aba5078a99326ca9e24edfee01db074c48a507cf",
+      "run_id": "20261103T181754695021Z_493b5f46",
+      "validation_path": "results/Yuxin/experiments/20261103T181754695021Z_493b5f46/validation_predictions.csv",
+      "validation_sha256": "98be147cefc99b6159fbe7f8fdf0dc3aceb08ca41b40b7a095b1ecdb392e7ffa",
+      "test_path": "results/Yuxin/submissions/20261103T181754695021Z_493b5f46.csv",
+      "test_sha256": "e47fd512fbe5efd693ef4433980b20e2da4fcc8ab697b69828fb0b6eb99bdbf5",
+      "seed": 5228
+    },
+    {
+      "model": "ridge",
+      "commit": "6e7ffcb0ccf20bacba42ca9d471084a3ab3aec71",
+      "run_id": "20261103T110030459326Z_838f1908",
+      "validation_path": "results/FXY/experiments/20261103T110030459326Z_838f1908/validation_predictions.csv",
+      "validation_sha256": "767094b8c04269e0f105f6be219a4372615591eb08f679848dbf88cf24e3f941",
+      "test_path": "results/FXY/submissions/20261103T110030459326Z_838f1908.csv",
+      "test_sha256": "ee7ddfefd4c6f92d8d54e1888819df279f054d80b853a812175a55ee25a4ecf9",
+      "seed": 5228
+    },
+    {
+      "model": "catboost",
+      "commit": "3dae63c3ba9e5919fadb9af54474fee20d86f751",
+      "run_id": "20261103T102108961798Z_15d233d7",
+      "validation_path": "results/Yaqi/experiments/20261103T102108961798Z_15d233d7/validation_predictions.csv",
+      "validation_sha256": "ac91db22907a85f898d458cc4b536c8afef091e2f6c453fe074c04924c4f6b9d",
+      "test_path": "results/Yaqi/submissions/20261103T102108961798Z_15d233d7.csv",
+      "test_sha256": "cb1ce642841f11163ef2b0c74f12a7795e12a9f781f8b3bf877cffbccc1e8a43",
+      "seed": 42
+    },
+    {
+      "model": "xgboost",
+      "commit": "3dae63c3ba9e5919fadb9af54474fee20d86f751",
+      "run_id": "20261103T102107575560Z_03bcf0a4",
+      "validation_path": "results/Yaqi/experiments/20261103T102107575560Z_03bcf0a4/validation_predictions.csv",
+      "validation_sha256": "0327575879534c97c0b6ddef23c170e7a8bb323986a8129ada5274b97f0119ed",
+      "test_path": "results/Yaqi/submissions/20261103T102107575560Z_03bcf0a4.csv",
+      "test_sha256": "f570a016fe40b6c4e28882c4f3a521aed97888fa25f585fab52f0d75a2ebd4c1",
+      "seed": 42
+    },
+    {
+      "model": "lightgbm",
+      "commit": "3dae63c3ba9e5919fadb9af54474fee20d86f751",
+      "run_id": "20261103T102108253957Z_ef409512",
+      "validation_path": "results/Yaqi/experiments/20261103T102108253957Z_ef409512/validation_predictions.csv",
+      "validation_sha256": "e531df4f14a3b851a58e7ceda6fa9269a89b6fc48d9df6aac7c1165e184f0902",
+      "test_path": "results/Yaqi/submissions/20261103T102108253957Z_ef409512.csv",
+      "test_sha256": "be72d8d477ae03918b3e4b7947ecc1aea2d880f9f7fcd638ea6d5ce60b20a659",
+      "seed": 42
+    },
+    {
+      "model": "market_carry",
+      "scope": "error-analysis-only development control; excluded from fusion",
+      "run_id": "20261103T175001571910Z_a7a4588e",
+      "validation_path": "notebooks/Yuxin/tuning/final/experiments/20261103T175001571910Z_a7a4588e/validation_predictions.csv",
+      "validation_sha256": "a536cc1f61c51f01ca3bc4e6c022e39b981b6c4f6e295299b53ef5b176b2e005",
+      "seed": 5228
+    },
+    {
+      "model": "market_transformer",
+      "scope": "error-analysis-only development control; excluded from fusion",
+      "run_id": "20261103T190543556826Z_a02818be",
+      "validation_path": "notebooks/Yuxin/stage4/full/experiments/20261103T190543556826Z_a02818be/validation_predictions.csv",
+      "validation_sha256": "0e9c674d533f1ca9b0a601a8ecf838597adb0e06ef44d024f82bef333ac9a800",
+      "seed": 5228
+    }
+  ],
+  "limitations": [
+    "Base-model hyperparameters already selected on outer folds; not untouched nested evaluation",
+    "A/B windows overlap; never merge their rows into one RMSE",
+    "Team seeds/environments/features differ",
+    "12 pairs reported, not one cherry-picked winner",
+    "KNN unavailable in inspected branches; no invented correlation",
+    "Diagnostic blend is not an additional formal results/ run or a Kaggle upload"
+  ]
+}

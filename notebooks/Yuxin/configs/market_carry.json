@@ -1,0 +1,1 @@
+{"class": "market", "parameters": {"encoder": "carry", "property_epochs": 30, "lookback": 6, "hidden_size": 16, "temporal_epochs": 160, "damping": 0.8}}

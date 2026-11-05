@@ -1,0 +1,1 @@
+{"class": "tabular", "parameters": {"kind": "mlp", "epochs": 30, "hidden_size": 128, "batch_size": 1024, "inner_months": 3, "patience": 5}}
