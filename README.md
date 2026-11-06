@@ -2,7 +2,7 @@
 
 CS5228 小组项目，参加 Kaggle 私有比赛 **CS5228-2610 Project**。根据新加坡 HDB 组屋属性预测月租金 `MONTHLY_RENT`，任务为回归，评估指标为原始租金尺度的 **RMSE**（SGD）。
 
-课程要求对使用或不使用的每类信息，尤其辅助数据，给出论证；报告与分数同等重要。目前已完成基础数据清洗、公共实验框架和两个参考基线。本分支 `yuxin_time_series` 还包含 Yuxin 的神经网络、时间编码器对照及融合诊断；其他组员的结果通过固定 Git 提交读取，不代表其全部代码已合并到本分支。
+课程要求对使用或不使用的每类信息，尤其辅助数据，给出论证；报告与分数同等重要。目前已完成基础数据清洗、公共实验框架、各成员的模型和最终融合，最终提交见 [融合与最终提交](doc/fusion_p1.md)。各成员工作的详细说明见 [团队分工](#团队分工) 中的文档链接。
 
 ## 快速开始
 
@@ -24,6 +24,7 @@ CS5228/
 ├── AGENTS.md                       # Agent 常用命令与文档入口
 ├── docs/
 │   └── experiment-interface.md     # 公共框架唯一接口协议
+├── doc/                            # 各成员的方法与开发文档
 ├── requirements.txt
 ├── CS5228-2610 Project _ Kaggle.mhtml
 ├── data/                           # 原始数据
@@ -39,7 +40,7 @@ CS5228/
 ├── src/
 │   ├── data_cleaning/              # 清洗、schema、loader 与数据校验
 │   ├── features/                   # 特征实现与注册表
-│   ├── models/                     # 参考基线；yuxin_nn/ 为个人神经网络包
+│   ├── models/                     # 参考基线、KNN；yuxin_nn/ 为个人神经网络包
 │   ├── config.py                   # 项目路径与随机种子
 │   ├── cv.py                       # 验证方案实现
 │   ├── experiment.py               # 实验运行与产物保存
@@ -66,12 +67,12 @@ CS5228/
 
 ## 团队分工
 
-| 组员 | 负责范围 |
-|---|---|
-| P1 | 数据与公共框架、目标编码、KNN、融合与提交 |
-| P2 | 统计模型：基线、Ridge、双向固定效应、混合效应；时间趋势处理 |
-| P3 | GBDT：LightGBM、XGBoost、CatBoost、RF；调参与 SHAP |
-| P4 | 辅助数据、距离特征、MLP + embedding |
+| 组员 | 负责范围 | 文档 |
+|---|---|---|
+| P1 | 数据清洗与公共实验框架、KNN、融合与最终提交 | [KNN](doc/knn_p1.md) · [融合与最终提交](doc/fusion_p1.md) |
+| P2 | 统计模型：基线、Ridge、双向固定效应、混合效应；时间趋势处理 | — |
+| P3 | GBDT：LightGBM、XGBoost、CatBoost、RF；调参与 SHAP | — |
+| P4 | 辅助数据、距离特征、MLP + embedding | [开发方案](doc/develop_yuxin_nn.md) · [验收记录](doc/develop_test_yuxin_nn.md) · [调参报告](doc/develop_tuning_yuxin_nn.md) · [运行说明](notebooks/Yuxin/README.md) |
 
 各组员共用实验框架，以便比较模型表现和进行消融实验。新增模型库由相应负责人维护依赖。
 
@@ -130,24 +131,6 @@ python -m venv --system-site-packages .venv
 [正式交付](results/Yuxin/README.md) 恰好保留三个运行；[选择与配置锁定清单](results/Yuxin/selection.json) 记录参数文件、实际训练轮数、原训练源码提交和产物哈希。
 分组误差与融合诊断位于 `notebooks/Yuxin/stage5/`，不是额外正式交付；新时间模型的配置、训练审计与验证摘要位于 `notebooks/Yuxin/stage4/full/`，逐折预测 CSV 按 `.gitignore` 不再提交。
 
-## P1 KNN 与最终融合
-
-**最终提交 `results/P1/fusion/fusion_stack3_L3.csv`，Kaggle 公开榜 434.67**（组内原先最好的单模型提交为 444.84）。
-
-- **KNN**：Ridge 先给出主预测，KNN 再修正其残差，并加入 MRT、商场、CBD 距离等辅助特征。v3 的 rolling 平均 RMSE 为 492.28。宏观指标（COE、股指）会让验证误差明显变大，因此不用。详见 [KNN 文档](doc/knn_p1.md)。
-- **融合**：
-  - 第一层：7 个基础模型按月去均值后做 NNLS 加权。
-  - 第二层：ExtraTrees、HistGradientBoosting、MLP 学习残差后取平均。
-  - 测试集整体水平：先对齐到 2025-03 的最新水平，再叠加 hedonic 租金指数的近期趋势（L3）。
-  - 跨时间验证的 mean_dm：最优单模型 463.42，纯线性 462.15，两层融合 460.83。详见 [融合文档](doc/fusion_p1.md)。
-
-| 提交 | 公开榜 |
-|---|---:|
-| fusion_stack3_L3（主选） | **434.67** |
-| fusion_et_L3 | 435.00 |
-| fusion_nnls_L3 | 435.42 |
-| fusion_stack3_L1（对冲选择） | 435.48 |
-
 ## 重要文档
 
 | 文档 | 内容 |
@@ -160,4 +143,3 @@ python -m venv --system-site-packages .venv
 | [Yuxin 开发方案](doc/develop_yuxin_nn.md) / [验收记录](doc/develop_test_yuxin_nn.md) | 六步实施要求、实际结果与边界 |
 | [Yuxin 调参报告](doc/develop_tuning_yuxin_nn.md) | 步骤 1—3 的有限搜索及冻结参数 |
 | [Yuxin 运行说明](notebooks/Yuxin/README.md) / [正式候选](results/Yuxin/README.md) | 神经网络复现、步骤 4—6 与交付索引 |
-| [P1 KNN](doc/knn_p1.md) / [P1 融合与最终提交](doc/fusion_p1.md) | KNN 结构与辅助特征取舍；两层融合、整体水平处理、Kaggle 检验与最终选择 |
