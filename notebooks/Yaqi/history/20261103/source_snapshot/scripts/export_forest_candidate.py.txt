@@ -1,0 +1,69 @@
+"""Fit and save each forest family's best validated feature configuration."""
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+import joblib
+import numpy as np
+import pandas as pd
+from threadpoolctl import threadpool_limits
+from src.data_cleaning import load_train, load_test, TARGET
+from src.features import FeaturePipeline
+from src.experiment import write_submission
+from scripts.train_feature_stages import build, blocks, write_json
+from scripts.analyze_feature_stages import raw_importance
+
+OUT = ROOT / "outputs/location_economy_20261103"
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--kind", required=True, choices=["rf", "extra"])
+    args = parser.parse_args()
+    frame = pd.read_csv(OUT / "comparison.csv")
+    group = frame.loc[frame.kind.eq(args.kind)]
+    assert len(group) == 6, "Complete all six feature stages before final fitting"
+    selected = group.sort_values("mean_rmse").iloc[0]
+    train, test = load_train(), load_test()
+    print(f"Final training: {selected['name']}", flush=True)
+    with threadpool_limits(limits=4):
+        pipeline = FeaturePipeline(blocks(selected.scenario))
+        model = build(args.kind, selected.scenario, 4).fit(pipeline.fit_transform(train), train[TARGET])
+        prediction = model.predict(pipeline.transform(test))
+        assert len(prediction) == len(test) == 50000 and np.isfinite(prediction).all()
+        artifact = OUT / f"models/{args.kind}_best_model.joblib"
+        artifact.parent.mkdir(exist_ok=True)
+        joblib.dump({"features": pipeline, "model": model, "kind": args.kind, "scenario": selected.scenario,
+                     "seed": 42, "actual_fit_rows": model.fit_rows_, "fit_start": model.fit_start_,
+                     "fit_end": model.fit_end_}, artifact, compress=3)
+        path = write_submission(test, prediction, OUT / f"submissions/{args.kind}_best_model.csv")
+        submission = pd.read_csv(path)
+        np.testing.assert_array_equal(submission.Id, pd.read_csv(ROOT / "data/example-submission.csv").Id)
+        restored = joblib.load(artifact)
+        np.testing.assert_allclose(restored["model"].predict(restored["features"].transform(test)),
+                                   submission.Predicted, rtol=0, atol=1e-6)
+    raw_importance(model.estimator_, args.kind).sort_values("importance", ascending=False).to_csv(
+        OUT / f"{args.kind}_feature_importance.csv", index=False)
+    prepare = model.estimator_.estimator_.named_steps["prepare"]
+    native = model.estimator_.estimator_.named_steps["regressor"]
+    write_json(OUT / f"{args.kind}_model.json", {"kind": args.kind, "scenario": selected.scenario,
+               "split_a": float(selected.split_a), "split_b": float(selected.split_b),
+               "mean_rmse": float(selected.mean_rmse), "validation_run_id": selected.run_id,
+               "features": blocks(selected.scenario), "available_train_rows": len(train),
+               "model": artifact.relative_to(ROOT).as_posix(), "submission": path.relative_to(ROOT).as_posix(),
+               "seed": 42, "threads": 4, "onehot_max_categories": 32,
+               "onehot_min_frequency": prepare.named_transformers_["categorical"].named_steps["onehot"].min_frequency,
+               "encoded_feature_count": int(native.n_features_in_), "raw_feature_count": len(model.estimator_.columns),
+               "actual_fit_rows": model.fit_rows_, "fit_start": model.fit_start_, "fit_end": model.fit_end_,
+               "test_rows": len(test), "submission_ids_match_example": True,
+               "reload_matches_submission": True, "importance_grouped_to_raw_fields": True})
+    print(f"Saved and verified {args.kind}: {path}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

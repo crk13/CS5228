@@ -1,0 +1,104 @@
+"""Independent score, feature, real-data cutoff, and final artifact checks."""
+
+import json
+import sys
+from pathlib import Path
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+import joblib
+import numpy as np
+import pandas as pd
+from src.cv import DATE_COL, get_splits
+from src.data_cleaning import load, load_train, load_test, TARGET
+from src.features.distance import DistanceFeatures, DISTANCE_COLUMNS
+from src.features.macro import EconomyFeatures
+from scripts.train_feature_stages import verify, write_json
+
+OUT = ROOT / "outputs/location_economy_20261103"
+
+
+def main():
+    train, test = load_train(), load_test()
+    records = json.loads((OUT / "runs.json").read_text(encoding="utf-8"))
+    signature = json.loads((OUT / "signature.json").read_text(encoding="utf-8"))
+    verify(records, train, signature["data"], OUT)
+    report = json.loads((OUT / "verification.json").read_text(encoding="utf-8"))
+    distance = DistanceFeatures().fit(train)
+    statistics = []
+    for name, frame in (("train", train), ("test", test)):
+        values = distance.transform(frame.drop(columns=[TARGET, "Id"], errors="ignore"))
+        assert values.index.equals(frame.index)
+        assert np.isfinite(values.to_numpy()).all()
+        assert (values.to_numpy() >= 0).all()
+        for column in DISTANCE_COLUMNS:
+            statistics.append({"dataset": name, "feature": column, "rows": len(values),
+                               "missing": int(values[column].isna().sum()), "min_km": values[column].min(),
+                               "median_km": values[column].median(), "max_km": values[column].max()})
+    pd.DataFrame(statistics).to_csv(OUT / "distance_statistics.csv", index=False)
+    raw = {name: load(name) for name in ("auxiliary/coe_prices.csv", "auxiliary/stock_prices.csv")}
+    cutoff_checks = []
+    for fold in get_splits(train, "rolling"):
+        training = train.iloc[fold.train_idx]
+        query = train.iloc[fold.valid_idx][[DATE_COL]].drop_duplicates().reset_index(drop=True)
+        original = EconomyFeatures(forecast="damped").fit(training)
+        cutoff = str(original.available_through_)
+        changed = {name: data.copy() for name, data in raw.items()}
+        coe, stock = changed["auxiliary/coe_prices.csv"], changed["auxiliary/stock_prices.csv"]
+        coe.loc[coe.YEAR_MONTH.gt(cutoff), "QUOTA_PREMIUM"] = 1e12
+        stock.loc[stock.YEAR_MONTH.gt(cutoff), "CLOSE"] = 1e12
+        expected = original.transform(query)
+        with patch("src.features.macro.load", side_effect=lambda name: changed[name]):
+            alternative = EconomyFeatures(forecast="damped").fit(training).transform(query)
+        pd.testing.assert_frame_equal(expected, alternative)
+        with patch("src.features.macro.load", side_effect=AssertionError("transform reloaded auxiliary data")):
+            pd.testing.assert_frame_equal(expected, original.transform(query))
+        cutoff_checks.append({"fold": fold.definition.name, "available_through": cutoff,
+                              "future_observations_perturbed": True, "features_identical": True})
+    best = json.loads((OUT / "best_model.json").read_text(encoding="utf-8"))
+    bundle = joblib.load(ROOT / best["model"])
+    prediction = bundle["model"].predict(bundle["features"].transform(test))
+    submission = pd.read_csv(ROOT / best["submission"])
+    sample = pd.read_csv(ROOT / "data/example-submission.csv")
+    assert len(submission) == 50000 and list(submission) == ["Id", "Predicted"]
+    np.testing.assert_array_equal(submission.Id, sample.Id)
+    np.testing.assert_array_equal(submission.Id, test.Id)
+    np.testing.assert_allclose(prediction, submission.Predicted, atol=1e-6, rtol=0)
+    forest_artifacts = []
+    for kind in ("rf", "extra"):
+        metadata_path = OUT / f"{kind}_model.json"
+        if not metadata_path.exists():
+            continue
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        candidates = [r for r in records if r["status"] == "complete" and r["kind"] == kind]
+        assert len(candidates) == 6
+        selected = min(candidates, key=lambda r: r["mean_rmse"])
+        assert metadata["validation_run_id"] == selected["run_id"]
+        forest = joblib.load(ROOT / metadata["model"])
+        values = forest["model"].predict(forest["features"].transform(test))
+        submitted = pd.read_csv(ROOT / metadata["submission"])
+        assert list(submitted) == ["Id", "Predicted"] and len(submitted) == len(test)
+        assert np.isfinite(values).all()
+        np.testing.assert_array_equal(submitted.Id, sample.Id)
+        np.testing.assert_array_equal(submitted.Id, test.Id)
+        np.testing.assert_allclose(values, submitted.Predicted, atol=1e-6, rtol=0)
+        forest_artifacts.append({"kind": kind, "selected_run": selected["run_id"], "rows": len(test),
+                                 "reload_matches_submission": True, "ids_match_example_and_test": True})
+        del forest
+    base = next(r for r in records if r["name"] == "catboost_base" and r["status"] == "complete")
+    old = json.loads((ROOT / "outputs/trees/best_model.json").read_text(encoding="utf-8"))
+    np.testing.assert_allclose([base["split_a"], base["split_b"]],
+                               [old["validation"]["holdout"], old["validation"]["rolling_2024_04"]], atol=1e-9, rtol=0)
+    report.update(distance_rows_checked=len(train) + len(test), distance_features_finite=True,
+                  real_data_future_perturbation_checks=cutoff_checks, transform_does_not_reload_economy_data=True,
+                  original_catboost_baseline_reproduced=True, submission_rows=len(test),
+                  submission_ids_match_example=True, reloaded_model_matches_all_submission_predictions=True,
+                  forest_artifact_checks=forest_artifacts)
+    write_json(OUT / "verification.json", report)
+    print(json.dumps(report, indent=2))
+
+
+if __name__ == "__main__":
+    main()

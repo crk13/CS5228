@@ -1,0 +1,204 @@
+[
+  {
+    "fold": "holdout",
+    "training_end": "2023-11",
+    "blocks": {
+      "distance": {
+        "unit": "km",
+        "distance": "great-circle, not walking distance",
+        "historical_opening_dates_available": false,
+        "facility_status": "provided file snapshot, not historical reconstruction",
+        "non_mrt_lines_excluded": [
+          "bp",
+          "pe",
+          "ptc",
+          "pw",
+          "rts",
+          "se",
+          "stc",
+          "sw"
+        ],
+        "facilities": {
+          "DIST_MRT_OPEN_KM": {
+            "records": 225,
+            "unique_coordinates": 192
+          },
+          "DIST_MALL_KM": {
+            "records": 113,
+            "unique_coordinates": 113
+          },
+          "DIST_PRIMARY_SCHOOL_KM": {
+            "records": 179,
+            "unique_coordinates": 177
+          }
+        }
+      },
+      "macro_stocks": {
+        "origin": "2023-11",
+        "available_through": "2023-10",
+        "publication_assumption": "one complete calendar month of delay",
+        "future_real_observations_used": false,
+        "forecast": "last",
+        "trend_window": 12,
+        "damping": 0.8,
+        "max_log_slope": 0.03,
+        "sgx_panel": [
+          "5E2.SI",
+          "A17U.SI",
+          "AIY.SI",
+          "AP4.SI",
+          "BN4.SI",
+          "BTM.SI",
+          "BUOU.SI",
+          "C07.SI",
+          "C09.SI",
+          "C38U.SI",
+          "C52.SI",
+          "C6L.SI",
+          "CJLU.SI",
+          "D05.SI",
+          "E5H.SI",
+          "F34.SI",
+          "G13.SI",
+          "H02.SI",
+          "H15.SI",
+          "HMN.SI",
+          "K71U.SI",
+          "M44U.SI",
+          "ME8U.SI",
+          "N2IU.SI",
+          "NS8U.SI",
+          "O39.SI",
+          "OV8.SI",
+          "P15.SI",
+          "S08.SI",
+          "S58.SI",
+          "S59.SI",
+          "S63.SI",
+          "S68.SI",
+          "T82U.SI",
+          "U06.SI",
+          "U11.SI",
+          "U14.SI",
+          "U96.SI",
+          "V03.SI",
+          "VC2.SI",
+          "Z25.SI",
+          "Z74.SI"
+        ],
+        "stock_anchor_month": "2021-01",
+        "stock_aggregation": "daily CLOSE mean per symbol/month, then equal-weight normalized index",
+        "stock_last_observation": "2023-10",
+        "adjusted_close_used": false,
+        "mixed_currencies": false,
+        "log_slopes": {
+          "MACRO_SGX_MONTHLY_PRICE_INDEX_LAG1": 0.000585077054466467
+        },
+        "columns": [
+          "MACRO_SGX_MONTHLY_PRICE_INDEX_LAG1"
+        ]
+      }
+    }
+  },
+  {
+    "fold": "rolling_2024_04",
+    "training_end": "2024-03",
+    "blocks": {
+      "distance": {
+        "unit": "km",
+        "distance": "great-circle, not walking distance",
+        "historical_opening_dates_available": false,
+        "facility_status": "provided file snapshot, not historical reconstruction",
+        "non_mrt_lines_excluded": [
+          "bp",
+          "pe",
+          "ptc",
+          "pw",
+          "rts",
+          "se",
+          "stc",
+          "sw"
+        ],
+        "facilities": {
+          "DIST_MRT_OPEN_KM": {
+            "records": 225,
+            "unique_coordinates": 192
+          },
+          "DIST_MALL_KM": {
+            "records": 113,
+            "unique_coordinates": 113
+          },
+          "DIST_PRIMARY_SCHOOL_KM": {
+            "records": 179,
+            "unique_coordinates": 177
+          }
+        }
+      },
+      "macro_stocks": {
+        "origin": "2024-03",
+        "available_through": "2024-02",
+        "publication_assumption": "one complete calendar month of delay",
+        "future_real_observations_used": false,
+        "forecast": "last",
+        "trend_window": 12,
+        "damping": 0.8,
+        "max_log_slope": 0.03,
+        "sgx_panel": [
+          "5E2.SI",
+          "A17U.SI",
+          "AIY.SI",
+          "AP4.SI",
+          "BN4.SI",
+          "BTM.SI",
+          "BUOU.SI",
+          "C07.SI",
+          "C09.SI",
+          "C38U.SI",
+          "C52.SI",
+          "C6L.SI",
+          "CJLU.SI",
+          "D05.SI",
+          "E5H.SI",
+          "F34.SI",
+          "G13.SI",
+          "H02.SI",
+          "H15.SI",
+          "HMN.SI",
+          "K71U.SI",
+          "M44U.SI",
+          "ME8U.SI",
+          "N2IU.SI",
+          "NS8U.SI",
+          "O39.SI",
+          "OV8.SI",
+          "P15.SI",
+          "S08.SI",
+          "S58.SI",
+          "S59.SI",
+          "S63.SI",
+          "S68.SI",
+          "T82U.SI",
+          "U06.SI",
+          "U11.SI",
+          "U14.SI",
+          "U96.SI",
+          "V03.SI",
+          "VC2.SI",
+          "Z25.SI",
+          "Z74.SI"
+        ],
+        "stock_anchor_month": "2021-01",
+        "stock_aggregation": "daily CLOSE mean per symbol/month, then equal-weight normalized index",
+        "stock_last_observation": "2024-02",
+        "adjusted_close_used": false,
+        "mixed_currencies": false,
+        "log_slopes": {
+          "MACRO_SGX_MONTHLY_PRICE_INDEX_LAG1": -0.002894575922081171
+        },
+        "columns": [
+          "MACRO_SGX_MONTHLY_PRICE_INDEX_LAG1"
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "variant": "raw_rent",
+    "split_a": 492.87431277402214,
+    "split_b": 476.1684953624768,
+    "mean_rmse": 484.52140406824947,
+    "run_id": "20261104T064730182142Z_7b8c0ece",
+    "run_dir": "outputs/Yaqi/fixed_mix_catboost_20261104T064729648979Z/experiments/20261104T064730182142Z_7b8c0ece"
+  },
+  {
+    "variant": "fixed_mix_last",
+    "split_a": 491.0508888729039,
+    "split_b": 474.6228339794364,
+    "mean_rmse": 482.8368614261701,
+    "run_id": "20261104T064937430441Z_eb083457",
+    "run_dir": "outputs/Yaqi/fixed_mix_catboost_20261104T064729648979Z/experiments/20261104T064937430441Z_eb083457"
+  }
+]

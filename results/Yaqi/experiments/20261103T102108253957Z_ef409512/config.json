@@ -1,0 +1,469 @@
+{
+  "timestamp": "2026-11-03T10:21:08.253957+00:00",
+  "run_id": "20261103T102108253957Z_ef409512",
+  "name": "yaqi_final_lightgbm_location_coe",
+  "author": "Yaqi",
+  "features": [
+    "basic",
+    "block",
+    "distance",
+    "macro_coe"
+  ],
+  "feature_parameters": {
+    "basic": {},
+    "block": {},
+    "distance": {},
+    "macro_coe": {
+      "damping": 0.8,
+      "forecast": "last",
+      "include_coe": true,
+      "include_stocks": false,
+      "max_log_slope": 0.03,
+      "trend_window": 12
+    }
+  },
+  "model": "__main__.TrainingPredictionRecorder",
+  "parameters": {
+    "cache_dir": "outputs/yaqi_delivery_cache/lightgbm",
+    "estimator": {
+      "class": "src.models.trees.RecentWindowRegressor",
+      "parameters": {
+        "estimator": {
+          "class": "src.models.base.ModelWrapper",
+          "parameters": {
+            "columns": [
+              "FLOOR_AREA_SQM",
+              "LEASE_COMMENCE_DATE",
+              "RENT_MONTH",
+              "MONTH_INDEX",
+              "FLAT_AGE",
+              "REMAINING_LEASE",
+              "FLAT_TYPE_ORDINAL",
+              "LATITUDE",
+              "LONGITUDE",
+              "MAX_FLOOR",
+              "YEAR_COMPLETED",
+              "DIST_MRT_OPEN_KM",
+              "DIST_MALL_KM",
+              "DIST_PRIMARY_SCHOOL_KM",
+              "MACRO_COE_A_LAG1",
+              "MACRO_COE_B_LAG1",
+              "MACRO_COE_C_LAG1",
+              "MACRO_COE_E_LAG1",
+              "TOWN",
+              "FLAT_TYPE",
+              "FLAT_MODEL",
+              "STREET",
+              "SUBZONE",
+              "PLANNING_AREA",
+              "REGION",
+              "POSTAL_CODE",
+              "BLOCK"
+            ],
+            "estimator": {
+              "class": "sklearn.pipeline.Pipeline",
+              "parameters": {
+                "memory": null,
+                "steps": [
+                  [
+                    "prepare",
+                    {
+                      "class": "src.models.trees.NativeFrame",
+                      "parameters": {
+                        "categorical": [
+                          "TOWN",
+                          "FLAT_TYPE",
+                          "FLAT_MODEL",
+                          "STREET",
+                          "SUBZONE",
+                          "PLANNING_AREA",
+                          "REGION",
+                          "POSTAL_CODE",
+                          "BLOCK"
+                        ],
+                        "numeric": [
+                          "FLOOR_AREA_SQM",
+                          "LEASE_COMMENCE_DATE",
+                          "RENT_MONTH",
+                          "MONTH_INDEX",
+                          "FLAT_AGE",
+                          "REMAINING_LEASE",
+                          "FLAT_TYPE_ORDINAL",
+                          "LATITUDE",
+                          "LONGITUDE",
+                          "MAX_FLOOR",
+                          "YEAR_COMPLETED",
+                          "DIST_MRT_OPEN_KM",
+                          "DIST_MALL_KM",
+                          "DIST_PRIMARY_SCHOOL_KM",
+                          "MACRO_COE_A_LAG1",
+                          "MACRO_COE_B_LAG1",
+                          "MACRO_COE_C_LAG1",
+                          "MACRO_COE_E_LAG1"
+                        ],
+                        "strings": false
+                      }
+                    }
+                  ],
+                  [
+                    "regressor",
+                    {
+                      "class": "lightgbm.sklearn.LGBMRegressor",
+                      "parameters": {
+                        "boosting_type": "gbdt",
+                        "class_weight": null,
+                        "colsample_bytree": 0.9,
+                        "importance_type": "split",
+                        "learning_rate": 0.035,
+                        "max_depth": -1,
+                        "min_child_samples": 60,
+                        "min_child_weight": 0.001,
+                        "min_split_gain": 0.0,
+                        "n_estimators": 700,
+                        "n_jobs": 4,
+                        "num_leaves": 31,
+                        "objective": null,
+                        "random_state": 42,
+                        "reg_alpha": 0.0,
+                        "reg_lambda": 10.0,
+                        "subsample": 0.85,
+                        "subsample_for_bin": 200000,
+                        "subsample_freq": 1,
+                        "verbosity": -1,
+                        "deterministic": true,
+                        "force_col_wise": true
+                      }
+                    }
+                  ]
+                ],
+                "transform_input": null,
+                "verbose": false
+              }
+            },
+            "target_transform": "none"
+          }
+        },
+        "months": 24
+      }
+    }
+  },
+  "split": "rolling",
+  "seed": 42,
+  "final": true,
+  "versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "sklearn": "1.9.1"
+  },
+  "folds": [
+    {
+      "name": "holdout",
+      "train_start": "2021-01",
+      "train_end": "2023-11",
+      "valid_start": "2023-12",
+      "valid_end": "2025-03",
+      "train_rows": 102829,
+      "valid_rows": 47171,
+      "rmse": 501.9181514853673,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "DIST_MRT_OPEN_KM",
+        "DIST_MALL_KM",
+        "DIST_PRIMARY_SCHOOL_KM",
+        "MACRO_COE_A_LAG1",
+        "MACRO_COE_B_LAG1",
+        "MACRO_COE_C_LAG1",
+        "MACRO_COE_E_LAG1"
+      ]
+    },
+    {
+      "name": "rolling_2024_04",
+      "train_start": "2021-01",
+      "train_end": "2024-03",
+      "valid_start": "2024-04",
+      "valid_end": "2025-03",
+      "train_rows": 114842,
+      "valid_rows": 35158,
+      "rmse": 482.5715863462422,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "DIST_MRT_OPEN_KM",
+        "DIST_MALL_KM",
+        "DIST_PRIMARY_SCHOOL_KM",
+        "MACRO_COE_A_LAG1",
+        "MACRO_COE_B_LAG1",
+        "MACRO_COE_C_LAG1",
+        "MACRO_COE_E_LAG1"
+      ]
+    }
+  ],
+  "final_train_rows": 150000,
+  "test_rows": 50000,
+  "submission_path": "results/Yaqi/submissions/20261103T102108253957Z_ef409512.csv",
+  "fold_rmse": {
+    "holdout": 501.9181514853673,
+    "rolling_2024_04": 482.5715863462422
+  },
+  "mean_rmse": 492.2448689158048,
+  "delivery": {
+    "kind": "lightgbm",
+    "scenario": "location_coe",
+    "source_afternoon_run_id": "20261103T065143121693Z_f3f31774",
+    "afternoon_scores_reproduced": true,
+    "estimator_recipe_unchanged": true,
+    "training_window_months": 24,
+    "actual_fit_windows": [
+      {
+        "fold": "holdout",
+        "input_rows": 102829,
+        "actual_fit_rows": 68359,
+        "fit_start": "2021-12",
+        "fit_end": "2023-11"
+      },
+      {
+        "fold": "rolling_2024_04",
+        "input_rows": 114842,
+        "actual_fit_rows": 68086,
+        "fit_start": "2022-04",
+        "fit_end": "2024-03"
+      },
+      {
+        "fold": "final",
+        "input_rows": 150000,
+        "actual_fit_rows": 71040,
+        "fit_start": "2023-04",
+        "fit_end": "2025-03"
+      }
+    ],
+    "training_predictions_role": "diagnostic; fitted-model predictions, not OOF",
+    "validation_predictions_role": "held-out chronological predictions for meta-model training",
+    "test_predictions_role": "features for final meta-model inference",
+    "feature_audit": [
+      {
+        "fold": "holdout",
+        "features": {
+          "distance": {
+            "unit": "km",
+            "distance": "great-circle, not walking distance",
+            "historical_opening_dates_available": false,
+            "facility_status": "provided file snapshot, not historical reconstruction",
+            "non_mrt_lines_excluded": [
+              "bp",
+              "pe",
+              "ptc",
+              "pw",
+              "rts",
+              "se",
+              "stc",
+              "sw"
+            ],
+            "facilities": {
+              "DIST_MRT_OPEN_KM": {
+                "records": 225,
+                "unique_coordinates": 192
+              },
+              "DIST_MALL_KM": {
+                "records": 113,
+                "unique_coordinates": 113
+              },
+              "DIST_PRIMARY_SCHOOL_KM": {
+                "records": 179,
+                "unique_coordinates": 177
+              }
+            }
+          },
+          "macro_coe": {
+            "origin": "2023-11",
+            "available_through": "2023-10",
+            "publication_assumption": "one complete calendar month of delay",
+            "future_real_observations_used": false,
+            "forecast": "last",
+            "trend_window": 12,
+            "damping": 0.8,
+            "max_log_slope": 0.03,
+            "coe_last_observation": "2023-10",
+            "log_slopes": {
+              "MACRO_COE_A_LAG1": 0.018223897295704925,
+              "MACRO_COE_B_LAG1": 0.02462549475963369,
+              "MACRO_COE_C_LAG1": 0.004313789082481888,
+              "MACRO_COE_E_LAG1": 0.025648145909122195
+            },
+            "columns": [
+              "MACRO_COE_A_LAG1",
+              "MACRO_COE_B_LAG1",
+              "MACRO_COE_C_LAG1",
+              "MACRO_COE_E_LAG1"
+            ]
+          }
+        }
+      },
+      {
+        "fold": "rolling_2024_04",
+        "features": {
+          "distance": {
+            "unit": "km",
+            "distance": "great-circle, not walking distance",
+            "historical_opening_dates_available": false,
+            "facility_status": "provided file snapshot, not historical reconstruction",
+            "non_mrt_lines_excluded": [
+              "bp",
+              "pe",
+              "ptc",
+              "pw",
+              "rts",
+              "se",
+              "stc",
+              "sw"
+            ],
+            "facilities": {
+              "DIST_MRT_OPEN_KM": {
+                "records": 225,
+                "unique_coordinates": 192
+              },
+              "DIST_MALL_KM": {
+                "records": 113,
+                "unique_coordinates": 113
+              },
+              "DIST_PRIMARY_SCHOOL_KM": {
+                "records": 179,
+                "unique_coordinates": 177
+              }
+            }
+          },
+          "macro_coe": {
+            "origin": "2024-03",
+            "available_through": "2024-02",
+            "publication_assumption": "one complete calendar month of delay",
+            "future_real_observations_used": false,
+            "forecast": "last",
+            "trend_window": 12,
+            "damping": 0.8,
+            "max_log_slope": 0.03,
+            "coe_last_observation": "2024-02",
+            "log_slopes": {
+              "MACRO_COE_A_LAG1": -0.018577370992816165,
+              "MACRO_COE_B_LAG1": -0.008236757216888822,
+              "MACRO_COE_C_LAG1": -0.014291060677783565,
+              "MACRO_COE_E_LAG1": -0.006463314202549896
+            },
+            "columns": [
+              "MACRO_COE_A_LAG1",
+              "MACRO_COE_B_LAG1",
+              "MACRO_COE_C_LAG1",
+              "MACRO_COE_E_LAG1"
+            ]
+          }
+        }
+      },
+      {
+        "fold": "final",
+        "features": {
+          "distance": {
+            "unit": "km",
+            "distance": "great-circle, not walking distance",
+            "historical_opening_dates_available": false,
+            "facility_status": "provided file snapshot, not historical reconstruction",
+            "non_mrt_lines_excluded": [
+              "bp",
+              "pe",
+              "ptc",
+              "pw",
+              "rts",
+              "se",
+              "stc",
+              "sw"
+            ],
+            "facilities": {
+              "DIST_MRT_OPEN_KM": {
+                "records": 225,
+                "unique_coordinates": 192
+              },
+              "DIST_MALL_KM": {
+                "records": 113,
+                "unique_coordinates": 113
+              },
+              "DIST_PRIMARY_SCHOOL_KM": {
+                "records": 179,
+                "unique_coordinates": 177
+              }
+            }
+          },
+          "macro_coe": {
+            "origin": "2025-03",
+            "available_through": "2025-02",
+            "publication_assumption": "one complete calendar month of delay",
+            "future_real_observations_used": false,
+            "forecast": "last",
+            "trend_window": 12,
+            "damping": 0.8,
+            "max_log_slope": 0.03,
+            "coe_last_observation": "2025-02",
+            "log_slopes": {
+              "MACRO_COE_A_LAG1": 0.005710752222871733,
+              "MACRO_COE_B_LAG1": 0.01281405394762197,
+              "MACRO_COE_C_LAG1": -0.005762462587188767,
+              "MACRO_COE_E_LAG1": 0.0134958788619272
+            },
+            "columns": [
+              "MACRO_COE_A_LAG1",
+              "MACRO_COE_B_LAG1",
+              "MACRO_COE_C_LAG1",
+              "MACRO_COE_E_LAG1"
+            ]
+          }
+        }
+      }
+    ],
+    "weights_included": false,
+    "versions": {
+      "numpy": "2.4.6",
+      "pandas": "3.0.3",
+      "scikit-learn": "1.9.1",
+      "catboost": "1.2.10",
+      "lightgbm": "4.7.0",
+      "xgboost": "3.2.0"
+    }
+  }
+}

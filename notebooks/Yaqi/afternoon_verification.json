@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "experiments_checked": [
+    "catboost_base",
+    "lightgbm_base",
+    "xgboost_base",
+    "catboost_location",
+    "lightgbm_location",
+    "xgboost_location",
+    "catboost_location_coe",
+    "lightgbm_location_coe",
+    "xgboost_location_coe",
+    "catboost_location_stocks",
+    "lightgbm_location_stocks",
+    "xgboost_location_stocks",
+    "catboost_location_economy_last",
+    "lightgbm_location_economy_last",
+    "xgboost_location_economy_last",
+    "catboost_location_economy_damped",
+    "lightgbm_location_economy_damped",
+    "xgboost_location_economy_damped",
+    "rf_base",
+    "rf_location",
+    "rf_location_coe",
+    "rf_location_stocks",
+    "rf_location_economy_last",
+    "rf_location_economy_damped",
+    "extra_base",
+    "extra_location",
+    "extra_location_coe",
+    "extra_location_stocks",
+    "extra_location_economy_last",
+    "extra_location_economy_damped"
+  ],
+  "scores_recomputed": true,
+  "validation_rows_and_targets_match": true,
+  "new_features_reach_model": true,
+  "datasets_unchanged": 17,
+  "macro_future_actuals_used": false,
+  "facility_historical_dates_available": false,
+  "distance_rows_checked": 200000,
+  "distance_features_finite": true,
+  "real_data_future_perturbation_checks": [
+    {
+      "fold": "holdout",
+      "available_through": "2023-10",
+      "future_observations_perturbed": true,
+      "features_identical": true
+    },
+    {
+      "fold": "rolling_2024_04",
+      "available_through": "2024-02",
+      "future_observations_perturbed": true,
+      "features_identical": true
+    }
+  ],
+  "transform_does_not_reload_economy_data": true,
+  "original_catboost_baseline_reproduced": true,
+  "submission_rows": 50000,
+  "submission_ids_match_example": true,
+  "reloaded_model_matches_all_submission_predictions": true,
+  "forest_artifact_checks": [
+    {
+      "kind": "rf",
+      "selected_run": "20261103T073839834454Z_2ccef2b9",
+      "rows": 50000,
+      "reload_matches_submission": true,
+      "ids_match_example_and_test": true
+    },
+    {
+      "kind": "extra",
+      "selected_run": "20261103T074845285184Z_b6e78b5f",
+      "rows": 50000,
+      "reload_matches_submission": true,
+      "ids_match_example_and_test": true
+    }
+  ]
+}

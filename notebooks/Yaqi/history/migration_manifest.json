@@ -1,0 +1,1891 @@
+{
+  "old_remote_branch": "yaqi-tree-models",
+  "old_remote_commit": "a69bdd546efa377888987b026f1da760e8d4e08f",
+  "new_branch_before_consolidation": "3dae63c3ba9e5919fadb9af54474fee20d86f751",
+  "old_remote_outer_zip_sha256": "9c9f7a6ff44e854663df54217a0d9a4d4ed9ff660e0f464593bbd98283c9fcb3",
+  "old_remote_inner_zip_sha256": "94e4cf578b0063b7cc8216086a3c9a59c21904eb43c355a1acaf369422228e2e",
+  "old_remote_upload_file_checks": [
+    {
+      "name": "best_monthly_error.png",
+      "expected_sha256": "f6b1fc826cee8c42cb3307f25e5e6c566df875fd6960ad22ae2ae274661ff251",
+      "actual_sha256": "f6b1fc826cee8c42cb3307f25e5e6c566df875fd6960ad22ae2ae274661ff251",
+      "matches": true
+    },
+    {
+      "name": "comparison.csv",
+      "expected_sha256": "1e71f2abbb9b38f1805e26385cb54efa6e2dfeb7ec2b19e7f0966c4fe292ae4d",
+      "actual_sha256": "1e71f2abbb9b38f1805e26385cb54efa6e2dfeb7ec2b19e7f0966c4fe292ae4d",
+      "matches": true
+    },
+    {
+      "name": "model_comparison.png",
+      "expected_sha256": "8d58b607f4dfd2952167b04fb7091f3cde8b451bfd8cd73aa03fee891bafd383",
+      "actual_sha256": "8d58b607f4dfd2952167b04fb7091f3cde8b451bfd8cd73aa03fee891bafd383",
+      "matches": true
+    },
+    {
+      "name": "permutation_importance.png",
+      "expected_sha256": "5073d327a0b171e7d2da53ab69037b24b8ba70c769808e9b93bf74781127bd3a",
+      "actual_sha256": "5073d327a0b171e7d2da53ab69037b24b8ba70c769808e9b93bf74781127bd3a",
+      "matches": true
+    },
+    {
+      "name": "YAQI_RESULTS.md",
+      "expected_sha256": "107dd2c00de6dddf3f7b32d5eeaa4781ba0b1da959d3fb13ba753ad51f6aad98",
+      "actual_sha256": "107dd2c00de6dddf3f7b32d5eeaa4781ba0b1da959d3fb13ba753ad51f6aad98",
+      "matches": true
+    },
+    {
+      "name": "yaqi_tree_models.patch",
+      "expected_sha256": "570898f029f799c6c5118d54f885b3b674ab322f2fb5829e81731660ee68433c",
+      "actual_sha256": "07ba3ee1689676f59fb822bb6a75f30fc59bafef98667558027a28840e48bf94",
+      "matches": false
+    },
+    {
+      "name": "yaqi_tree_models_delivery.zip",
+      "expected_sha256": "9c9f7a6ff44e854663df54217a0d9a4d4ed9ff660e0f464593bbd98283c9fcb3",
+      "actual_sha256": "9c9f7a6ff44e854663df54217a0d9a4d4ed9ff660e0f464593bbd98283c9fcb3",
+      "matches": true
+    }
+  ],
+  "all_migrated_remote_payloads_match_original_manifest": true,
+  "old_remote_inner_file_manifest_verified": true,
+  "excluded": [
+    {
+      "path": "outputs/trees/models/best_tree.joblib",
+      "reason": "No model weights in team delivery"
+    },
+    {
+      "path": "yaqi_tree_models.patch",
+      "reason": "Source expanded as audit text; obsolete framework patch not applied"
+    },
+    {
+      "path": "*.zip",
+      "reason": "Archives expanded into individual files"
+    },
+    {
+      "path": "afternoon/models/",
+      "reason": "No model weights in team delivery"
+    }
+  ],
+  "files": [
+    {
+      "source": "remote_outer_zip:.gitignore",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/.gitignore.txt",
+      "bytes": 609,
+      "sha256": "4de84d4cd97911f5d4abc1decd48e30cc1ef8d848622ab0e8c39f59af3a86459"
+    },
+    {
+      "source": "remote_outer_zip:README.md",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/README.md.txt",
+      "bytes": 5755,
+      "sha256": "f93569d0481dd874bfba6a16b031fdb757ce83f6be412995928f7bfe44e30641"
+    },
+    {
+      "source": "remote_outer_zip:deliverables/README.md",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/deliverables/README.md.txt",
+      "bytes": 1306,
+      "sha256": "db638ae59da900cd1c184efd4fac9f27382da5f024145330a2cc4d064a9bed37"
+    },
+    {
+      "source": "remote_outer_zip:deliverables/manifest.json",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/deliverables/manifest.json.txt",
+      "bytes": 3988,
+      "sha256": "f1af6d959459a79e8d51f2bf65f10e5dbd4fe487a954d7f7bd61ddefa6453c73"
+    },
+    {
+      "source": "remote_outer_zip:docs/TREE_TRAINING.md",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/docs/TREE_TRAINING.md.txt",
+      "bytes": 6546,
+      "sha256": "7ee8be11c019212c3e39ab4603a1e12b0377c4c498543487251105267dfa5e67"
+    },
+    {
+      "source": "remote_outer_zip:notebooks/Yaqi_tree_models.ipynb",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/notebooks/Yaqi_tree_models.ipynb.txt",
+      "bytes": 3172,
+      "sha256": "bf14ce21e3d62e17dcfbca8dc678a22e321cdba1f22ecbf8385b2faefdeb4a2d"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/TREE_REPORT.md",
+      "destination": "notebooks/Yaqi/history/20261022/TREE_REPORT.md",
+      "bytes": 3723,
+      "sha256": "21f21c32d18910f51e94ba78d2899876a2f3521e51a21564a16a5d975b53b678"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/actual_fit_windows.csv",
+      "destination": "notebooks/Yaqi/history/20261022/actual_fit_windows.csv",
+      "bytes": 1404,
+      "sha256": "f94cd563d2f14b80d93c929005d4f0f89041a4c0e97265d7092de4a68631d5ff"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/best_model.json",
+      "destination": "notebooks/Yaqi/history/20261022/best_model.json",
+      "bytes": 473,
+      "sha256": "e5d09eed571a39d59f3f22f341359610936b7454722e93fb61527bc44487274d"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_12m_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_12m_by_flat_type.csv",
+      "bytes": 780,
+      "sha256": "ac70fd8f7175b14bf293ef49cd24c25873440ecf69c0d422deb703d1835709aa"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_12m_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_12m_by_rent_approval_date.csv",
+      "bytes": 1803,
+      "sha256": "21108eeee1d7c86f8afa9a46efdc927d3f8fde3d3536f81c409ae1e679f2ed33"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_12m_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_12m_by_town.csv",
+      "bytes": 3420,
+      "sha256": "7228930a60ab67a6677d3fc09d81481cd00e9012ccfa8660880a11fa913ee497"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_24m_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_24m_by_flat_type.csv",
+      "bytes": 780,
+      "sha256": "bf91443abec675e95709d8db7410f61ee3e7624a263548374c65969105a120e8"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_24m_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_24m_by_rent_approval_date.csv",
+      "bytes": 1799,
+      "sha256": "952a0dc1de7a1044dd5524c576ec2a9c8316a8e536a24a6a03186bcee4283b55"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_24m_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_24m_by_town.csv",
+      "bytes": 3430,
+      "sha256": "f8922bd10aa3789aca8822abde1916b3d9ba3c5392858f9fcf22a3c7f87749fb"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_address_24m_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_address_24m_by_flat_type.csv",
+      "bytes": 784,
+      "sha256": "bc82d2671c3510bcdf1869140d0143c057cacc780cba21f8a2239808be091a28"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_address_24m_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_address_24m_by_rent_approval_date.csv",
+      "bytes": 1802,
+      "sha256": "fa8efdd4e3064e54924df78fef03f1f9f8ee8955b60676e7370a40225eeedc27"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_address_24m_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_address_24m_by_town.csv",
+      "bytes": 3417,
+      "sha256": "53352e092abaab120e5648765117327d7185fd8688cc8b0be059bfc4284a2b72"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_all_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_all_by_flat_type.csv",
+      "bytes": 792,
+      "sha256": "0890febc2f4f26dc1ddcd0bf57295d4edc6ffd7250fa6ecc8540cfe0a4642561"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_all_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_all_by_rent_approval_date.csv",
+      "bytes": 1794,
+      "sha256": "a5def49d57cafc39b5605e0d7c75b9dc67401a375e99df7cfe25266da75a3f40"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/catboost_all_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/catboost_all_by_town.csv",
+      "bytes": 3433,
+      "sha256": "bdf3a9a60a0dce113ac5841486815e4c034dc3bc3a88ce222084d6c30e466e8f"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/comparison.csv",
+      "destination": "notebooks/Yaqi/history/20261022/comparison.csv",
+      "bytes": 3245,
+      "sha256": "1e71f2abbb9b38f1805e26385cb54efa6e2dfeb7ec2b19e7f0966c4fe292ae4d"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/environment.json",
+      "destination": "notebooks/Yaqi/history/20261022/environment.json",
+      "bytes": 1981,
+      "sha256": "892be4dd6538c5e0281e441a38e65386624758f6ba76388c14b56b64f0d62f15"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T083645789390Z_730b776e/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T083645789390Z_730b776e/config.json",
+      "bytes": 8511,
+      "sha256": "9da016a5655812a855345702c0fbc9a061502680afa0e03db23660efd68d89ac"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T083647870161Z_ad188407/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T083647870161Z_ad188407/config.json",
+      "bytes": 8459,
+      "sha256": "bbc6cd5dbeeb1f26d05b65213354f020e409e01e36c7c728e3ca6457f9b3d022"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T084617188162Z_da35b454/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T084617188162Z_da35b454/config.json",
+      "bytes": 8460,
+      "sha256": "425c405d3c366afc9e6e44ef1c10a247e346b2870c87ec782599d5e05eaf8e91"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T085632372185Z_8134631b/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085632372185Z_8134631b/config.json",
+      "bytes": 8507,
+      "sha256": "23aff1ae9a1bc655bc72ff423fa34e4ec04ed681a8bb93d5371ba9fb01f6dad8"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T085637052299Z_76e8e9ba/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085637052299Z_76e8e9ba/config.json",
+      "bytes": 5427,
+      "sha256": "f173fa15311d016ac203d2c46e872d3bd33e9287aeed9f5b92817dc49d321a8a"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T085644178764Z_1f19df22/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085644178764Z_1f19df22/config.json",
+      "bytes": 6241,
+      "sha256": "b088da2a26625c4be298a7cf74d9b16d6593ccb07fc99f7ad8f84ce205430646"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T085656292472Z_d7bb7d02/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085656292472Z_d7bb7d02/config.json",
+      "bytes": 5024,
+      "sha256": "18b16fc2d8b02132ac143ecf5102840ce57a761d7770ba328bec6e4199b4022b"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T085910786732Z_f8392471/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085910786732Z_f8392471/config.json",
+      "bytes": 5420,
+      "sha256": "952ef788ad97410b31c74d40541cdacdc684394fe212174f4197bca6ce528fec"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T085915407551Z_a6d20984/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085915407551Z_a6d20984/config.json",
+      "bytes": 5423,
+      "sha256": "7943e18a7c1729c474558129ce318b3511b0de0d90e523114fd3fc0c68081986"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T085920861885Z_55aefbc2/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085920861885Z_55aefbc2/config.json",
+      "bytes": 5022,
+      "sha256": "f936c09b1e94b2607f4962d1a26c85ec33060d38880c50cef59c2338abe14907"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T090042018986Z_d27432b4/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T090042018986Z_d27432b4/config.json",
+      "bytes": 5027,
+      "sha256": "0c84f827cd7d04d43431c65f9c4f11a59958fc8cd437d2f7438c98800b0e1bfe"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T090224250422Z_25902837/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T090224250422Z_25902837/config.json",
+      "bytes": 5437,
+      "sha256": "5afe7a6d263588a36fdfbbb25c8ee4f9afab2170999f1363abd924d7cc9c1a76"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T090228604888Z_d611e0af/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T090228604888Z_d611e0af/config.json",
+      "bytes": 5219,
+      "sha256": "75854b22896016389c384589be53b448d2d241691d131a0c2f1395ad72c0667a"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/20261022T090435551251Z_0102e08b/config.json",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T090435551251Z_0102e08b/config.json",
+      "bytes": 5414,
+      "sha256": "2f2969003622f321ef029ab6041760e0dbd680e5f385c65f99c28ca882de6009"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/experiments/log.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/log.csv",
+      "bytes": 30379,
+      "sha256": "9c9d3697e34ea5d98707a6e620ca7751a9ec81c32c545bc819c900eec1596326"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/extra_all_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/extra_all_by_flat_type.csv",
+      "bytes": 784,
+      "sha256": "aee664eed1d35f387d8c6004a1cef7251311a0fefb5d34006cde4ade8a1fdecf"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/extra_all_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/extra_all_by_rent_approval_date.csv",
+      "bytes": 1803,
+      "sha256": "a5f641bc167f9e3db15bb3352c88295e5ce82423081fb1d06d35d89650ad23bd"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/extra_all_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/extra_all_by_town.csv",
+      "bytes": 3436,
+      "sha256": "34095c16c30abfc077e09cbfaed5e6df7bac62f521c03790c419859094fcd148"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/figures/best_monthly_error.png",
+      "destination": "notebooks/Yaqi/history/20261022/figures/best_monthly_error.png",
+      "bytes": 91270,
+      "sha256": "f6b1fc826cee8c42cb3307f25e5e6c566df875fd6960ad22ae2ae274661ff251"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/figures/model_comparison.png",
+      "destination": "notebooks/Yaqi/history/20261022/figures/model_comparison.png",
+      "bytes": 57414,
+      "sha256": "8d58b607f4dfd2952167b04fb7091f3cde8b451bfd8cd73aa03fee891bafd383"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/figures/permutation_importance.png",
+      "destination": "notebooks/Yaqi/history/20261022/figures/permutation_importance.png",
+      "bytes": 62682,
+      "sha256": "5073d327a0b171e7d2da53ab69037b24b8ba70c769808e9b93bf74781127bd3a"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/hist_all_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/hist_all_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "831641bae75ef7f7d145309354ecb74237cadb66b79cbb5c41e2a9b146404b71"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/hist_all_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/hist_all_by_rent_approval_date.csv",
+      "bytes": 1802,
+      "sha256": "fbb9b679b1f9109978df3593a750d8c50942cff3887ae5ac7f0b581d9df71a50"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/hist_all_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/hist_all_by_town.csv",
+      "bytes": 3427,
+      "sha256": "ab84a41ba635d617121210bbad4a83ce40683a790bcda202b966a0378bc4e7c7"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/integrity.json",
+      "destination": "notebooks/Yaqi/history/20261022/integrity.json",
+      "bytes": 1903,
+      "sha256": "c81a755a86ca3a2e8048321f6ad7707d2308dc73a437a43a283d61e78065b531"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/interpretation.json",
+      "destination": "notebooks/Yaqi/history/20261022/interpretation.json",
+      "bytes": 302,
+      "sha256": "a703c6c92ddb150d3395fc0d958473150b2abc42bacd93c80cdc541f58dd0e3f"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_12m_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_12m_by_flat_type.csv",
+      "bytes": 784,
+      "sha256": "a36f19bba3b26509f377a30903ed51ee3e2e658b52f796f0bd61bab9e36a551c"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_12m_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_12m_by_rent_approval_date.csv",
+      "bytes": 1805,
+      "sha256": "6a00c3db4c97118d41b2f4db931ebcf56cd7fd64f27fb1455504824f6e6e5a41"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_12m_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_12m_by_town.csv",
+      "bytes": 3424,
+      "sha256": "5064663795f92661e10437289c57a23a1ac34ffa33286addd00953474d5c04d6"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_24m_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_24m_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "c0c1abc1a5927355a53e54a994c9d7dd39ce361507e6c4ff85c0c73b679631a6"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_24m_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_24m_by_rent_approval_date.csv",
+      "bytes": 1804,
+      "sha256": "0560e9a4dba88985ca242bbe3f7465c08881645378f01ffa719b78939254bbe4"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_24m_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_24m_by_town.csv",
+      "bytes": 3424,
+      "sha256": "95b6a2bd1a58825f96b0c39973a4d7e9ecf53ec735d5b34294db37b9e958e133"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_all_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_all_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "63de96cfd4ad9168fda65ff2c788b48ec352bcf89d9b75c3e237adfd7b22294b"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_all_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_all_by_rent_approval_date.csv",
+      "bytes": 1802,
+      "sha256": "d0358a36ebedaa967066f19d33180b46092c77ea85c786725a0197d60b435894"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_all_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_all_by_town.csv",
+      "bytes": 3434,
+      "sha256": "172999902ab7809dcc938792c243ea1d6352d4a38a9ff1a6f499601e102869d2"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_regularized_24m_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_regularized_24m_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "85cb238bc25a4dd1d38830e292b79666c9ffdb9d3c83556d25df494a4fa32b56"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_regularized_24m_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_regularized_24m_by_rent_approval_date.csv",
+      "bytes": 1798,
+      "sha256": "bb434ae85ca488410eab4d8df0340d5ddc2dafc26b5ff51a3551effb2c1fdd6d"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/lightgbm_regularized_24m_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/lightgbm_regularized_24m_by_town.csv",
+      "bytes": 3428,
+      "sha256": "6d3b41226f8e825d7c506117be9abe27a0068655163f25aa01273246bd335ed3"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/model_export.json",
+      "destination": "notebooks/Yaqi/history/20261022/model_export.json",
+      "bytes": 169,
+      "sha256": "faf40bbcf6c593e9aef530f02660a1fc88ca61da578e02de01f110ff18923891"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/permutation_importance.csv",
+      "destination": "notebooks/Yaqi/history/20261022/permutation_importance.csv",
+      "bytes": 1070,
+      "sha256": "ae4e971a8d782fbaea5179041ac1fa5f707d1aea38af733ac737c5eb6d3c623c"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/reference_all_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/reference_all_by_flat_type.csv",
+      "bytes": 789,
+      "sha256": "52f192bb6ed3d8b88ab9369a126d1fb66651b092d6c7e361043622c42d82c8cd"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/reference_all_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/reference_all_by_rent_approval_date.csv",
+      "bytes": 1802,
+      "sha256": "2a9870da54df81c476bed0c4a61caff8a68642e5b85f86629adfb2feff61ec79"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/reference_all_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/reference_all_by_town.csv",
+      "bytes": 3434,
+      "sha256": "dc7a89815224d50ea9f91492fc4dbc1dae09d9e1b44c0cd3178602b3d047289b"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/rf_all_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/rf_all_by_flat_type.csv",
+      "bytes": 785,
+      "sha256": "25de117d7e81cb25e4e2acd968ccf6a39dd70997e24dcde9645c09386ef7015c"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/rf_all_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/rf_all_by_rent_approval_date.csv",
+      "bytes": 1804,
+      "sha256": "fa72bf35f8c593c1258ec911bb14305dd4d9ab3e1eed11d8500a8832303972fb"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/rf_all_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/rf_all_by_town.csv",
+      "bytes": 3430,
+      "sha256": "cec413cd7ded86eeb7a86480ebe15752678939d65af07628ef75022db78d58d4"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/runs.json",
+      "destination": "notebooks/Yaqi/history/20261022/runs.json",
+      "bytes": 5763,
+      "sha256": "00a5aa2b277855961fe2f9be6ac9e00d8343e8669c81efe404465cc11a4e7378"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/signature.json",
+      "destination": "notebooks/Yaqi/history/20261022/signature.json",
+      "bytes": 4117,
+      "sha256": "c69c2ff0245b39b3691d8a73b5511881d054222e8f20066ca0911e7100debd6f"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/summary_metrics.json",
+      "destination": "notebooks/Yaqi/history/20261022/summary_metrics.json",
+      "bytes": 293,
+      "sha256": "aecfbcf338c240d12dbbb56cce4fedf926709eb2f58f6a58b6042f83f44a16d8"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/test_results.txt",
+      "destination": "notebooks/Yaqi/history/20261022/test_results.txt",
+      "bytes": 1840,
+      "sha256": "f556201218221b939fe831aae373bfde9ea4fcdad222dc2fd485f1ee25c7d0a9"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/verification.json",
+      "destination": "notebooks/Yaqi/history/20261022/verification.json",
+      "bytes": 616,
+      "sha256": "7764347907ebbcc08ce8867a6786f436696c337d74d63fc44c6c78598d6fce4c"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/xgboost_all_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261022/xgboost_all_by_flat_type.csv",
+      "bytes": 790,
+      "sha256": "9fae7bd0b1bf6ef25dd1390c1cc56616b8511b90071fa287ad67d8f0f05529f4"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/xgboost_all_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261022/xgboost_all_by_rent_approval_date.csv",
+      "bytes": 1796,
+      "sha256": "052c598fbc57e57d82d02b9cddbd0e6f13cc074a9d5bca6218bba4be5f85c491"
+    },
+    {
+      "source": "remote_outer_zip:outputs/trees/xgboost_all_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261022/xgboost_all_by_town.csv",
+      "bytes": 3435,
+      "sha256": "e3d9b826162785e275083850fb69b605cdf7e265cd94f93c14be2e6928573592"
+    },
+    {
+      "source": "remote_outer_zip:requirements.in",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/requirements.in.txt",
+      "bytes": 142,
+      "sha256": "f9965bc3f9f81105f4ec849899e0c7cafc3878d029399ba01a663ed0498bcc69"
+    },
+    {
+      "source": "remote_outer_zip:requirements.txt",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/requirements.txt.txt",
+      "bytes": 1128,
+      "sha256": "6d7fbdc18b9c3b015755b1e4275bcaa31a6c0c55ff7b13e6f41cf26bc619e782"
+    },
+    {
+      "source": "remote_outer_zip:scripts/analyze_trees.py",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/scripts/analyze_trees.py.txt",
+      "bytes": 9142,
+      "sha256": "5ab3ba10734262a3c209f1244d574cd46862af7d756ec51ee4064953c3745589"
+    },
+    {
+      "source": "remote_outer_zip:scripts/package_tree_results.py",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/scripts/package_tree_results.py.txt",
+      "bytes": 1669,
+      "sha256": "632920ac01f0aba54e6915abf5c7e73aa153fed3f871daf63fa0139bab300bfc"
+    },
+    {
+      "source": "remote_outer_zip:scripts/train_trees.py",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/scripts/train_trees.py.txt",
+      "bytes": 10817,
+      "sha256": "5fdde57cb71270d5b76602f5b3cff7e9b52801fc3a2aeaebede84ac1d9a05cb4"
+    },
+    {
+      "source": "remote_outer_zip:scripts/verify_tree_results.py",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/scripts/verify_tree_results.py.txt",
+      "bytes": 4050,
+      "sha256": "f101f64fded17f8ca8bb0319b8ac7ea275ee1c2bf49156c10c03026ba17aeae8"
+    },
+    {
+      "source": "remote_outer_zip:src/config.py",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/src/config.py.txt",
+      "bytes": 124,
+      "sha256": "696b35ecaa2c0a192b456e9cd0a1b15e9658647bdb09958e3cbe2fd3792e7930"
+    },
+    {
+      "source": "remote_outer_zip:src/features/pipeline.py",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/src/features/pipeline.py.txt",
+      "bytes": 2523,
+      "sha256": "4f9c622dab993cce5a5e1efa19819fb9626c03a5d6d725262be4db4e6a15f5d5"
+    },
+    {
+      "source": "remote_outer_zip:src/models/trees.py",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/src/models/trees.py.txt",
+      "bytes": 8172,
+      "sha256": "71451b9fc088c9c75eb9eaae6e2c00e186efaf91ba7f6c3b73f4da9f7c76b69d"
+    },
+    {
+      "source": "remote_outer_zip:tests/test_trees.py",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/tests/test_trees.py.txt",
+      "bytes": 3404,
+      "sha256": "bdfc3c57af1dde1ebe7f65ac9e47084b830f5f44218ed9067950f70927fc06e5"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T083645789390Z_730b776e/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T083645789390Z_730b776e/validation_predictions.csv",
+      "bytes": 4191132,
+      "sha256": "a53115c5235ebd21e62e71022b4a2ff9ba342f18d992c1a10df990a10e5d72fc"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T083647870161Z_ad188407/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T083647870161Z_ad188407/validation_predictions.csv",
+      "bytes": 4190237,
+      "sha256": "7244001a1226c1824ec6dc6705e425add064b1efd77f0a3acc6e82d031892350"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T084617188162Z_da35b454/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T084617188162Z_da35b454/validation_predictions.csv",
+      "bytes": 4190290,
+      "sha256": "13928b296cf5fa47a4d2119f84e3bb3cd7f852ca559197420ec19f30db1a7ad2"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T085632372185Z_8134631b/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085632372185Z_8134631b/validation_predictions.csv",
+      "bytes": 4190048,
+      "sha256": "fe2979c6f7621075de2714cd5046725e36ac0f2b565a02ce1c2fed7068d309ea"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T085637052299Z_76e8e9ba/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085637052299Z_76e8e9ba/validation_predictions.csv",
+      "bytes": 4190338,
+      "sha256": "9f6b9bafb30675f27e8862f998c024e11a9fe24940785dd39e338d991cb84995"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T085644178764Z_1f19df22/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085644178764Z_1f19df22/validation_predictions.csv",
+      "bytes": 4066095,
+      "sha256": "968e3168bcaceab4a88e4ee13fa7abcbbf7410ab9e6e1258cbd8a06e99e625d1"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T085656292472Z_d7bb7d02/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085656292472Z_d7bb7d02/validation_predictions.csv",
+      "bytes": 4190133,
+      "sha256": "e441b39b21621a94ca3a8b827b06600ea6a6ac4221f48920a68b04c590e6003f"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T085910786732Z_f8392471/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085910786732Z_f8392471/validation_predictions.csv",
+      "bytes": 4189966,
+      "sha256": "6d124ea07a8d4382e9d78acd342891de4ce8c6b0f739b2dfb86cb6841506f68a"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T085915407551Z_a6d20984/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085915407551Z_a6d20984/validation_predictions.csv",
+      "bytes": 4190023,
+      "sha256": "76eb4194251e96ca45aa75b7e35789158a862ef50df9b4bbb9c2721f4e98fcde"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T085920861885Z_55aefbc2/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T085920861885Z_55aefbc2/validation_predictions.csv",
+      "bytes": 4190265,
+      "sha256": "084f7c20cf28fc3cc6abdbf82b13e253fce64e0b9ad4eceb3cbd7fa77331dc47"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T090042018986Z_d27432b4/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T090042018986Z_d27432b4/validation_predictions.csv",
+      "bytes": 4190261,
+      "sha256": "75f3eee64ad369e80a99eb6c3d2211506d31d6f8251f2ba12ae3862d65babd38"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T090224250422Z_25902837/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T090224250422Z_25902837/validation_predictions.csv",
+      "bytes": 4190294,
+      "sha256": "dc9d72bb3c689e92cd19a79f9def4b0eb898cbfbebc6985c144f7dd93be3cbde"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T090228604888Z_d611e0af/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T090228604888Z_d611e0af/validation_predictions.csv",
+      "bytes": 4190390,
+      "sha256": "44e80eadfdc9b199caaf856a42ccc654d4baf5845b09d5cbfe1efeb78141455c"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/experiments/20261022T090435551251Z_0102e08b/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261022/experiments/20261022T090435551251Z_0102e08b/validation_predictions.csv",
+      "bytes": 4190390,
+      "sha256": "44e80eadfdc9b199caaf856a42ccc654d4baf5845b09d5cbfe1efeb78141455c"
+    },
+    {
+      "source": "remote_inner_zip:outputs/trees/submissions/20261022T090435551251Z_0102e08b.csv",
+      "destination": "notebooks/Yaqi/history/20261022/submissions/20261022T090435551251Z_0102e08b.csv",
+      "bytes": 1262617,
+      "sha256": "8ca7e2928057027ab1926311ae4b19bc9a4547cfb7e43d3790508418a01b36eb"
+    },
+    {
+      "source": "remote_root:UPLOAD_MANIFEST.json",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/UPLOAD_MANIFEST.json.txt",
+      "bytes": 1386,
+      "sha256": "4f05175d0dfd89bee4483b07b97dca13263b7b0cd1cd9ded128b8a57ce756db4"
+    },
+    {
+      "source": "remote_root:YAQI_RESULTS.md",
+      "destination": "notebooks/Yaqi/history/20261022/source_snapshot/YAQI_RESULTS.md.txt",
+      "bytes": 4823,
+      "sha256": "107dd2c00de6dddf3f7b32d5eeaa4781ba0b1da959d3fb13ba753ad51f6aad98"
+    },
+    {
+      "source": "remote_outer_zip:deliverables/manifest.json",
+      "destination": "notebooks/Yaqi/history/20261022/original_package_manifest.json",
+      "bytes": 3988,
+      "sha256": "f1af6d959459a79e8d51f2bf65f10e5dbd4fe487a954d7f7bd61ddefa6453c73"
+    },
+    {
+      "source": "local_verified_afternoon:audit_base.json",
+      "destination": "notebooks/Yaqi/history/20261103/audit_base.json",
+      "bytes": 181,
+      "sha256": "c30f369332726bf2a9d93d300b8dc1f1cb953536a46c9b4381aaace7e0e24280"
+    },
+    {
+      "source": "local_verified_afternoon:audit_location.json",
+      "destination": "notebooks/Yaqi/history/20261103/audit_location.json",
+      "bytes": 1833,
+      "sha256": "1d6254691d1de57f2a76c3a8761d564d94667dd7e9f627eb550c75a159e24b77"
+    },
+    {
+      "source": "local_verified_afternoon:audit_location_coe.json",
+      "destination": "notebooks/Yaqi/history/20261103/audit_location_coe.json",
+      "bytes": 3416,
+      "sha256": "fd6111018e16a6413b2a68c4e32a98e00335b1f9f02caffcaeef0b2136dfca21"
+    },
+    {
+      "source": "local_verified_afternoon:audit_location_economy_damped.json",
+      "destination": "notebooks/Yaqi/history/20261103/audit_location_economy_damped.json",
+      "bytes": 6053,
+      "sha256": "04e6209997c95d53b087897b12c65a50f1c1df7b44ac7cab99b3454cc7d0eb35"
+    },
+    {
+      "source": "local_verified_afternoon:audit_location_economy_last.json",
+      "destination": "notebooks/Yaqi/history/20261103/audit_location_economy_last.json",
+      "bytes": 6035,
+      "sha256": "d8eb496de066a9333c02284c81456abb72c6596f06c56d13e9634e0d96b60890"
+    },
+    {
+      "source": "local_verified_afternoon:audit_location_stocks.json",
+      "destination": "notebooks/Yaqi/history/20261103/audit_location_stocks.json",
+      "bytes": 5286,
+      "sha256": "c985a7cde7944798d3e965dc630f4bf6e78bf4dddda034620e5bf098cad20848"
+    },
+    {
+      "source": "local_verified_afternoon:best_by_stage.csv",
+      "destination": "notebooks/Yaqi/history/20261103/best_by_stage.csv",
+      "bytes": 1755,
+      "sha256": "76dec7ff06844cc65895e5a241fe8e118c47225372809d2c5b68997db3775952"
+    },
+    {
+      "source": "local_verified_afternoon:best_model.json",
+      "destination": "notebooks/Yaqi/history/20261103/best_model.json",
+      "bytes": 2395,
+      "sha256": "67c3c89e1b6c78a1566515abf316285931e61b2c122e4fa23a30a4ecf1a6db4b"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_base_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_base_by_flat_type.csv",
+      "bytes": 784,
+      "sha256": "bc82d2671c3510bcdf1869140d0143c057cacc780cba21f8a2239808be091a28"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_base_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_base_by_rent_approval_date.csv",
+      "bytes": 1802,
+      "sha256": "fa8efdd4e3064e54924df78fef03f1f9f8ee8955b60676e7370a40225eeedc27"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_base_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_base_by_town.csv",
+      "bytes": 3417,
+      "sha256": "53352e092abaab120e5648765117327d7185fd8688cc8b0be059bfc4284a2b72"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "32ccc8dfcbf2cb39b0821853e2e25d408586ddee0afe850eb356fab7f96d0d09"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_by_rent_approval_date.csv",
+      "bytes": 1802,
+      "sha256": "fe4632954bb3895f694d37a1089c4b8afa50a1b45021c52a9adb8482cdcceea1"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_by_town.csv",
+      "bytes": 3435,
+      "sha256": "03899a5ff13618c843d77dd28fac62722b51b3f302c9e189d7d1836bd6b96ba5"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_coe_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_coe_by_flat_type.csv",
+      "bytes": 782,
+      "sha256": "66b7129fa015e0e0afa3922e026a4a4b29ecd719def9b5c30f122a33b8769055"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_coe_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_coe_by_rent_approval_date.csv",
+      "bytes": 1797,
+      "sha256": "1f74cc718fb1ac0ad9f688fa355414af5199afb3583b1447015ffb76785a2cd6"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_coe_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_coe_by_town.csv",
+      "bytes": 3414,
+      "sha256": "675712ff88d8fa0c57f138c7afad951c12ea16acfe24a67ac5cdfa207c5e0108"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_economy_damped_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_economy_damped_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "3edb7b8c81fd4023141cfb4827ff1b0801de4c00190b889a734db689ab32b2e1"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_economy_damped_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_economy_damped_by_rent_approval_date.csv",
+      "bytes": 1796,
+      "sha256": "15e428126e4b4c13dcb1a3e4d0036eed38f9ef63cca13dc146926f1058d29427"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_economy_damped_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_economy_damped_by_town.csv",
+      "bytes": 3435,
+      "sha256": "e7147f956077f82b55f94d79e2f25da2e99355dc5089543ed3a8c46efac85c17"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_economy_last_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_economy_last_by_flat_type.csv",
+      "bytes": 785,
+      "sha256": "c2f434e30b455705bc55b75844f2af5ff9b0a211ada7ca4f42eaf965c8869fe5"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_economy_last_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_economy_last_by_rent_approval_date.csv",
+      "bytes": 1795,
+      "sha256": "d809c6eeaf219d78b3f18c47f49eb2668b8ede2e91228a3d02b4deaafe537192"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_economy_last_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_economy_last_by_town.csv",
+      "bytes": 3443,
+      "sha256": "83d55d1dd3601736d1e93af8129ad112f1af88f4074afc3a184fb1ff7a8eb2e3"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_stocks_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_stocks_by_flat_type.csv",
+      "bytes": 785,
+      "sha256": "dabf84a6967f7f05d41bc854584ded02c9c31063bcb0973ff05f1e14543b791f"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_stocks_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_stocks_by_rent_approval_date.csv",
+      "bytes": 1799,
+      "sha256": "1ad1ce28ba51a3eba9bfc3e541bfe67c0160136e406e8bf32b54bc5dbcf91d24"
+    },
+    {
+      "source": "local_verified_afternoon:catboost_location_stocks_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/catboost_location_stocks_by_town.csv",
+      "bytes": 3418,
+      "sha256": "a6d5516d6cd5bc1577f07e090066012be859bedfd954519a83a9ca80aa62a383"
+    },
+    {
+      "source": "local_verified_afternoon:comparison.csv",
+      "destination": "notebooks/Yaqi/history/20261103/comparison.csv",
+      "bytes": 8207,
+      "sha256": "3bd830fe941e16c1bb09fa1d9f2a2bc8d96d8aa1637e45ae543e06d9f2059b74"
+    },
+    {
+      "source": "local_verified_afternoon:covariates_location_coe.csv",
+      "destination": "notebooks/Yaqi/history/20261103/covariates_location_coe.csv",
+      "bytes": 9170,
+      "sha256": "6a48f31186322d622fe2d31a7d97475f5c9ec8e7ff7a186424b4664efc504fd9"
+    },
+    {
+      "source": "local_verified_afternoon:covariates_location_economy_damped.csv",
+      "destination": "notebooks/Yaqi/history/20261103/covariates_location_economy_damped.csv",
+      "bytes": 13948,
+      "sha256": "3e8d9f5e65a579d74f01c7596ad705e5d74f66580e2376860a8692ea1a76c3a8"
+    },
+    {
+      "source": "local_verified_afternoon:covariates_location_economy_last.csv",
+      "destination": "notebooks/Yaqi/history/20261103/covariates_location_economy_last.csv",
+      "bytes": 11603,
+      "sha256": "d8a0fd9fbeccb7554692d33502583aec7e814d7da92e136bc1a97cce2c1ca10b"
+    },
+    {
+      "source": "local_verified_afternoon:covariates_location_stocks.csv",
+      "destination": "notebooks/Yaqi/history/20261103/covariates_location_stocks.csv",
+      "bytes": 7128,
+      "sha256": "928805dcdb64057a943080c90d716c14bb5ef49efba936673727b5fc3fb0f563"
+    },
+    {
+      "source": "local_verified_afternoon:distance_statistics.csv",
+      "destination": "notebooks/Yaqi/history/20261103/distance_statistics.csv",
+      "bytes": 604,
+      "sha256": "509b3d13efd19cfaaa2934d6835c4e17aa17146ced30130ccde0b511e0c58662"
+    },
+    {
+      "source": "local_verified_afternoon:environment.json",
+      "destination": "notebooks/Yaqi/history/20261103/environment.json",
+      "bytes": 1981,
+      "sha256": "892be4dd6538c5e0281e441a38e65386624758f6ba76388c14b56b64f0d62f15"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T063958592981Z_c6d60758/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T063958592981Z_c6d60758/config.json",
+      "bytes": 5221,
+      "sha256": "e8dcf477c8dd2c23aa8cc16fcf572ea59c6e1a1828d418e1450c7eb8a5832577"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T063958592981Z_c6d60758/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T063958592981Z_c6d60758/validation_predictions.csv",
+      "bytes": 4190390,
+      "sha256": "44e80eadfdc9b199caaf856a42ccc654d4baf5845b09d5cbfe1efeb78141455c"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064222624109Z_e126e3f4/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064222624109Z_e126e3f4/config.json",
+      "bytes": 5547,
+      "sha256": "e8f52f6a2169af40f88688fccc276e50d61635c4328769b6626cd9d3cfabcb2a"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064222624109Z_e126e3f4/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064222624109Z_e126e3f4/validation_predictions.csv",
+      "bytes": 4190166,
+      "sha256": "c4210fa6c5eb2e821caa0071c982c331be977e9eae5a8bf2f717fa98ff6cb6d2"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064240052965Z_2b723e51/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064240052965Z_2b723e51/config.json",
+      "bytes": 6362,
+      "sha256": "de227bee21fce33fa74cb78ccb2c0c4937d3ff5334a44c2471585bb47230f328"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064240052965Z_2b723e51/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064240052965Z_2b723e51/validation_predictions.csv",
+      "bytes": 4066293,
+      "sha256": "4e51368e3b8a13d2d6e76b2c09bbd536bad1cacf72813708434a1df429666797"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064310753746Z_6972583c/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064310753746Z_6972583c/config.json",
+      "bytes": 5667,
+      "sha256": "2a9e449e34ea7a8c4a816ab4116e1c92bf5e2ef9fbc6c3f261456cab8916b372"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064310753746Z_6972583c/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064310753746Z_6972583c/validation_predictions.csv",
+      "bytes": 4190399,
+      "sha256": "e1f1fb6d5787e34f34e91489a74b95399a59b2e5e4fbc2be7a92e54d3564ae3e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064702203560Z_2d5cd4c7/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064702203560Z_2d5cd4c7/config.json",
+      "bytes": 5997,
+      "sha256": "31ae9f36fd97da600caf72c7039f71954ba5d4662248f8d71e78e04ee45af14e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064702203560Z_2d5cd4c7/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064702203560Z_2d5cd4c7/validation_predictions.csv",
+      "bytes": 4190102,
+      "sha256": "427e7bf55c15cc9d4ac43549d158efc893ee4c0b2feabc175fa5d187f50cd1bc"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064726451164Z_29aa2f0c/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064726451164Z_29aa2f0c/config.json",
+      "bytes": 6808,
+      "sha256": "9010835919f06182616730d9bc643d90144c0f7fa613047d20140175bcc6d827"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064726451164Z_29aa2f0c/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064726451164Z_29aa2f0c/validation_predictions.csv",
+      "bytes": 4066447,
+      "sha256": "cc8cac9b09df689b3811fe23a887dc2e6dce61a6ae569bcc3d91008d682e5360"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064800758768Z_fad60b21/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064800758768Z_fad60b21/config.json",
+      "bytes": 6411,
+      "sha256": "f1152ffe6ab5cf94904325e2e60ad942716645fdeedf16e94bd3e8f85412f884"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T064800758768Z_fad60b21/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T064800758768Z_fad60b21/validation_predictions.csv",
+      "bytes": 4190276,
+      "sha256": "953e27d02a90585b065bfddb5eb8467a06cfcd7166d486c06bff7eddc5280906"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065143121693Z_f3f31774/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065143121693Z_f3f31774/config.json",
+      "bytes": 6736,
+      "sha256": "fe6b1dab4a7b17cf84663166dc490df9e124bac67768bed84c4d665d570da31e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065143121693Z_f3f31774/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065143121693Z_f3f31774/validation_predictions.csv",
+      "bytes": 4189898,
+      "sha256": "3940a78d1666b37dee4e10730a6d62fbee51ef9dc980f12dab52ec28c5701a51"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065209030917Z_385447cf/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065209030917Z_385447cf/config.json",
+      "bytes": 7553,
+      "sha256": "458d59a640f9b9942379b501c49b02d79fdbb389ebc856117f5cf2ee5b347d6e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065209030917Z_385447cf/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065209030917Z_385447cf/validation_predictions.csv",
+      "bytes": 4066970,
+      "sha256": "ba92b25db2fdb78236356f9bf5c225f92a6d448c5b8b69e1640290bd66f022c4"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065244965199Z_f6deacc6/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065244965199Z_f6deacc6/config.json",
+      "bytes": 6096,
+      "sha256": "81b7378a3e00f9d86a6d69c38dfda82254d345f5c878741f7084ef26149b0235"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065244965199Z_f6deacc6/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065244965199Z_f6deacc6/validation_predictions.csv",
+      "bytes": 4190399,
+      "sha256": "4df4fa16d53e9a928f7c90d3c0e36dec182db6811171efb07594ffc1db7691f6"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065636515520Z_cbaf4330/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065636515520Z_cbaf4330/config.json",
+      "bytes": 6424,
+      "sha256": "629a401d5485d98beba881c1d22d052cf16f3cd49bd4e22d0e3a4bcd6d4c7362"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065636515520Z_cbaf4330/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065636515520Z_cbaf4330/validation_predictions.csv",
+      "bytes": 4189646,
+      "sha256": "9ccb470a17c98e6b0d4c522abbdd478047481a3ca1dc3aec1c310af4e065dfe7"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065702859778Z_52dd2a4f/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065702859778Z_52dd2a4f/config.json",
+      "bytes": 7237,
+      "sha256": "b411a4d36ac07469a02404a92cce1e7f0d6ef91e57278dc5248fb2faf09cb6f9"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065702859778Z_52dd2a4f/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065702859778Z_52dd2a4f/validation_predictions.csv",
+      "bytes": 4066565,
+      "sha256": "db5fb764ee42a6101f6a86df7fc333351d2f8d80402d103d60520b7db8b53d95"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065740958496Z_1792779d/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065740958496Z_1792779d/config.json",
+      "bytes": 6616,
+      "sha256": "ad82c2e3528a84c94477839d3dc67a11fda22637fc82e29cb69b28712fc34009"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T065740958496Z_1792779d/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T065740958496Z_1792779d/validation_predictions.csv",
+      "bytes": 4190294,
+      "sha256": "90a40bad03ace36d3606f0ff62979137d40bfe0878b215e5f763b3604bad2c82"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070132629211Z_6cc99cfd/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070132629211Z_6cc99cfd/config.json",
+      "bytes": 6944,
+      "sha256": "b8b46f0282769accefdf5285d45e03290da0eb2b822e81a317009589998a29ee"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070132629211Z_6cc99cfd/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070132629211Z_6cc99cfd/validation_predictions.csv",
+      "bytes": 4189856,
+      "sha256": "5d0821fb461caed7e172e8d6443db993338227f345dd337c9a07b650b7251b78"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070158696263Z_7bcec101/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070158696263Z_7bcec101/config.json",
+      "bytes": 7757,
+      "sha256": "41ede2db8545254fb0d4665298ee442cf7c06c4d1a06b362f5fe238badd5c59f"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070158696263Z_7bcec101/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070158696263Z_7bcec101/validation_predictions.csv",
+      "bytes": 4066522,
+      "sha256": "de329f471007044bb2ddcee930d28f912b27c4d99a8073313902e5ab46e889bb"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070238187370Z_76fe65d3/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070238187370Z_76fe65d3/config.json",
+      "bytes": 6630,
+      "sha256": "380356f2cf106406c7a6e109123f288cfdd047c432b77633b2352f889ec4ba75"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070238187370Z_76fe65d3/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070238187370Z_76fe65d3/validation_predictions.csv",
+      "bytes": 4190585,
+      "sha256": "8f1e99ddfd0918256f8bfb889ac6cb5679ca2d86c20c6e82c132cb9817d2679f"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070630768987Z_3a6f2544/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070630768987Z_3a6f2544/config.json",
+      "bytes": 6959,
+      "sha256": "f8aab927b6bc77bb83cebb13a9c71a27fc78b78f6b9e2fd8ab5d5b4e2eb72ec6"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070630768987Z_3a6f2544/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070630768987Z_3a6f2544/validation_predictions.csv",
+      "bytes": 4190119,
+      "sha256": "01988ace27d9930de34d19f275b9c5e9f0ccf5e3bd4a43e947189485182152ad"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070656537350Z_9e69a132/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070656537350Z_9e69a132/config.json",
+      "bytes": 7772,
+      "sha256": "847d7f99b0ae3b34510454a790a0c1dd8881525313801a30823412158b7ad686"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T070656537350Z_9e69a132/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T070656537350Z_9e69a132/validation_predictions.csv",
+      "bytes": 4066978,
+      "sha256": "54e27cf1b64fd26643bbc3012426508e8e820463d01ac0e71048ff2628b11dbf"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T072808265294Z_a76320ec/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T072808265294Z_a76320ec/config.json",
+      "bytes": 8586,
+      "sha256": "f0bd29e687aa1ce940d5ca00077c9ddde92561eb118d84bc7ce77b86040d5b8e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T072808265294Z_a76320ec/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T072808265294Z_a76320ec/validation_predictions.csv",
+      "bytes": 4190400,
+      "sha256": "80e23652932398ded572b399f4b646aaca110d9a8810e2727c0f9a3088f4749c"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T073839557549Z_db75438d/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T073839557549Z_db75438d/config.json",
+      "bytes": 8589,
+      "sha256": "a7eec3fbc573f36a3e207eeb6e96af7abc9ca430efcf5fc0ef3c69c946147310"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T073839557549Z_db75438d/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T073839557549Z_db75438d/validation_predictions.csv",
+      "bytes": 4190306,
+      "sha256": "1bf2a5976728c8390c26b9410108be143b07638c5845daada8a58a97c93cc555"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T073839834454Z_2ccef2b9/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T073839834454Z_2ccef2b9/config.json",
+      "bytes": 9049,
+      "sha256": "badc52e0c1543be3c96718e422055fe519275e7ed84074fe43ed9ff8fc64b20e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T073839834454Z_2ccef2b9/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T073839834454Z_2ccef2b9/validation_predictions.csv",
+      "bytes": 4190406,
+      "sha256": "2454ed55dd7a788c25f0154a1ac9790486f0da55afa794ca030ca65e030012cd"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T074845285184Z_b6e78b5f/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T074845285184Z_b6e78b5f/config.json",
+      "bytes": 9044,
+      "sha256": "d9d5434a0d95d7fa8fb60d59d4e45669ed4c94280852ce230d0db4308c9f799e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T074845285184Z_b6e78b5f/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T074845285184Z_b6e78b5f/validation_predictions.csv",
+      "bytes": 4190346,
+      "sha256": "c8e42e2895fa4d82b445380f643ff76048ce80983025e73105d2f90a424c2736"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T074910523835Z_0b232131/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T074910523835Z_0b232131/config.json",
+      "bytes": 9805,
+      "sha256": "f9e937cdb5d9c36e3b7eacd45e125336d5e96e19c9c71d4b3beefd74a4477d0a"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T074910523835Z_0b232131/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T074910523835Z_0b232131/validation_predictions.csv",
+      "bytes": 4190427,
+      "sha256": "6d6c14234be9c56ee354de4c4079b8c09a1d1d4ddf2f7afa33e628f10d6c27a7"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T080041904272Z_cb37c830/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T080041904272Z_cb37c830/config.json",
+      "bytes": 9806,
+      "sha256": "0cf1413ffb6a5a08ce95eb9085ef2e6a79907daa0f3ff825651617fef6edd2b3"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T080041904272Z_cb37c830/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T080041904272Z_cb37c830/validation_predictions.csv",
+      "bytes": 4190520,
+      "sha256": "f2eeb5141be0e9ebca5314e117d66f258c234c4bfdfd6d8bfd046f2c8319772e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T080101067991Z_e3b2fc2b/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T080101067991Z_e3b2fc2b/config.json",
+      "bytes": 9482,
+      "sha256": "96bf94863d1b61e159230fded3734e2d516fbf1b9086a973ba37b681a2f28270"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T080101067991Z_e3b2fc2b/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T080101067991Z_e3b2fc2b/validation_predictions.csv",
+      "bytes": 4190228,
+      "sha256": "8e66cff8f5c89f911217558d29efdc522772ef7c20b34cf2ff34178f02d06bc6"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T081147566738Z_1ada4d8c/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T081147566738Z_1ada4d8c/config.json",
+      "bytes": 10015,
+      "sha256": "85705c6458c3a889ca7c293b71224f3758c105561d35c40e79015781928001c6"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T081147566738Z_1ada4d8c/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T081147566738Z_1ada4d8c/validation_predictions.csv",
+      "bytes": 4190368,
+      "sha256": "fd5c033bd1169a564461c64c10f48a373c465db40a4f8d4362931e5d5418ee1a"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T081439541578Z_bdb2a040/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T081439541578Z_bdb2a040/config.json",
+      "bytes": 9481,
+      "sha256": "26c71fee4519a026b3153645af0429ba9189d289be85599015f0e4195eb4cb2a"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T081439541578Z_bdb2a040/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T081439541578Z_bdb2a040/validation_predictions.csv",
+      "bytes": 4190274,
+      "sha256": "78c53b6a7809c940ed65f4ae98ee8e1e9f5c501f2703237e9598a571b215dcdd"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T082225360386Z_e203f34a/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T082225360386Z_e203f34a/config.json",
+      "bytes": 10030,
+      "sha256": "5ab3e8a2dac7795cd4db64c0b18c81b136b4b2187b5e580f6bbb4277d6610cdf"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T082225360386Z_e203f34a/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T082225360386Z_e203f34a/validation_predictions.csv",
+      "bytes": 4190335,
+      "sha256": "2a74e72a8b06138ecd9d51456bc2606739b5370ba32f239e68dc8400383df081"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T082441220812Z_7b073e91/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T082441220812Z_7b073e91/config.json",
+      "bytes": 10016,
+      "sha256": "66dae64d0ba6bb1be8a500ad5754c368c2db370565607e6cccac02f6189b8dad"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T082441220812Z_7b073e91/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T082441220812Z_7b073e91/validation_predictions.csv",
+      "bytes": 4190554,
+      "sha256": "bf795855404c69370d9a204ad9762891e7c9c0bcca34de24da09c53f21737c1b"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T083415559096Z_1549ca33/config.json",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T083415559096Z_1549ca33/config.json",
+      "bytes": 10034,
+      "sha256": "3292165d5ae5f1e2920bffbba6cf14bf3cb48646459c7cec116fa318637569f4"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/20261103T083415559096Z_1549ca33/validation_predictions.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/20261103T083415559096Z_1549ca33/validation_predictions.csv",
+      "bytes": 4190275,
+      "sha256": "0d6cae54cf19fcd812331df8ae0b2ddd9712cc7f7eab31e7818dd7186b04f56e"
+    },
+    {
+      "source": "local_verified_afternoon:experiments/log.csv",
+      "destination": "notebooks/Yaqi/history/20261103/experiments/log.csv",
+      "bytes": 81924,
+      "sha256": "8cbe0b2fc7e600a140ff86350536a95f58f70ad31c4d76d46566412b6bb5a798"
+    },
+    {
+      "source": "local_verified_afternoon:extra_base_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_base_by_flat_type.csv",
+      "bytes": 785,
+      "sha256": "6a38fefe5e061d5eeb251844a62a264609a7bd8158e0889f1702e641d64732c1"
+    },
+    {
+      "source": "local_verified_afternoon:extra_base_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_base_by_rent_approval_date.csv",
+      "bytes": 1804,
+      "sha256": "f9af8812774c58aef964e4cf81f2567c3ee7afaab07ed022713f81ac34d54a4f"
+    },
+    {
+      "source": "local_verified_afternoon:extra_base_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_base_by_town.csv",
+      "bytes": 3421,
+      "sha256": "07379eccef12c2b9fa63e7feb219b18aaf755d63409281bf741cbaebbd637764"
+    },
+    {
+      "source": "local_verified_afternoon:extra_feature_importance.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_feature_importance.csv",
+      "bytes": 791,
+      "sha256": "fc7e9ee1a10679593314969b781bf860e1aef43bbf85715bfeb61c5989743752"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_by_flat_type.csv",
+      "bytes": 787,
+      "sha256": "607621e2eb71126aa6c765975a496bdc7e35cd8a4d58afdffa4b5e13647997bd"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_by_rent_approval_date.csv",
+      "bytes": 1802,
+      "sha256": "d5e3832d2a6d566a148305d5feb0534d6c92aa0b094439c9f79006e69a794e2c"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_by_town.csv",
+      "bytes": 3418,
+      "sha256": "50d9b63f8d49cdb19ba58d561f7a84f246e7f6f476dd4d71ee8be52beb8ecbdf"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_coe_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_coe_by_flat_type.csv",
+      "bytes": 787,
+      "sha256": "94a01ce3f0dbc757e665083dc523b99350affc889715d63a0116e99d4a9539c3"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_coe_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_coe_by_rent_approval_date.csv",
+      "bytes": 1795,
+      "sha256": "46cec48eb00d59f32c8c3146e194d8b7c97509dd6371614d5af22541f77dde39"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_coe_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_coe_by_town.csv",
+      "bytes": 3427,
+      "sha256": "c43e5f5105c70f267702d745f1acf95921911bdba3d6086e1ceaca58eff50328"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_economy_damped_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_economy_damped_by_flat_type.csv",
+      "bytes": 780,
+      "sha256": "e2641a898cb1beae128b41fe666507dc7880be9b98a84934838a48594cc747ec"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_economy_damped_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_economy_damped_by_rent_approval_date.csv",
+      "bytes": 1795,
+      "sha256": "43500df9c00d8e63ebdba9b0ce9d06db0a62f4f3269a30a1d2024d4b33555d31"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_economy_damped_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_economy_damped_by_town.csv",
+      "bytes": 3428,
+      "sha256": "3a5b03ca7dd987156f0f42bc5253a75a3d98225c4f4f7bb93217a8b08a3e2c60"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_economy_last_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_economy_last_by_flat_type.csv",
+      "bytes": 781,
+      "sha256": "c1c0995934a4e2ab8fefb9d4767ec46946136c95b7d95c8db3efec81c5d08ace"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_economy_last_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_economy_last_by_rent_approval_date.csv",
+      "bytes": 1799,
+      "sha256": "111815f8910a2ea6b7785e495126e7808a29b4cd200a85a48b33b898aa24c7a2"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_economy_last_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_economy_last_by_town.csv",
+      "bytes": 3426,
+      "sha256": "e6cfee694ecd30d03edc444017621b19e25a8011b4a496ff5ca31cca86cb7462"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_stocks_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_stocks_by_flat_type.csv",
+      "bytes": 785,
+      "sha256": "b75d0331eb28fc5d01b299b569f3fa9350df56141a117d2874a08ecd11c9d614"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_stocks_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_stocks_by_rent_approval_date.csv",
+      "bytes": 1803,
+      "sha256": "93436bbf6a3b3926e00feda38bbe23bd01e777238669faad1a5089b2f0973e8c"
+    },
+    {
+      "source": "local_verified_afternoon:extra_location_stocks_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/extra_location_stocks_by_town.csv",
+      "bytes": 3432,
+      "sha256": "9847e39b8f7a9a9b755fe0129e86e8287c21eae72bfc7795e810060565026fb9"
+    },
+    {
+      "source": "local_verified_afternoon:extra_model.json",
+      "destination": "notebooks/Yaqi/history/20261103/extra_model.json",
+      "bytes": 862,
+      "sha256": "4fba9afb5b0197e08fe0a9b7ae7f3d8eeae202bb1146666746efcdf042aba02d"
+    },
+    {
+      "source": "local_verified_afternoon:FEATURE_REPORT.md",
+      "destination": "notebooks/Yaqi/history/20261103/FEATURE_REPORT.md",
+      "bytes": 8482,
+      "sha256": "0627c6eb2323b60eac020a05ea0690933a16bed6706610677e62132bc08e37ab"
+    },
+    {
+      "source": "local_verified_afternoon:figures/economic_inputs.png",
+      "destination": "notebooks/Yaqi/history/20261103/figures/economic_inputs.png",
+      "bytes": 238540,
+      "sha256": "8b6e00eef142196af269fb7fd45a3fca5d7b188d3b2abd0ced1a0bddec730704"
+    },
+    {
+      "source": "local_verified_afternoon:figures/native_feature_importance.png",
+      "destination": "notebooks/Yaqi/history/20261103/figures/native_feature_importance.png",
+      "bytes": 99306,
+      "sha256": "845188a1fc8125e68a3fce4781d1518f93d8c4bcaeb4465d4e19559004e80a70"
+    },
+    {
+      "source": "local_verified_afternoon:figures/stage_comparison.png",
+      "destination": "notebooks/Yaqi/history/20261103/figures/stage_comparison.png",
+      "bytes": 194744,
+      "sha256": "f56ba8a019bba746c3d148f7d469c9c20a3f2ffe6797e23fe6dfb053488bfabf"
+    },
+    {
+      "source": "local_verified_afternoon:forest_comparison.csv",
+      "destination": "notebooks/Yaqi/history/20261103/forest_comparison.csv",
+      "bytes": 3247,
+      "sha256": "07be6e1fdb05528c97d3dc637bed84594c102769839c80dd513ee83522dfe533"
+    },
+    {
+      "source": "local_verified_afternoon:forest_merge.json",
+      "destination": "notebooks/Yaqi/history/20261103/forest_merge.json",
+      "bytes": 489,
+      "sha256": "84e1cecb66a4e670cb83f6103b42692ecd673c0dea42d70426400680841e69f8"
+    },
+    {
+      "source": "local_verified_afternoon:FOREST_REPORT.md",
+      "destination": "notebooks/Yaqi/history/20261103/FOREST_REPORT.md",
+      "bytes": 5565,
+      "sha256": "906de9cfe4cc59ac14a830bd9b2af6031c2840e14c281a376e5b85fbac525c3d"
+    },
+    {
+      "source": "local_verified_afternoon:forest_residual_correlations.csv",
+      "destination": "notebooks/Yaqi/history/20261103/forest_residual_correlations.csv",
+      "bytes": 301,
+      "sha256": "6d2e155717e96685b765780fee10ece51a1d8ddb93652140d4909c4ba8a4751c"
+    },
+    {
+      "source": "local_verified_afternoon:integrity.json",
+      "destination": "notebooks/Yaqi/history/20261103/integrity.json",
+      "bytes": 1980,
+      "sha256": "4de4b545b5eabf6d23d9bb601e511bd9092e1b8fead2d45bcc8a8b27d50a4b48"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_base_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_base_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "4657f9fceedc009993ec00210e261ed88f70e94ee5502a9db45dfcde4630cf8b"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_base_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_base_by_rent_approval_date.csv",
+      "bytes": 1795,
+      "sha256": "a69367d1409aa6a3b97ccced242e603ff388d8de752806018d8282d5fef790b0"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_base_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_base_by_town.csv",
+      "bytes": 3428,
+      "sha256": "d2464945cdce2a8c5dbcf0ed13267fbeedcf9e76905f92653a57a8b445a73e62"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_by_flat_type.csv",
+      "bytes": 788,
+      "sha256": "f46c5d77086cc1f1edc5976ae8bfe81f3a7fe40828e653694a4d017f5eae105e"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_by_rent_approval_date.csv",
+      "bytes": 1797,
+      "sha256": "3806c76bf0e8ee8738bc27f893a64e8cbeea23e90e541b89200aa62dbc399a5a"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_by_town.csv",
+      "bytes": 3431,
+      "sha256": "4914ba411f4512ed0078263465021ded4e947512b8ce999fd656102d875b4d75"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_coe_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_coe_by_flat_type.csv",
+      "bytes": 784,
+      "sha256": "d280c1faf2f248edc8ae188a56b5b2b0571f619f29048f74c4a718e74007fcad"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_coe_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_coe_by_rent_approval_date.csv",
+      "bytes": 1803,
+      "sha256": "6050c6c421c9a672ef92a13b03fb462af1fa1f5dad021f4297147aaa8e152f89"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_coe_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_coe_by_town.csv",
+      "bytes": 3424,
+      "sha256": "bf4d50ddc226b5015b107517777b60320f5729823151c9e36da86291c164408e"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_economy_damped_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_economy_damped_by_flat_type.csv",
+      "bytes": 786,
+      "sha256": "fbb8b0a97841997d521b039ebad1b4281a0b9c65c2ce7544e228814f802d78d3"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_economy_damped_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_economy_damped_by_rent_approval_date.csv",
+      "bytes": 1802,
+      "sha256": "6c2ec2de2d2ab6d79701c7a5d6170f6ecef01895faaab1449b0df4b355d86bd3"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_economy_damped_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_economy_damped_by_town.csv",
+      "bytes": 3435,
+      "sha256": "2909bc72aca842f297683021be0def326d889b0bf089a45a6f6293a117f3682f"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_economy_last_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_economy_last_by_flat_type.csv",
+      "bytes": 781,
+      "sha256": "b5e8a993bcc8e6f715a3d23e9ac255ac49abcb8c1ec14f0b37c97c41fb32689b"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_economy_last_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_economy_last_by_rent_approval_date.csv",
+      "bytes": 1806,
+      "sha256": "9c5d060e4e01eb96a58848bea5861fbe852ff18d73a6ee31acd81d83a60198aa"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_economy_last_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_economy_last_by_town.csv",
+      "bytes": 3425,
+      "sha256": "9efb1940b5fe35b0f9399d70618367b1292b651eedc297b6f27449e53b6eb77e"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_stocks_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_stocks_by_flat_type.csv",
+      "bytes": 785,
+      "sha256": "8b08c6d347f9fc66bb03b0a0fbbd39fa5f36ce0e158ec990a5782bcaed3b6fc2"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_stocks_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_stocks_by_rent_approval_date.csv",
+      "bytes": 1799,
+      "sha256": "887a378355f2eba7bbce99d5c7e4d92338ae8a33b389ef8d1db021650bb5d860"
+    },
+    {
+      "source": "local_verified_afternoon:lightgbm_location_stocks_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/lightgbm_location_stocks_by_town.csv",
+      "bytes": 3427,
+      "sha256": "042abf863cedc7c20d0d16e42c3016c40f9bb0d0f666ca1ade498fe3d9636de8"
+    },
+    {
+      "source": "local_verified_afternoon:location_model.json",
+      "destination": "notebooks/Yaqi/history/20261103/location_model.json",
+      "bytes": 563,
+      "sha256": "3b98f7f7040a96861661c91584505dfb03c02a0e63ffe7beb90fb9a227377886"
+    },
+    {
+      "source": "local_verified_afternoon:native_feature_importance.csv",
+      "destination": "notebooks/Yaqi/history/20261103/native_feature_importance.csv",
+      "bytes": 900,
+      "sha256": "07306afcbb0bef09ac66a6d91ae9d128cf6ec877d496d4a8f5755994ff0d6cb1"
+    },
+    {
+      "source": "local_verified_afternoon:rf_base_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_base_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "296754e4b0432243366bbf5d44c7e769a7c3d8d63ec46d1655a691f1bfa1b12e"
+    },
+    {
+      "source": "local_verified_afternoon:rf_base_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_base_by_rent_approval_date.csv",
+      "bytes": 1797,
+      "sha256": "b1bbdac67862421cb57eb47cc620fa710096757235dbf8670c98769361836980"
+    },
+    {
+      "source": "local_verified_afternoon:rf_base_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_base_by_town.csv",
+      "bytes": 3423,
+      "sha256": "ffe43763f741577e422d741e7df59241890b38b9db3b6a9b6b8efedd97fd839a"
+    },
+    {
+      "source": "local_verified_afternoon:rf_feature_importance.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_feature_importance.csv",
+      "bytes": 796,
+      "sha256": "a1de07fadfb5dd62c17c6ecbbd9ba79c5d822a44e2aa51403079cfccb32b9bce"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_by_flat_type.csv",
+      "bytes": 786,
+      "sha256": "8b39a0d6ced5bca0cf8e0750ece6d60da7b1ea9929a8896aa7a78f1e9cfa2723"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_by_rent_approval_date.csv",
+      "bytes": 1806,
+      "sha256": "dfb5ce8d47235024c5455646b502073cc564f32ae55bfc698fbacee8715a04d1"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_by_town.csv",
+      "bytes": 3423,
+      "sha256": "fe7b40dc8c2738786f7dd42b6143e6c2169e16d6ee0580b13c6351126e96fb6e"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_coe_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_coe_by_flat_type.csv",
+      "bytes": 783,
+      "sha256": "09783feb684555aaa8d2269af992a0ef606d753f983b35f647010480727a07d0"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_coe_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_coe_by_rent_approval_date.csv",
+      "bytes": 1798,
+      "sha256": "87ddfb8a44e51611ae51409e0bf336becadd64c0ab6005c3388c878b9dcd298d"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_coe_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_coe_by_town.csv",
+      "bytes": 3434,
+      "sha256": "14e076b2b1d757274a495449ee23bb23b913994e98704422b2aac7e0d3316598"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_economy_damped_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_economy_damped_by_flat_type.csv",
+      "bytes": 790,
+      "sha256": "8417584e4b5262efce3a93916f61bc245545e13bab5c2fd22b004403500a7c54"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_economy_damped_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_economy_damped_by_rent_approval_date.csv",
+      "bytes": 1801,
+      "sha256": "956072a19c934c8b0c975342b8b816a990a47226908487e246ca592fa85e9bb1"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_economy_damped_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_economy_damped_by_town.csv",
+      "bytes": 3444,
+      "sha256": "811b2879bd2e950ac2779a6b270dafc65a2225e08d3db5efce42a653baedecf3"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_economy_last_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_economy_last_by_flat_type.csv",
+      "bytes": 785,
+      "sha256": "da6d7a69dc55b8cd8c7596e7d2c51e48407c9663d2c49e441ac7fae7527f3a6e"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_economy_last_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_economy_last_by_rent_approval_date.csv",
+      "bytes": 1799,
+      "sha256": "31b4da2b59d3cab61f9ffca8b6b4c1567899cdade121d16aeb4429d5afebb79c"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_economy_last_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_economy_last_by_town.csv",
+      "bytes": 3432,
+      "sha256": "12f463308722b3c40d826049486ebeb256924dd4a146a403873b502dde4b58c6"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_stocks_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_stocks_by_flat_type.csv",
+      "bytes": 786,
+      "sha256": "d5953528e5b13352069c51606ab50848bfd121db817f262220884c6a82599658"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_stocks_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_stocks_by_rent_approval_date.csv",
+      "bytes": 1801,
+      "sha256": "dc4c252a3a06802a2db4125b59d30cc3a4250f86275f286999a74c2dd62d34b6"
+    },
+    {
+      "source": "local_verified_afternoon:rf_location_stocks_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/rf_location_stocks_by_town.csv",
+      "bytes": 3428,
+      "sha256": "562e33856bf6f368ba753b3ead0e5f07e75fd7f738b7ab1f4f7fe5ef526a9f5a"
+    },
+    {
+      "source": "local_verified_afternoon:rf_model.json",
+      "destination": "notebooks/Yaqi/history/20261103/rf_model.json",
+      "bytes": 854,
+      "sha256": "92b58ee74aec3edd3caf63bacfd9b83043ba4cc2aa03c8cee6886d37ccd984a2"
+    },
+    {
+      "source": "local_verified_afternoon:runs.json",
+      "destination": "notebooks/Yaqi/history/20261103/runs.json",
+      "bytes": 12662,
+      "sha256": "8d654e4f1283c95861511f39c81bff56fd36fb6acc40e0873be47b8fbfff4452"
+    },
+    {
+      "source": "local_verified_afternoon:signature.json",
+      "destination": "notebooks/Yaqi/history/20261103/signature.json",
+      "bytes": 4168,
+      "sha256": "649a0d16b1fbd4b155cec67c9eca3607e4d53022de49f3fa50e1e15d28ee5a90"
+    },
+    {
+      "source": "local_verified_afternoon:submissions/best_feature_model.csv",
+      "destination": "notebooks/Yaqi/history/20261103/submissions/best_feature_model.csv",
+      "bytes": 1262701,
+      "sha256": "9778f1428b0856ccc4fa69923a9f7474cbc4dff206c4d6d67cd7391aba610217"
+    },
+    {
+      "source": "local_verified_afternoon:submissions/extra_best_model.csv",
+      "destination": "notebooks/Yaqi/history/20261103/submissions/extra_best_model.csv",
+      "bytes": 1262808,
+      "sha256": "16e89118dd7badc613ce61bb85b016a31efa5455b1fc00deade5a0b48f7a9f36"
+    },
+    {
+      "source": "local_verified_afternoon:submissions/location_only_model.csv",
+      "destination": "notebooks/Yaqi/history/20261103/submissions/location_only_model.csv",
+      "bytes": 1262903,
+      "sha256": "b0bc97aff89be394010ad042ed26c2ce407baa6327990f7baddfb6e6082e9c65"
+    },
+    {
+      "source": "local_verified_afternoon:submissions/rf_best_model.csv",
+      "destination": "notebooks/Yaqi/history/20261103/submissions/rf_best_model.csv",
+      "bytes": 1262712,
+      "sha256": "b355efb9078b5e1033b0e8a93dd4f511b277216df656f49e4f6bd1270f3884a5"
+    },
+    {
+      "source": "local_verified_afternoon:summary_metrics.json",
+      "destination": "notebooks/Yaqi/history/20261103/summary_metrics.json",
+      "bytes": 302,
+      "sha256": "6d94215127d306e87d574e92a48d6d2ae123627948fe2bb32fa1ef1fc7c492fa"
+    },
+    {
+      "source": "local_verified_afternoon:verification.json",
+      "destination": "notebooks/Yaqi/history/20261103/verification.json",
+      "bytes": 2307,
+      "sha256": "8f7fc20f2801d712bc3ca81743e7b75c71721710f362e777e9aa4c657df5af4d"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_base_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_base_by_flat_type.csv",
+      "bytes": 784,
+      "sha256": "6a93caca1f41a70c53d34317bd5790b0343eab8dd7facb281961c19f0ae4ccf7"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_base_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_base_by_rent_approval_date.csv",
+      "bytes": 1804,
+      "sha256": "81c2b3e4833247704fae547285d05d841a7f7327ee292148d1fe3cb698e99e74"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_base_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_base_by_town.csv",
+      "bytes": 3433,
+      "sha256": "f5098c6143bb1cf74abe565fdfc6571003c4d0bd9e84403fec983737ad0fd4f9"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_by_flat_type.csv",
+      "bytes": 785,
+      "sha256": "60409aa640a6cc8544888339d5eb46b121a0f620e772ab4169655590f9428ed9"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_by_rent_approval_date.csv",
+      "bytes": 1800,
+      "sha256": "4e21b22f9be8774646fb51e5513ade610d04608e7f7912b61dcd833977d6971a"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_by_town.csv",
+      "bytes": 3432,
+      "sha256": "25861d0cd8f8492148d1c1e2eb65026f230638a5a8053c1a55f974710604c611"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_coe_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_coe_by_flat_type.csv",
+      "bytes": 789,
+      "sha256": "14507bc8b8610c018cb466c4aa0061ced9599acc27f43c237e68fcb4702c0368"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_coe_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_coe_by_rent_approval_date.csv",
+      "bytes": 1803,
+      "sha256": "2c5ba1f85ef9aed41608b29b4d93e1c5e9ada04e5f8c0c472e87da314d3bbca9"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_coe_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_coe_by_town.csv",
+      "bytes": 3432,
+      "sha256": "35566750054a3eb669c75e910c10e548d83d4c396cec3368086e593bd0902d25"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_economy_damped_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_economy_damped_by_flat_type.csv",
+      "bytes": 788,
+      "sha256": "763f40f62c7638cf5f15891bd712942143b5285b6b5a564f779f7adf289ef191"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_economy_damped_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_economy_damped_by_rent_approval_date.csv",
+      "bytes": 1798,
+      "sha256": "fc6664004d0b10d7af4cc269da1192b755f62ea9c470901725a4a181476bd78b"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_economy_damped_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_economy_damped_by_town.csv",
+      "bytes": 3425,
+      "sha256": "f479d59e7e086bea07b4ae0714d2c0f15b72b50565383a0fe0a13669389b1194"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_economy_last_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_economy_last_by_flat_type.csv",
+      "bytes": 781,
+      "sha256": "bda6d2b0487e064e3627b2a4864960d3baca4b2840895f3871b903b1db5314f0"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_economy_last_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_economy_last_by_rent_approval_date.csv",
+      "bytes": 1805,
+      "sha256": "164e9e013062e0676ee25d998ea9c16ee0f29259bc09d8139b86d7b184fe9bdb"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_economy_last_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_economy_last_by_town.csv",
+      "bytes": 3429,
+      "sha256": "4e50498239f593c37aceee6d3a5afc99d5a961d5673d8cdfbd259da8aeee1974"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_stocks_by_flat_type.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_stocks_by_flat_type.csv",
+      "bytes": 787,
+      "sha256": "635f1c8a88fed55cbfbff33453070cb1effb1d8d5df7260348c43c1c2d8bc729"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_stocks_by_rent_approval_date.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_stocks_by_rent_approval_date.csv",
+      "bytes": 1794,
+      "sha256": "9c580f632cd36f6984a13eeaecf8f3fc40d9cb3d36f9d0278ad26a7f7c32eaaf"
+    },
+    {
+      "source": "local_verified_afternoon:xgboost_location_stocks_by_town.csv",
+      "destination": "notebooks/Yaqi/history/20261103/xgboost_location_stocks_by_town.csv",
+      "bytes": 3435,
+      "sha256": "759087ead305213f5a7fd775209671b470e456e2c3f4cf9ae724df0594e697b4"
+    },
+    {
+      "source": "local_afternoon_source:scripts/train_feature_stages.py",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/scripts/train_feature_stages.py.txt",
+      "bytes": 19149,
+      "sha256": "5b00cf2f5d83225b2dae06b685f722a951f3ae713812cca9fa90ce0c5bfbe047"
+    },
+    {
+      "source": "local_afternoon_source:scripts/analyze_feature_stages.py",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/scripts/analyze_feature_stages.py.txt",
+      "bytes": 8729,
+      "sha256": "9d206674bca85ad4641f51216ddd22bd73c0a747ccd657379a9ab3a3fd13841f"
+    },
+    {
+      "source": "local_afternoon_source:scripts/merge_forest_experiments.py",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/scripts/merge_forest_experiments.py.txt",
+      "bytes": 4998,
+      "sha256": "09223f0037c251bb456a3cdd6fbf973f1b33341690057bde9e87a735ea599014"
+    },
+    {
+      "source": "local_afternoon_source:scripts/verify_feature_stages.py",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/scripts/verify_feature_stages.py.txt",
+      "bytes": 5964,
+      "sha256": "88a17dc46fdc78bd3edaf19386862b2878dd452968d46036f0aa8e9e912f0a8c"
+    },
+    {
+      "source": "local_afternoon_source:scripts/report_forest_supplement.py",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/scripts/report_forest_supplement.py.txt",
+      "bytes": 8406,
+      "sha256": "f71f719b4a3769457a52543b1fbecc9ca6cdde9e09ade287250ed8f58a9cef90"
+    },
+    {
+      "source": "local_afternoon_source:scripts/export_forest_candidate.py",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/scripts/export_forest_candidate.py.txt",
+      "bytes": 3806,
+      "sha256": "fe9a58e12c03eea5d001bea1cffbe09016e3f794fc438ea7bde46e7bbe034a57"
+    },
+    {
+      "source": "local_afternoon_source:scripts/export_location_candidate.py",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/scripts/export_location_candidate.py.txt",
+      "bytes": 2850,
+      "sha256": "f7d8b81bf2573407ecef02268bd7fdd9b9a97c7e2cf54053e14df5dbbb935e17"
+    },
+    {
+      "source": "local_afternoon_source:docs/FEATURE_STAGES.md",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/docs/FEATURE_STAGES.md.txt",
+      "bytes": 9223,
+      "sha256": "fd6fdb65866212025d4e6773fcaacd8ed929051a777284b68a32480867d5484a"
+    },
+    {
+      "source": "local_afternoon_source:notebooks/Yaqi_location_economy.ipynb",
+      "destination": "notebooks/Yaqi/history/20261103/source_snapshot/notebooks/Yaqi_location_economy.ipynb.txt",
+      "bytes": 3773,
+      "sha256": "3758a3101e2302715efe9ef4fdf7c486845ef2b436ae8384dfc1da3d98e4aa5f"
+    }
+  ]
+}

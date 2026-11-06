@@ -1,0 +1,104 @@
+# Yaqi：树模型训练
+
+此目录是 GitHub `data-cleaning` 分支（`6eb4f01`）的独立副本。原始 `data/` 和小组的 `data_cleaned/` 只读取。不要在上一级旧项目中运行这些命令。
+
+## 环境与入口
+
+在 VS Code 打开本目录，选择你已有的 Python 3.11 解释器；不需要新建 `.venv`。以下命令均在本目录终端运行：
+
+```powershell
+python -c "import sys; print(sys.executable)"
+python -m pip install -r requirements.in
+python -m unittest discover -s tests -v
+python scripts/train_trees.py --stage all --final
+```
+
+训练程序自动保存实际依赖版本到 `requirements.txt` 和 `outputs/trees/environment.json`。安装精确复现环境时可使用 `requirements.txt`；直接依赖维护在 `requirements.in`。
+
+## 分步运行
+
+```powershell
+# 七种模型/配置的首轮比较，两个共享验证窗口
+python scripts/train_trees.py --stage compare
+
+# 接着运行近期窗口与类别字段消融
+python scripts/train_trees.py --stage tune --resume
+
+# 合并已有结果，选择全部候选中两折平均最好的模型，并全量训练生成提交
+python scripts/train_trees.py --stage all --resume --final
+
+# 仅跑指定算法；一个新输出目录是一组独立实验
+python scripts/train_trees.py --models lightgbm catboost --output outputs/boosting
+
+# 较快试验：只跑主验证，不能把结果写成两折成绩
+python scripts/train_trees.py --stage compare --models lightgbm --split holdout --output outputs/quick
+```
+
+`--threads 4` 控制 CPU 使用；默认不使用 GPU。`--resume` 只跳过同一输出目录里已成功完成且数据/模型代码/种子/切分一致的候选。失败候选会记录原因，并使程序返回失败状态，不会被伪装成成功。
+
+## 与公共框架的关系
+
+树模型通过 `src/models/trees.py::tree_model` 接入原有 `run_experiment()`，不另外实现一套验证或提交逻辑。只启用已有的 `basic`、`block` 特征块，不占用队友的预留模块名。
+
+另有一项框架兼容修复：`FeaturePipeline` 继承 `BaseEstimator`，使当前 scikit-learn 的 `check_is_fitted` 能读取 estimator tags，公开调用接口不变。CatBoost 在适配器的 `fit` 中创建，避免该版本对类别列表参数复制导致 sklearn `clone` 失败。
+
+参考 HistGradientBoosting 的 120 轮配置保留，并从头复跑。根据用户项目规则，独立副本的 `src/config.py::SEED` 从仓库历史的 5228 改为 42；所有本轮模型共用 42。迁回团队仓库时与 P1 统一种子，并在最终种子下重新运行，不能静默混合两套分数。
+
+- split A：训练 2021-01—2023-11，验证 2023-12—2025-03。
+- split B：训练 2021-01—2024-03，验证 2024-04—2025-03。
+- 报告分别列 A、B 和简单平均。两折验证时间重叠，不是两个独立测试集。
+- `12m`、`24m` 在每折训练截止月往前取完整日历月份；不会从验证段抽样。
+- 固定轮数训练，不把这两个报告窗口的标签传给早停。
+- 填补、类别词表、one-hot 都在训练折拟合。CatBoost 使用原生类别处理，缺失类别显式转字符串；LightGBM/XGBoost 使用训练词表固定的 pandas category，未知类别作为缺失。
+- 随机森林/ExtraTrees 使用 one-hot，避免把街道的任意编码误当成连续数值。
+- 参考 Hist 模型使用原有特征列，其余树模型增加 STREET 和类别 FLAT_TYPE，因此与 reference 的差值包含算法和特征表达变化；完整算法对照看 all 中 RF/ExtraTrees/LightGBM/XGBoost/CatBoost。
+- 不删除重复/低租金记录，不使用验证期租金做目标编码，不引入未来宏观数据或历史日期不明的设施快照。
+- 这两个窗口参与了模型选择，最终开发验证成绩有选择偏差。后续可增加更早截止点检验稳定性，或使用真实 Kaggle 分数评估。
+
+## 输出
+
+- `outputs/trees/TREE_REPORT.md`：中文结果说明。
+- `outputs/trees/comparison.csv`：逐模型 A/B RMSE、平均值、耗时。
+- `outputs/trees/runs.json`：候选参数、成功/失败、实验 ID。
+- `outputs/trees/experiments/log.csv`：公共框架格式的实验日志。
+- `outputs/trees/experiments/<run_id>/config.json`：完整模型与验证配置。
+- `outputs/trees/experiments/<run_id>/validation_predictions.csv`：可交给 P1 融合的逐行预测。
+- `outputs/trees/*_by_*.csv`：月份、镇区、房型的误差与偏差。
+- `outputs/trees/best_model.json`：选择的配置和提交路径。
+- `outputs/trees/submissions/<run_id>.csv`：指定 `--final` 后生成，共 50000 行，`Id,Predicted`，编号与样例逐行核对。
+- `outputs/trees/integrity.json`：原始及清洗 CSV 的 SHA-256 与训练后不变检查。
+
+公共框架当前不保存训练好的模型对象；参数与训练入口均已保存，可重现并交给 P1。程序不会上传 Kaggle 或推送 GitHub。
+
+## 图表、解释与保存模型
+
+训练完成后可运行：
+
+```powershell
+python scripts/analyze_trees.py --explain --export-final
+python scripts/verify_tree_results.py
+```
+
+此命令生成比较图、最佳模型逐月误差图，并重新拟合 split A 模型计算 2000 条验证样本、3 次重复的置换重要性。先核对复现的完整 A 分数，再解释预测；重要性不是因果效应，相关特征可能分摊重要性。
+
+`--export-final` 用全量训练集拟合并保存 `outputs/trees/models/best_tree.joblib`，重新加载后检查全部 50000 个预测与已生成提交一致。复用示例：
+
+```python
+import joblib
+from src.data_cleaning import load_test
+
+bundle = joblib.load("outputs/trees/models/best_tree.joblib")
+prediction = bundle["model"].predict(bundle["features"].transform(load_test()))
+```
+
+模型重载时需要当前项目的 `src` 可被导入，并使用记录的依赖版本。
+
+复核程序从每个模型保存的逐行验证预测重新计算 A/B 分数，核对验证行位置、日期和真实标签、最佳模型选择、全部测试编号与原始文件哈希。结果保存在 `outputs/trees/verification.json`；各近期训练窗口的实际日期与样本数保存在 `outputs/trees/actual_fit_windows.csv`。
+
+Notebook 入口为 `notebooks/Yaqi_tree_models.ipynb`，可查看已有结果，也可继续训练。
+
+## 技术资料
+
+- https://catboost.ai/docs/en/concepts/python-reference_catboostregressor
+- https://lightgbm.readthedocs.io/en/latest/pythonapi/lightgbm.LGBMRegressor.html
+- https://xgboost.readthedocs.io/en/latest/tutorials/categorical.html

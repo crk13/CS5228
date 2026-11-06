@@ -1,0 +1,10 @@
+{
+  "best_name": "catboost_address_24m",
+  "split_a": 493.6174956233871,
+  "split_b": 477.30881345031713,
+  "mean_rmse": 485.4631545368521,
+  "seed": 42,
+  "reference_mean_rmse": 489.3963183783835,
+  "improvement_sgd": 3.9331638415314387,
+  "improvement_percent": 0.8036766305402524
+}

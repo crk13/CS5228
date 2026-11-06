@@ -1,0 +1,58 @@
+"""Keep the location-only model alongside the validation-selected winner."""
+
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+import joblib
+import numpy as np
+import pandas as pd
+from threadpoolctl import threadpool_limits
+from src.data_cleaning import load_train, load_test, TARGET
+from src.experiment import write_submission
+from src.features import FeaturePipeline
+from scripts.train_feature_stages import build, blocks, write_json
+
+OUT = ROOT / "outputs/location_economy_20261103"
+
+
+def main():
+    comparison = pd.read_csv(OUT / "comparison.csv")
+    chosen = comparison.loc[comparison.scenario.eq("location")].sort_values("mean_rmse").iloc[0]
+    best = json.loads((OUT / "best_model.json").read_text(encoding="utf-8"))
+    train, test = load_train(), load_test()
+    with threadpool_limits(limits=4):
+        if best["scenario"] == "location" and best["kind"] == chosen.kind:
+            bundle = joblib.load(ROOT / best["model"])
+            pipeline, model = bundle["features"], bundle["model"]
+        else:
+            pipeline = FeaturePipeline(blocks("location"))
+            X = pipeline.fit_transform(train)
+            model = build(chosen.kind, "location", 4).fit(X, train[TARGET])
+        prediction = model.predict(pipeline.transform(test))
+        artifact = OUT / "models/location_only_model.joblib"
+        joblib.dump({"features": pipeline, "model": model, "scenario": "location", "kind": chosen.kind,
+                     "seed": 42, "actual_fit_rows": model.fit_rows_, "fit_start": model.fit_start_,
+                     "fit_end": model.fit_end_}, artifact, compress=3)
+        path = write_submission(test, prediction, OUT / "submissions/location_only_model.csv")
+        sample = pd.read_csv(ROOT / "data/example-submission.csv")
+        submission = pd.read_csv(path)
+        np.testing.assert_array_equal(sample.Id, submission.Id)
+        restored = joblib.load(artifact)
+        np.testing.assert_allclose(restored["model"].predict(restored["features"].transform(test)),
+                                   submission.Predicted, atol=1e-6, rtol=0)
+    write_json(OUT / "location_model.json", {"kind": chosen.kind, "scenario": "location",
+               "split_a": float(chosen.split_a), "split_b": float(chosen.split_b), "mean_rmse": float(chosen.mean_rmse),
+               "validation_run_id": chosen.run_id, "model": artifact.relative_to(ROOT).as_posix(),
+               "submission": path.relative_to(ROOT).as_posix(), "reload_matches_submission": True,
+               "test_rows": len(test), "actual_fit_rows": model.fit_rows_,
+               "fit_start": model.fit_start_, "fit_end": model.fit_end_,
+               "economy_features_used": False})
+    print(f"Location-only candidate saved: {path}")
+
+
+if __name__ == "__main__":
+    main()

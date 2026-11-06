@@ -1,0 +1,17 @@
+{
+  "name": "catboost_address_24m",
+  "specification": {
+    "kind": "catboost",
+    "months": 24,
+    "address": true
+  },
+  "seed": 42,
+  "validation": {
+    "holdout": 493.6174956233871,
+    "rolling_2024_04": 477.30881345031713
+  },
+  "mean_rmse": 485.46315453685213,
+  "submission": "outputs\\trees\\submissions\\20261022T090435551251Z_0102e08b.csv",
+  "run_id": "20261022T090435551251Z_0102e08b",
+  "generated_at": "2026-10-22T09:07:40.275410+00:00"
+}

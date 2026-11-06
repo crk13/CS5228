@@ -1,0 +1,107 @@
+"""Compact report of all six forest stages, preserving the full A/B details."""
+
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+import pandas as pd
+from scripts.train_feature_stages import LABELS, SCENARIOS
+
+OUT = ROOT / "outputs/location_economy_20261103"
+
+
+def main():
+    frame = pd.read_csv(OUT / "comparison.csv")
+    assert len(frame) == 30
+    forests = frame.loc[frame.kind.isin(["rf", "extra"])].copy()
+    assert len(forests) == 12
+    forests.to_csv(OUT / "forest_comparison.csv", index=False)
+    lines = ["# 随机森林与 ExtraTrees：补充实验", "",
+             "已补齐两种森林各六阶段，共 12 组、24 次真实时间验证；与原 18 组合并后共五类模型、30 组配置。",
+             "", "| 特征阶段 | RF A | RF B | RF 平均 | ExtraTrees A | ExtraTrees B | ExtraTrees 平均 |",
+             "|---|---:|---:|---:|---:|---:|---:|"]
+    for scenario in SCENARIOS:
+        rf = forests.loc[forests.kind.eq("rf") & forests.scenario.eq(scenario)].iloc[0]
+        extra = forests.loc[forests.kind.eq("extra") & forests.scenario.eq(scenario)].iloc[0]
+        lines.append(f"| {LABELS[scenario]} | {rf.split_a:.3f} | {rf.split_b:.3f} | {rf.mean_rmse:.3f} | {extra.split_a:.3f} | {extra.split_b:.3f} | {extra.mean_rmse:.3f} |")
+    lines += ["", "## 固定方案与口径", "",
+              "- 与提升树共用 A/B 窗口、最近 24 个月训练、种子 42、原始字段＋楼栋字段＋邮编与楼号。",
+              "- 两种森林均为 160 棵树、max_depth=24、min_samples_leaf=8、max_features=0.8、4 线程。",
+              "- 类别 one-hot 每字段最多 32 类，训练中低频类别合并；模型选定的输入字段全部保留，词表、分组及数值填补仅在当前训练窗口拟合。",
+              "- 模型参数和编码预算在六阶段之间固定。本次与最早全历史、未限制 one-hot 类别上限的森林实验不同，必须与本次各自的 base 比较。",
+              "- 设施为文件快照；历史启用日期未知。经济输入仍遵守各折固定截止点，未来实测值不进入特征。",
+              "- 两种独立模型在不同目录并行，每进程 4 线程；源数据、代码、版本及切分指纹一致后才合并，原 18 组实验 ID 不变。",
+              "- A/B 验证窗口有重叠且参与配置选择；这些是开发验证成绩，不是独立测试或 Kaggle 排行榜成绩。",
+              "", "## 本轮结论", ""]
+    for kind in ("rf", "extra"):
+        group = forests.loc[forests.kind.eq(kind)]
+        selected = group.loc[group.mean_rmse.idxmin()]
+        base = group.loc[group.scenario.eq("base")].iloc[0]
+        location = group.loc[group.scenario.eq("location")].iloc[0]
+        economy = group.loc[~group.scenario.isin(["base", "location"])].sort_values("mean_rmse").iloc[0]
+        lines += [f"- {kind} 最低平均为 {selected.mean_rmse:.3f} SGD，对应 {LABELS[selected.scenario]}。",
+                  f"- {kind} 位置相对基础变化：{location.mean_rmse - base.mean_rmse:+.3f} SGD；最佳经济阶段相对位置变化：{economy.mean_rmse - location.mean_rmse:+.3f} SGD。负数表示改善。"]
+    best = frame.loc[frame.mean_rmse.idxmin()]
+    metadata = json.loads((OUT / "best_model.json").read_text(encoding="utf-8"))
+    assert best["name"] == metadata["name"]
+    lines += ["", f"五类模型合并后最低平均仍按实际结果选择：**{best['name']}，A={best.split_a:.3f}，B={best.split_b:.3f}，平均={best.mean_rmse:.3f} SGD**。",
+              "这些结论只对应本次有限配置，不能据此宣称某算法在所有参数下都更优。",
+              "", "## 最佳森林配置的地区误差", "",
+              "每个模型、每个验证窗口列出至少 100 条样本的地区中 RMSE 最高的三个；两窗口分别计算，不合并重叠记录。偏差为预测减真实租金，负值表示平均低估。",
+              "", "| 模型 | 窗口 | 地区 | 样本数 | RMSE | 平均偏差 |",
+              "|---|---|---|---:|---:|---:|"]
+    for kind in ("rf", "extra"):
+        selected = forests.loc[forests.kind.eq(kind)].sort_values("mean_rmse").iloc[0]
+        towns = pd.read_csv(OUT / f"{selected['name']}_by_town.csv")
+        for fold, title in (("holdout", "A"), ("rolling_2024_04", "B")):
+            worst = towns.loc[towns.fold.eq(fold) & towns.rows.ge(100)].nlargest(3, "rmse")
+            for row in worst.itertuples():
+                lines.append(f"| {kind} | {title} | {row.TOWN} | {row.rows} | {row.rmse:.3f} | {row.bias:+.3f} |")
+    lines += ["", "后续可优先检查这些地区的高租金记录、地址类别覆盖与缺失情况，再单独设计编码或参数实验。本次没有根据这些误差重新调参。",
+              "", "## 最终森林使用的字段", "",
+              "以下为按源字段汇总的模型原生重要性；它是拟合后的描述，不是新增特征带来收益的证明，也不是因果效应。", ""]
+    for kind in ("rf", "extra"):
+        fitted = json.loads((OUT / f"{kind}_model.json").read_text(encoding="utf-8"))
+        lines.append(f"- {kind}：可用 {fitted['available_train_rows']} 条，最终实际拟合 {fitted['actual_fit_rows']} 条（{fitted['fit_start']}—{fitted['fit_end']}）；{fitted['raw_feature_count']} 个源字段，编码后 {fitted['encoded_feature_count']} 列。")
+        importance = pd.read_csv(OUT / f"{kind}_feature_importance.csv").nlargest(5, "importance")
+        top = "、".join(f"{r.feature}（{r.importance:.1%}）" for r in importance.itertuples())
+        lines.append(f"- {kind}：{top}。")
+    lines += ["", "## 与当前推荐模型的误差相关性", "",
+              "各折按 (fold, row_index) 一一对齐，只比较相同行的预测误差；相关性低可能提供互补信息，但不保证融合后改善。本次没有拟合融合权重。",
+              "", "| 森林模型 | 对照模型 | 窗口 | 对齐行数 | 误差 Pearson 相关系数 |",
+              "|---|---|---|---:|---:|"]
+    reference = pd.read_csv(ROOT / best.run_dir / "validation_predictions.csv")
+    correlations = []
+    for kind in ("rf", "extra"):
+        selected = forests.loc[forests.kind.eq(kind)].sort_values("mean_rmse").iloc[0]
+        prediction = pd.read_csv(ROOT / selected.run_dir / "validation_predictions.csv")
+        aligned = prediction.merge(reference, on=["fold", "row_index"], suffixes=("_forest", "_reference"),
+                                   how="inner", validate="one_to_one")
+        assert len(aligned) == len(prediction) == len(reference)
+        assert aligned.MONTHLY_RENT_forest.equals(aligned.MONTHLY_RENT_reference)
+        for fold, title in (("holdout", "A"), ("rolling_2024_04", "B")):
+            part = aligned.loc[aligned.fold.eq(fold)]
+            residual = part.Predicted_forest - part.MONTHLY_RENT_forest
+            reference_residual = part.Predicted_reference - part.MONTHLY_RENT_reference
+            correlation = float(residual.corr(reference_residual))
+            correlations.append({"kind": kind, "reference": best["name"], "fold": fold,
+                                 "rows": len(part), "residual_pearson": correlation})
+            lines.append(f"| {kind} | {best['name']} | {title} | {len(part)} | {correlation:.4f} |")
+    pd.DataFrame(correlations).to_csv(OUT / "forest_residual_correlations.csv", index=False)
+    lines += [
+              "", "## 交付", "",
+              "- 完整比较：comparison.csv；本补充表：forest_comparison.csv。",
+              "- 逐行验证预测与参数：experiments/<run_id>/，可按 (fold, row_index) 与队友结果对齐。",
+              "- RF 模型与提交：models/rf_best_model.joblib、submissions/rf_best_model.csv。",
+              "- ExtraTrees 模型与提交：models/extra_best_model.joblib、submissions/extra_best_model.csv。",
+              "- 各字段重要性：rf_feature_importance.csv、extra_feature_importance.csv（已汇总编码列和缺失指示列）。",
+              "- 数据、分数及模型重载复核：verification.json；独立进程合并记录：forest_merge.json。"]
+    (OUT / "FOREST_REPORT.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print("Forest report written.")
+
+
+if __name__ == "__main__":
+    main()

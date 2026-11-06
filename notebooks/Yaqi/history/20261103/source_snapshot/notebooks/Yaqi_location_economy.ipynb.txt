@@ -1,0 +1,16 @@
+{
+ "cells": [
+  {"cell_type":"markdown","metadata":{},"source":["# Yaqi：位置与经济特征分阶段实验\n","使用现有 Python 3.11 内核。先在原有特征上加入设施距离，再尝试 COE、股票与组合。所有阶段共用 A/B 时间划分、种子 42、24 个月训练窗口和固定模型参数。\n","\n","设施是提供文件的快照，缺少历史启用日期。经济数据在每折截止时点截断，未来值由历史预测，不读取验证期实测值。详细说明见 `docs/FEATURE_STAGES.md`。"]},
+  {"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":["from pathlib import Path\n","import sys, subprocess\n","roots = [Path.cwd(), Path.cwd() / 'tree-models', *Path.cwd().parents]\n","ROOT = next(p for p in roots if (p / 'scripts/train_feature_stages.py').exists())\n","sys.path.insert(0, str(ROOT))\n","print('项目目录:', ROOT)\n","print('当前解释器:', sys.executable)\n","OUT = ROOT / 'outputs/location_economy_20261103'\n"]},
+  {"cell_type":"markdown","metadata":{},"source":["## 训练或继续实验\n","下一格使用 4 个 CPU 线程，运行五种模型各六组特征（30 组），并生成验证最佳配置的提交文件。已完成结果会复用；仅查看结果可跳过此格。随机森林与 ExtraTrees 的类别编码每字段最多 32 类，低频类别合并；六阶段参数与编码预算固定。详细复现及独立进程合并步骤见 `docs/FEATURE_STAGES.md`。"]},
+  {"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":["command = [sys.executable, '-u', str(ROOT / 'scripts/train_feature_stages.py'), '--models', 'catboost', 'lightgbm', 'xgboost', 'rf', 'extra', '--resume', '--final']\n","subprocess.run(command, cwd=ROOT, check=True)\n"]},
+  {"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":["import pandas as pd\n","from IPython.display import display, Markdown, Image\n","results = pd.read_csv(OUT / 'comparison.csv')\n","display(results[['kind', 'scenario', 'split_a', 'split_b', 'mean_rmse', 'change_vs_base', 'change_vs_location']].round(3))\n","display(Markdown((OUT / 'FEATURE_REPORT.md').read_text(encoding='utf-8')))\n","display(Image(filename=str(OUT / 'figures/stage_comparison.png')))\n"]},
+  {"cell_type":"markdown","metadata":{},"source":["## 两种森林补充结果\n","以下按相同特征阶段比较 RandomForest 与 ExtraTrees 的真实验证成绩。完整 A/B 表、参数和模型路径见 `FOREST_REPORT.md`。"]},
+  {"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":["forests = results.loc[results.kind.isin(['rf', 'extra'])]\n","display(forests[['kind', 'scenario', 'split_a', 'split_b', 'mean_rmse']].round(3))\n","forest_report = OUT / 'FOREST_REPORT.md'\n","if forest_report.exists():\n","    display(Markdown(forest_report.read_text(encoding='utf-8')))\n"]},
+  {"cell_type":"markdown","metadata":{},"source":["## 检查宏观信息边界与最终配置\n","A 只读到 2023-10；B 只读到 2024-02；最终训练只读到 2025-02。`covariates_*.csv` 标记各月份是否使用预测协变量。未来实测 COE/股票已提供在文件中，但没有用于这些实验。"]},
+  {"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":["import json\n","print((OUT / 'verification.json').read_text(encoding='utf-8'))\n","print((OUT / 'best_model.json').read_text(encoding='utf-8'))\n","covariates = pd.read_csv(OUT / 'covariates_location_economy_last.csv')\n","display(covariates.loc[covariates['covariate_is_forecast']].head())\n"]}
+ ],
+ "metadata":{"kernelspec":{"display_name":"Python 3","language":"python","name":"python3"},"language_info":{"name":"python","version":"3.11.9"}},
+ "nbformat":4,
+ "nbformat_minor":4
+}

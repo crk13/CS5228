@@ -1,0 +1,81 @@
+import sys
+from pathlib import Path
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "tests"))
+
+"""Protect fold isolation, unseen-category handling, and the model contract."""
+
+import importlib.util
+import unittest
+
+import numpy as np
+import pandas as pd
+from sklearn.base import BaseEstimator, RegressorMixin, clone
+from threadpoolctl import threadpool_limits
+
+from src.models.trees import NativeFrame, RecentWindowRegressor, tree_model
+
+
+class RecordFit(RegressorMixin, BaseEstimator):
+    def fit(self, X, y):
+        self.indices_ = X.index.tolist()
+        self.y_ = np.asarray(y)
+        return self
+
+    def predict(self, X):
+        return np.full(len(X), self.y_.mean())
+
+
+class TreeTests(unittest.TestCase):
+    def test_recent_window_uses_calendar_months_and_positional_targets(self):
+        frame = pd.DataFrame({"RENT_APPROVAL_DATE": ["2023-12", "2023-06", "2023-07"]}, index=[90, 20, 40])
+        model = clone(RecentWindowRegressor(RecordFit(), 6)).fit(frame, [4000, 1, 3000])
+        self.assertEqual(model.estimator_.indices_, [90, 40])
+        np.testing.assert_array_equal(model.estimator_.y_, [4000, 3000])
+        self.assertEqual(model.fit_start_, "2023-07")
+        self.assertEqual(model.fit_end_, "2023-12")
+
+    def test_vocabulary_cannot_learn_from_validation(self):
+        training = pd.DataFrame({"x": [1, np.nan], "town": pd.Series(["a", None], dtype="string")})
+        validation = pd.DataFrame({"x": [3], "town": ["never_seen"]})
+        transform = NativeFrame(("x",), ("town",)).fit(training)
+        transformed = transform.transform(validation)
+        self.assertTrue(pd.isna(transformed.town.iloc[0]))
+        self.assertNotIn("never_seen", transform.categories_["town"])
+        strings = NativeFrame(("x",), ("town",), strings=True).fit(training)
+        self.assertEqual(strings.transform(validation).town.iloc[0], "never_seen")
+        self.assertEqual(strings.transform(training).town.iloc[1], "__MISSING__")
+
+    def test_all_models_handle_unknown_categories_and_missing_values(self):
+        # Use the team's synthetic frame and actual feature pipeline contract.
+        from test_framework import example_train
+        from src.features import FeaturePipeline
+        from src.data_cleaning import TARGET
+
+        train = pd.concat([example_train()] * 8, ignore_index=True)
+        pipeline = FeaturePipeline(["basic", "block"])
+        X = pipeline.fit_transform(train)
+        query = train.iloc[[0]].copy()
+        query["STREET"] = "unseen street"
+        query["TOWN"] = "unseen town"
+        query["YEAR_COMPLETED"] = np.nan
+        query["MAX_FLOOR"] = np.nan
+        for kind in ("rf", "extra", "hist", "lightgbm", "catboost", "xgboost"):
+            if kind in ("lightgbm", "catboost", "xgboost") and importlib.util.find_spec(kind) is None:
+                continue
+            with self.subTest(kind=kind):
+                model = tree_model(kind, threads=1)
+                params = model.get_params(deep=True)
+                changes = {key: 3 for key in params if key.endswith(("__n_estimators", "__iterations", "__max_iter"))}
+                model.set_params(**changes)
+                model = clone(model)
+                with threadpool_limits(limits=1):
+                    model.fit(X, train[TARGET])
+                    result = model.predict(pipeline.transform(query))
+                self.assertEqual(result.shape, (1,))
+                self.assertTrue(np.isfinite(result).all())
+
+
+if __name__ == "__main__":
+    unittest.main()

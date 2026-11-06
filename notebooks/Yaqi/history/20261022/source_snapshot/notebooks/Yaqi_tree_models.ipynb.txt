@@ -1,0 +1,91 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Yaqi：树模型训练与结果\n",
+    "在右上角选择现有的 Python 3.11 内核。使用 GitHub 清洗数据与公共实验框架，原始数据只读取。\n",
+    "\n",
+    "请按顺序运行。完整训练使用 4 个 CPU 线程；`--resume` 会复用同一配置下已完成的候选。详细说明见 `docs/TREE_TRAINING.md`。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from pathlib import Path\n",
+    "import sys, subprocess\n",
+    "roots = [Path.cwd(), Path.cwd() / 'tree-models', *Path.cwd().parents]\n",
+    "ROOT = next(p for p in roots if (p / 'scripts/train_trees.py').exists())\n",
+    "sys.path.insert(0, str(ROOT))\n",
+    "print('项目目录:', ROOT)\n",
+    "print('当前解释器:', sys.executable)\n",
+    "from src.config import SEED\n",
+    "print('本次种子:', SEED)\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 训练\n",
+    "split A：训练截至 2023-11，验证 2023-12—2025-03。split B：训练截至 2024-03，验证 2024-04—2025-03。\n",
+    "\n",
+    "下面运行随机森林、ExtraTrees、HistGradientBoosting、LightGBM、XGBoost、CatBoost 和近期窗口消融，按两折平均 RMSE 选配置并生成提交。若只想看已有结果，可跳过此单元格。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "command = [sys.executable, '-u', str(ROOT / 'scripts/train_trees.py'), '--stage', 'all', '--resume', '--final']\n",
+    "subprocess.run(command, cwd=ROOT, check=True)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "from IPython.display import display, Markdown\n",
+    "OUT = ROOT / 'outputs/trees'\n",
+    "results = pd.read_csv(OUT / 'comparison.csv')\n",
+    "display(results[['name', 'split_a', 'split_b', 'mean_rmse', 'seconds']].round(3))\n",
+    "display(Markdown((OUT / 'TREE_REPORT.md').read_text(encoding='utf-8')))\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 图表与解释\n",
+    "下面生成比较图和逐月误差图。若还要置换重要性及保存可重载模型，可给命令追加 `--explain`、`--export-final`，会额外训练最佳配置。置换重要性反映预测依赖，不是因果关系。"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "subprocess.run([sys.executable, str(ROOT / 'scripts/analyze_trees.py')], cwd=ROOT, check=True)\n",
+    "from IPython.display import Image\n",
+    "display(Image(filename=str(OUT / 'figures/model_comparison.png')))\n",
+    "display(Image(filename=str(OUT / 'figures/best_monthly_error.png')))\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
+  "language_info": {"name": "python", "version": "3.11.9"}
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}

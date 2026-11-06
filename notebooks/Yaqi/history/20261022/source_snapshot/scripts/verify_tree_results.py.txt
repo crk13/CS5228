@@ -1,0 +1,79 @@
+"""Recompute every reported score from saved predictions and verify row lineage."""
+
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+import numpy as np
+import pandas as pd
+
+from src.cv import get_splits
+from src.data_cleaning import load_train, load_test, TARGET
+
+
+def main():
+    output = ROOT / "outputs/trees"
+    train = load_train()
+    folds = {f.definition.name: f for f in get_splits(train, "rolling")}
+    records = json.loads((output / "runs.json").read_text(encoding="utf-8"))
+    checked = []
+    windows = []
+    for record in records:
+        if record["status"] != "complete":
+            continue
+        directory = ROOT / record["run_dir"]
+        config = json.loads((directory / "config.json").read_text(encoding="utf-8"))
+        prediction = pd.read_csv(directory / "validation_predictions.csv")
+        scores = []
+        for name, group in prediction.groupby("fold", sort=False):
+            fold = folds[name]
+            np.testing.assert_array_equal(group.row_index, fold.valid_idx)
+            np.testing.assert_array_equal(group.MONTHLY_RENT, train.iloc[fold.valid_idx][TARGET])
+            np.testing.assert_array_equal(group.RENT_APPROVAL_DATE, train.iloc[fold.valid_idx].RENT_APPROVAL_DATE)
+            rmse = float(np.sqrt(np.mean((group.MONTHLY_RENT - group.Predicted) ** 2)))
+            np.testing.assert_allclose(rmse, config["fold_rmse"][name], rtol=0, atol=1e-9)
+            scores.append(rmse)
+            months = train.iloc[fold.train_idx].RENT_APPROVAL_DATE
+            length = record["specification"].get("months")
+            if length is not None:
+                cutoff = str(pd.Period(months.max(), freq="M") - (length - 1))
+                months = months.loc[months >= cutoff]
+            windows.append({"name": record["name"], "fold": name, "fit_start": months.min(),
+                            "fit_end": months.max(), "actual_fit_rows": len(months), "seed": config["seed"]})
+        np.testing.assert_allclose(np.mean(scores), record["mean_rmse"], rtol=0, atol=1e-9)
+        np.testing.assert_allclose(config["fold_rmse"]["holdout"], record["split_a"], rtol=0, atol=1e-9)
+        if record["split_b"] is not None:
+            np.testing.assert_allclose(config["fold_rmse"]["rolling_2024_04"], record["split_b"], rtol=0, atol=1e-9)
+        checked.append(record["name"])
+    hashes = json.loads((output / "signature.json").read_text(encoding="utf-8"))["hashes"]
+    for relative, expected in hashes.items():
+        assert hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == expected, relative
+    best = json.loads((output / "best_model.json").read_text(encoding="utf-8"))
+    submission = pd.read_csv(ROOT / best["submission"])
+    example = pd.read_csv(ROOT / "data/example-submission.csv")
+    test = load_test()
+    assert list(submission.columns) == ["Id", "Predicted"]
+    assert len(submission) == len(test) == 50000
+    np.testing.assert_array_equal(submission.Id, example.Id)
+    np.testing.assert_array_equal(submission.Id, test.Id)
+    assert np.isfinite(submission.Predicted).all()
+    summary = pd.read_csv(output / "comparison.csv")
+    expected_best = summary.sort_values("mean_rmse").iloc[0]
+    assert expected_best["name"] == best["name"]
+    np.testing.assert_allclose(best["mean_rmse"], expected_best.mean_rmse, atol=1e-9, rtol=0)
+    pd.DataFrame(windows).to_csv(output / "actual_fit_windows.csv", index=False)
+    report = {"status": "passed", "models_checked": checked,
+              "scores_recomputed_from_predictions": True, "validation_rows_and_targets_verified": True,
+              "source_files_unchanged": len(hashes), "submission_rows": len(submission),
+              "submission_ids_match_example": True, "submission_predictions_finite": True,
+              "best_model": best["name"]}
+    (output / "verification.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    print(json.dumps(report, indent=2))
+
+
+if __name__ == "__main__":
+    main()

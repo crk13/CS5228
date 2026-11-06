@@ -1,0 +1,96 @@
+"""Merge independent forest workers after checking identical experiment settings."""
+
+import json
+import hashlib
+import importlib.metadata
+import shutil
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+import pandas as pd
+from threadpoolctl import threadpool_limits
+from src.data_cleaning import load_train
+from src.experiment import _json_value, _new_model
+from scripts.train_feature_stages import (
+    write_json, summarize, verify, plot_results, build, export_best, SCENARIOS,
+)
+
+MAIN = ROOT / "outputs/location_economy_20261103"
+WORKER = ROOT / "outputs/location_economy_extra_20261103"
+
+
+def main():
+    signatures = [json.loads((folder / "signature.json").read_text(encoding="utf-8")) for folder in (MAIN, WORKER)]
+    assert signatures[0] == signatures[1], "Worker data, code, seed, threads, or versions differ"
+    current_source = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                      for p in sorted((ROOT / "src").rglob("*.py"))}
+    assert current_source == signatures[0]["source"], "Source code changed while training"
+    assert {name: importlib.metadata.version(name) for name in signatures[0]["versions"]} == signatures[0]["versions"]
+    records = json.loads((MAIN / "runs.json").read_text(encoding="utf-8"))
+    additions = json.loads((WORKER / "runs.json").read_text(encoding="utf-8"))
+    complete = [r for r in additions if r["status"] == "complete"]
+    assert len(complete) == 6 and {r["kind"] for r in complete} == {"extra"}
+    copied = []
+    for record in complete:
+        previous = [r for r in records if r["name"] == record["name"] and r["status"] == "complete"]
+        if previous:
+            assert previous[0]["run_id"] == record["run_id"]
+            continue
+        source = ROOT / record["run_dir"]
+        destination = MAIN / "experiments" / record["run_id"]
+        if destination.exists():
+            for path in source.iterdir():
+                assert (destination / path.name).read_bytes() == path.read_bytes()
+        else:
+            shutil.copytree(source, destination)
+        copied_record = dict(record, run_dir=destination.relative_to(ROOT).as_posix())
+        records.append(copied_record)
+        copied.append(record["name"])
+        for path in WORKER.glob(record["name"] + "_by_*.csv"):
+            shutil.copy2(path, MAIN / path.name)
+    old_log = pd.read_csv(MAIN / "experiments/log.csv")
+    new_log = pd.read_csv(WORKER / "experiments/log.csv")
+    pd.concat([old_log, new_log], ignore_index=True).drop_duplicates("run_id", keep="first").to_csv(
+        MAIN / "experiments/log.csv", index=False)
+    good = [r for r in records if r["status"] == "complete"]
+    expected = {(kind, stage) for kind in ("catboost", "lightgbm", "xgboost", "rf", "extra")
+                for stage in SCENARIOS}
+    assert len(good) == 30 and {(r["kind"], r["scenario"]) for r in good} == expected
+    for record in good:
+        config = json.loads((ROOT / record["run_dir"] / "config.json").read_text(encoding="utf-8"))
+        recipe = _json_value(_new_model(build(record["kind"], record["scenario"], 4)).get_params(deep=False))
+        assert recipe == config["parameters"], f"Recipe changed for {record['name']}"
+    write_json(MAIN / "runs.json", records)
+    train = load_train()
+    verify(records, train, signatures[0]["data"], MAIN)
+    summarize(records, MAIN)
+    plot_results(MAIN)
+    winner = min(good, key=lambda r: r["mean_rmse"])
+    metadata_path = MAIN / "best_model.json"
+    metadata = json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.exists() else {}
+    reusable = (metadata.get("validation_run_id") == winner["run_id"]
+                and metadata.get("name") == winner["name"]
+                and all((ROOT / metadata.get(key, "missing")).is_file() for key in ("model", "submission")))
+    if not reusable:
+        with threadpool_limits(limits=4):
+            export_best(records, train, MAIN, 4)
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+    metadata["compared_experiments"] = 30
+    metadata["selection"] = "lowest A/B development mean among 30 declared candidates from five model families"
+    write_json(metadata_path, metadata)
+    summarize(records, MAIN)
+    write_json(MAIN / "forest_merge.json", {"status": "passed", "worker": WORKER.relative_to(ROOT).as_posix(),
+               "added": copied, "total_experiments": 30, "identical_signatures": True,
+               "serialized_recipes_match": True, "preserved_original_run_ids": True,
+               "winner": winner["name"], "reused_unchanged_best_model": reusable})
+    write_json(MAIN / "integrity.json", {"unchanged": True, "hashes": signatures[0]["data"],
+               "experiments": 30, "completed_at": datetime.now(timezone.utc).isoformat()})
+    print("Merged and verified 30 experiments from five model families.")
+
+
+if __name__ == "__main__":
+    main()

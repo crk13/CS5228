@@ -1,0 +1,49 @@
+{
+  "status": "passed",
+  "checked": [
+    {
+      "kind": "catboost",
+      "run_id": "20261103T102108961798Z_15d233d7",
+      "fold_rmse": {
+        "holdout": 492.87431277402214,
+        "rolling_2024_04": 476.16849536247673
+      },
+      "mean_rmse": 484.52140406824947,
+      "oof_rows": 82329,
+      "training_rows": 150000,
+      "test_rows": 50000
+    },
+    {
+      "kind": "xgboost",
+      "run_id": "20261103T102107575560Z_03bcf0a4",
+      "fold_rmse": {
+        "holdout": 495.9482632704745,
+        "rolling_2024_04": 475.6800297186158
+      },
+      "mean_rmse": 485.8141464945452,
+      "oof_rows": 82329,
+      "training_rows": 150000,
+      "test_rows": 50000
+    },
+    {
+      "kind": "lightgbm",
+      "run_id": "20261103T102108253957Z_ef409512",
+      "fold_rmse": {
+        "holdout": 501.9181514853673,
+        "rolling_2024_04": 482.5715863462422
+      },
+      "mean_rmse": 492.2448689158048,
+      "oof_rows": 82329,
+      "training_rows": 150000,
+      "test_rows": 50000
+    }
+  ],
+  "all_predictions_finite": true,
+  "rows_and_targets_exact": true,
+  "fold_training_and_validation_disjoint": true,
+  "test_ids_match_sample": true,
+  "scores_recomputed": true,
+  "afternoon_scores_reproduced": true,
+  "weights_included": false,
+  "datasets_unchanged": true
+}

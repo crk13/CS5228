@@ -1,0 +1,192 @@
+[
+  {
+    "name": "reference_all",
+    "specification": {
+      "name": "reference_all",
+      "kind": "reference"
+    },
+    "status": "complete",
+    "split_a": 498.05359679990715,
+    "split_b": 480.7390399568598,
+    "mean_rmse": 489.3963183783835,
+    "seconds": 1.7660000000614673,
+    "run_id": "20261022T083645789390Z_730b776e",
+    "run_dir": "outputs\\trees\\experiments\\20261022T083645789390Z_730b776e"
+  },
+  {
+    "name": "rf_all",
+    "specification": {
+      "name": "rf_all",
+      "kind": "rf"
+    },
+    "status": "complete",
+    "split_a": 501.62776516089036,
+    "split_b": 483.4845452191784,
+    "mean_rmse": 492.55615519003436,
+    "seconds": 569.0150000001304,
+    "run_id": "20261022T083647870161Z_ad188407",
+    "run_dir": "outputs\\trees\\experiments\\20261022T083647870161Z_ad188407"
+  },
+  {
+    "name": "extra_all",
+    "specification": {
+      "name": "extra_all",
+      "kind": "extra"
+    },
+    "status": "complete",
+    "split_a": 503.5138362443951,
+    "split_b": 486.97145861823645,
+    "mean_rmse": 495.2426474313158,
+    "seconds": 614.8589999999385,
+    "run_id": "20261022T084617188162Z_da35b454",
+    "run_dir": "outputs\\trees\\experiments\\20261022T084617188162Z_da35b454"
+  },
+  {
+    "name": "hist_all",
+    "specification": {
+      "name": "hist_all",
+      "kind": "hist"
+    },
+    "status": "complete",
+    "split_a": 497.57702109416624,
+    "split_b": 480.4927543893367,
+    "mean_rmse": 489.0348877417515,
+    "seconds": 4.358999999938533,
+    "run_id": "20261022T085632372185Z_8134631b",
+    "run_dir": "outputs\\trees\\experiments\\20261022T085632372185Z_8134631b"
+  },
+  {
+    "name": "lightgbm_all",
+    "specification": {
+      "name": "lightgbm_all",
+      "kind": "lightgbm"
+    },
+    "status": "complete",
+    "split_a": 499.84038688632495,
+    "split_b": 480.73624944956526,
+    "mean_rmse": 490.28831816794514,
+    "seconds": 6.811999999918044,
+    "run_id": "20261022T085637052299Z_76e8e9ba",
+    "run_dir": "outputs\\trees\\experiments\\20261022T085637052299Z_76e8e9ba"
+  },
+  {
+    "name": "xgboost_all",
+    "specification": {
+      "name": "xgboost_all",
+      "kind": "xgboost"
+    },
+    "status": "complete",
+    "split_a": 498.51535067039526,
+    "split_b": 478.5959211616198,
+    "mean_rmse": 488.55563591600753,
+    "seconds": 11.827999999979511,
+    "run_id": "20261022T085644178764Z_1f19df22",
+    "run_dir": "outputs\\trees\\experiments\\20261022T085644178764Z_1f19df22"
+  },
+  {
+    "name": "catboost_all",
+    "specification": {
+      "name": "catboost_all",
+      "kind": "catboost"
+    },
+    "status": "complete",
+    "split_a": 495.5941900495705,
+    "split_b": 478.9592237374721,
+    "mean_rmse": 487.2767068935213,
+    "seconds": 134.15600000019185,
+    "run_id": "20261022T085656292472Z_d7bb7d02",
+    "run_dir": "outputs\\trees\\experiments\\20261022T085656292472Z_d7bb7d02"
+  },
+  {
+    "name": "lightgbm_12m",
+    "specification": {
+      "name": "lightgbm_12m",
+      "kind": "lightgbm",
+      "months": 12
+    },
+    "status": "complete",
+    "split_a": 504.1763847732134,
+    "split_b": 486.9492900246949,
+    "mean_rmse": 495.5628373989541,
+    "seconds": 4.327999999979511,
+    "run_id": "20261022T085910786732Z_f8392471",
+    "run_dir": "outputs\\trees\\experiments\\20261022T085910786732Z_f8392471"
+  },
+  {
+    "name": "lightgbm_24m",
+    "specification": {
+      "name": "lightgbm_24m",
+      "kind": "lightgbm",
+      "months": 24
+    },
+    "status": "complete",
+    "split_a": 499.55329577145756,
+    "split_b": 480.9973478290445,
+    "mean_rmse": 490.27532180025105,
+    "seconds": 5.1399999998975545,
+    "run_id": "20261022T085915407551Z_a6d20984",
+    "run_dir": "outputs\\trees\\experiments\\20261022T085915407551Z_a6d20984"
+  },
+  {
+    "name": "catboost_12m",
+    "specification": {
+      "name": "catboost_12m",
+      "kind": "catboost",
+      "months": 12
+    },
+    "status": "complete",
+    "split_a": 497.8293816299608,
+    "split_b": 481.7399474690862,
+    "mean_rmse": 489.7846645495235,
+    "seconds": 80.8430000001099,
+    "run_id": "20261022T085920861885Z_55aefbc2",
+    "run_dir": "outputs\\trees\\experiments\\20261022T085920861885Z_55aefbc2"
+  },
+  {
+    "name": "catboost_24m",
+    "specification": {
+      "name": "catboost_24m",
+      "kind": "catboost",
+      "months": 24
+    },
+    "status": "complete",
+    "split_a": 495.41873714190245,
+    "split_b": 478.85163348659904,
+    "mean_rmse": 487.13518531425075,
+    "seconds": 101.90599999995902,
+    "run_id": "20261022T090042018986Z_d27432b4",
+    "run_dir": "outputs\\trees\\experiments\\20261022T090042018986Z_d27432b4"
+  },
+  {
+    "name": "lightgbm_regularized_24m",
+    "specification": {
+      "name": "lightgbm_regularized_24m",
+      "kind": "lightgbm",
+      "months": 24,
+      "variant": "regularized"
+    },
+    "status": "complete",
+    "split_a": 498.33066128936906,
+    "split_b": 480.64869766549816,
+    "mean_rmse": 489.4896794774336,
+    "seconds": 4.0469999997876585,
+    "run_id": "20261022T090224250422Z_25902837",
+    "run_dir": "outputs\\trees\\experiments\\20261022T090224250422Z_25902837"
+  },
+  {
+    "name": "catboost_address_24m",
+    "specification": {
+      "name": "catboost_address_24m",
+      "kind": "catboost",
+      "months": 24,
+      "address": true
+    },
+    "status": "complete",
+    "split_a": 493.6174956233871,
+    "split_b": 477.30881345031713,
+    "mean_rmse": 485.46315453685213,
+    "seconds": 126.64100000006147,
+    "run_id": "20261022T090228604888Z_d611e0af",
+    "run_dir": "outputs\\trees\\experiments\\20261022T090228604888Z_d611e0af"
+  }
+]

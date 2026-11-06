@@ -1,0 +1,191 @@
+"""P3 tree models; all learned preprocessing is local to the current fit."""
+
+import numpy as np
+import pandas as pd
+from sklearn.base import BaseEstimator, RegressorMixin, TransformerMixin, clone
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import ExtraTreesRegressor, RandomForestRegressor
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import FunctionTransformer, OneHotEncoder
+from sklearn.utils.validation import check_is_fitted
+
+from src.config import SEED
+from src.cv import DATE_COL
+from src.models.base import ModelWrapper
+from src.models.baselines import hist_gradient_boosting_model
+
+NUMERIC = [
+    "FLOOR_AREA_SQM", "LEASE_COMMENCE_DATE", "RENT_MONTH", "MONTH_INDEX",
+    "FLAT_AGE", "REMAINING_LEASE", "FLAT_TYPE_ORDINAL", "LATITUDE",
+    "LONGITUDE", "MAX_FLOOR", "YEAR_COMPLETED",
+]
+CATEGORICAL = ["TOWN", "FLAT_TYPE", "FLAT_MODEL", "STREET", "SUBZONE", "PLANNING_AREA", "REGION"]
+
+
+def category_strings(X):
+    return X.astype("string").fillna("__MISSING__").astype(object)
+
+
+class NativeFrame(TransformerMixin, BaseEstimator):
+    """Freeze category vocabulary in fit; unknowns become NaN for LGBM/XGB."""
+
+    def __init__(self, numeric=(), categorical=(), strings=False):
+        self.numeric = numeric
+        self.categorical = categorical
+        self.strings = strings
+
+    def fit(self, X, y=None):
+        self.categories_ = {
+            c: sorted(category_strings(X[[c]])[c].unique().tolist())
+            for c in self.categorical
+        }
+        return self
+
+    def transform(self, X):
+        check_is_fitted(self, "categories_")
+        result = X[list(self.numeric)].astype(np.float32).copy()
+        for column in self.categorical:
+            values = category_strings(X[[column]])[column]
+            result[column] = values if self.strings else pd.Categorical(
+                values.where(values.isin(self.categories_[column])), categories=self.categories_[column]
+            )
+        return result
+
+
+class CatBoostAdapter(RegressorMixin, BaseEstimator):
+    """Construct CatBoost in fit: its list parameter copying can break sklearn clone."""
+
+    def __init__(self, categorical=(), iterations=1000, learning_rate=0.04,
+                 depth=7, l2_leaf_reg=10.0, random_state=42, threads=4):
+        self.categorical = categorical
+        self.iterations = iterations
+        self.learning_rate = learning_rate
+        self.depth = depth
+        self.l2_leaf_reg = l2_leaf_reg
+        self.random_state = random_state
+        self.threads = threads
+
+    def fit(self, X, y):
+        from catboost import CatBoostRegressor
+        self.estimator_ = CatBoostRegressor(
+            iterations=self.iterations, learning_rate=self.learning_rate,
+            depth=self.depth, l2_leaf_reg=self.l2_leaf_reg, loss_function="RMSE",
+            cat_features=list(self.categorical), random_seed=self.random_state,
+            thread_count=self.threads, verbose=False, allow_writing_files=False,
+        ).fit(X, y)
+        return self
+
+    def predict(self, X):
+        check_is_fitted(self, "estimator_")
+        return self.estimator_.predict(X)
+
+
+class RecentWindowRegressor(RegressorMixin, BaseEstimator):
+    """Keep the last N calendar months of THIS training fold, never validation."""
+
+    def __init__(self, estimator, months=None):
+        self.estimator = estimator
+        self.months = months
+
+    def fit(self, X, y):
+        months = pd.to_datetime(X[DATE_COL], format="%Y-%m").dt.to_period("M")
+        if self.months is not None and self.months < 1:
+            raise ValueError("months must be positive or None")
+        mask = np.ones(len(X), dtype=bool) if self.months is None else (
+            months >= months.max() - (self.months - 1)
+        ).to_numpy()
+        self.fit_rows_ = int(mask.sum())
+        self.fit_start_ = str(months[mask].min())
+        self.fit_end_ = str(months[mask].max())
+        self.estimator_ = clone(self.estimator).fit(X.loc[mask], np.asarray(y)[mask])
+        return self
+
+    def predict(self, X):
+        check_is_fitted(self, "estimator_")
+        return self.estimator_.predict(X)
+
+
+def tree_model(kind, *, months=None, threads=4, variant="default", target="none", address=False,
+               extra_numeric=()):
+    """Return a cloneable model accepted by the team's run_experiment()."""
+    numeric = NUMERIC + list(extra_numeric)
+    if len(numeric) != len(set(numeric)):
+        raise ValueError("Extra numeric columns must be unique and new")
+    categorical = CATEGORICAL + (["POSTAL_CODE", "BLOCK"] if address else [])
+    columns = numeric + categorical
+    if kind in ("reference", "hist"):
+        if extra_numeric:
+            raise ValueError("Use rf, extra, lightgbm, xgboost, or catboost for extra features")
+        model = hist_gradient_boosting_model(target)
+        if kind == "hist":
+            model.set_params(estimator__regressor__max_iter=500,
+                             estimator__regressor__learning_rate=0.04,
+                             estimator__regressor__l2_regularization=10.0,
+                             estimator__regressor__min_samples_leaf=60)
+    elif kind in ("rf", "extra"):
+        preprocessing = ColumnTransformer([
+            ("numeric", SimpleImputer(strategy="median", add_indicator=True), numeric),
+            ("categorical", Pipeline([
+                ("strings", FunctionTransformer(category_strings)),
+                ("onehot", OneHotEncoder(handle_unknown="ignore", min_frequency=10,
+                                         dtype=np.float32)),
+            ]), categorical),
+        ], sparse_threshold=1.0)
+        cls = RandomForestRegressor if kind == "rf" else ExtraTreesRegressor
+        estimator = cls(n_estimators=160, max_depth=24, min_samples_leaf=8,
+                        max_features=0.8, n_jobs=threads, random_state=SEED)
+        model = ModelWrapper(Pipeline([("prepare", preprocessing), ("regressor", estimator)]),
+                             columns, target)
+    else:
+        prepare = NativeFrame(tuple(numeric), tuple(categorical), strings=kind == "catboost")
+        if kind == "lightgbm":
+            from lightgbm import LGBMRegressor
+            estimator = LGBMRegressor(
+                n_estimators=700, learning_rate=0.035,
+                num_leaves=15 if variant == "regularized" else 31,
+                min_child_samples=100 if variant == "regularized" else 60,
+                reg_lambda=20.0 if variant == "regularized" else 10.0,
+                colsample_bytree=0.9, subsample=0.85, subsample_freq=1,
+                random_state=SEED, n_jobs=threads, verbosity=-1,
+                deterministic=True, force_col_wise=True,
+            )
+        elif kind == "xgboost":
+            from xgboost import XGBRegressor
+            estimator = XGBRegressor(
+                n_estimators=700, learning_rate=0.035, max_depth=6,
+                min_child_weight=30, reg_lambda=20.0, subsample=0.85,
+                colsample_bytree=0.9, tree_method="hist", enable_categorical=True,
+                objective="reg:squarederror", eval_metric="rmse",
+                random_state=SEED, n_jobs=threads,
+            )
+        elif kind == "catboost":
+            estimator = CatBoostAdapter(
+                iterations=1000, learning_rate=0.04,
+                depth=6 if variant == "regularized" else 7,
+                l2_leaf_reg=20.0 if variant == "regularized" else 10.0,
+                categorical=tuple(categorical), random_state=SEED, threads=threads,
+            )
+        else:
+            raise ValueError(f"Unknown model: {kind}")
+        model = ModelWrapper(Pipeline([("prepare", prepare), ("regressor", estimator)]), columns, target)
+    return RecentWindowRegressor(model, months)
+
+
+def candidates(stage="all"):
+    """Small, declared search; these two windows are development validation."""
+    comparison = [{"name": k + "_all", "kind": k} for k in (
+        "reference", "rf", "extra", "hist", "lightgbm", "xgboost", "catboost"
+    )]
+    tuning = [
+        {"name": f"{k}_{m}m", "kind": k, "months": m}
+        for k in ("lightgbm", "catboost") for m in (12, 24)
+    ] + [
+        {"name": "lightgbm_regularized_24m", "kind": "lightgbm", "months": 24, "variant": "regularized"},
+        {"name": "catboost_address_24m", "kind": "catboost", "months": 24, "address": True},
+    ]
+    if stage == "compare":
+        return comparison
+    if stage == "tune":
+        return tuning
+    return comparison + tuning

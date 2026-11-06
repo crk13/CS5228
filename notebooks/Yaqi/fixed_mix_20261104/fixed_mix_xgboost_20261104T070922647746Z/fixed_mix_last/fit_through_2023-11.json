@@ -1,0 +1,21 @@
+{
+  "available_training_rows": 102829,
+  "actual_fit_rows": 68359,
+  "fit_start": "2021-12",
+  "fit_end": "2023-11",
+  "seconds": 10.452999999979511,
+  "index_origin": "2023-11",
+  "index_reference_level": 3179.8264610342103,
+  "index_weights": {
+    "2-room": 0.02013403178133505,
+    "3-room": 0.3275438237101636,
+    "4-room": 0.360876181557461,
+    "5-room": 0.23701384214684967,
+    "executive": 0.05443212080419069
+  },
+  "index_rows": 68342,
+  "excluded_from_index_only_rows": 17,
+  "future_market_level_rule": "last training month held constant",
+  "normalization": "y / (S_month / S_last_training_month)",
+  "sample_weight": null
+}
