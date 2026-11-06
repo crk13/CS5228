@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "models": [
+    "catboost",
+    "xgboost",
+    "lightgbm"
+  ],
+  "studies": [
+    "outputs/Yaqi/fixed_mix_catboost_20261104T064729648979Z",
+    "outputs/Yaqi/fixed_mix_xgboost_20261104T070922647746Z",
+    "outputs/Yaqi/fixed_mix_lightgbm_20261104T070922018042Z"
+  ],
+  "all_six_variant_predictions_aligned": true,
+  "all_twelve_fold_scores_recomputed": true,
+  "same_training_data_and_market_indices": true,
+  "index_hashes": {
+    "2023-11": "e624468696f30cc43262566cb50c8a0fc0e48d9e0b15581912455a499af888b1",
+    "2024-03": "1f692ca27d9ca009d8c26c502522156cee838322da76c31260f5ad6cc22ddfd3"
+  },
+  "source_and_data_hashes_verified": true,
+  "catboost_source": "Earlier completed matched experiment from this conversation; not unnecessarily rerun",
+  "formal_results_replaced": false,
+  "model_or_blend_optimality_claim": false
+}

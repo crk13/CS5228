@@ -1,0 +1,13 @@
+kind,variant,fold,rmse,validation_rows
+catboost,raw_rent,holdout,492.87431277402214,47171
+catboost,raw_rent,rolling_2024_04,476.16849536247673,35158
+catboost,fixed_mix_last,holdout,491.0508888729039,47171
+catboost,fixed_mix_last,rolling_2024_04,474.6228339794364,35158
+xgboost,raw_rent,holdout,495.9482632704745,47171
+xgboost,raw_rent,rolling_2024_04,475.6800297186158,35158
+xgboost,fixed_mix_last,holdout,492.28669099164136,47171
+xgboost,fixed_mix_last,rolling_2024_04,474.02292543609775,35158
+lightgbm,raw_rent,holdout,501.9181514853673,47171
+lightgbm,raw_rent,rolling_2024_04,482.5715863462422,35158
+lightgbm,fixed_mix_last,holdout,499.2830401219583,47171
+lightgbm,fixed_mix_last,rolling_2024_04,481.26476902792746,35158

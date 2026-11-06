@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "data_files_hash_checked": 17,
+  "training_source_hash_checked": true,
+  "both_variants_actually_trained": true,
+  "underlying_model_parameters_and_features_identical": true,
+  "predictions_aligned_rows_dates_targets": true,
+  "all_scores_recomputed": true,
+  "index_rebuilt_from_actual_recent_training_rows": true,
+  "fold_audits": [
+    {
+      "fold": "holdout",
+      "fit_start": "2021-12",
+      "fit_end": "2023-11",
+      "fit_rows": 68359,
+      "index_rows": 68342,
+      "last_market_level": 3179.8264610342103
+    },
+    {
+      "fold": "rolling_2024_04",
+      "fit_start": "2022-04",
+      "fit_end": "2024-03",
+      "fit_rows": 68086,
+      "index_rows": 68068,
+      "last_market_level": 3177.4960333783865
+    }
+  ],
+  "rmse_sgd": {
+    "raw_rent": [
+      501.9181514853673,
+      482.5715863462422,
+      492.2448689158048
+    ],
+    "fixed_mix_last": [
+      499.2830401219583,
+      481.26476902792746,
+      490.2739045749429
+    ]
+  }
+}

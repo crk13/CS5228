@@ -1,0 +1,9 @@
+{
+  "model": "catboost_address_24m",
+  "fold": "holdout",
+  "sample_rows": 2000,
+  "sample_baseline_rmse": 514.7386840354702,
+  "full_fold_rmse_reproduced": 493.6174956233871,
+  "seed": 42,
+  "note": "Permutation importance is predictive, not causal; correlated features can mask each other."
+}

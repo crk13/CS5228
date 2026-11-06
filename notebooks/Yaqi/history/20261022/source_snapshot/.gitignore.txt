@@ -1,0 +1,29 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environments & secrets
+.env
+.venv/
+env/
+venv/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+
+# Generated experiment artifacts (config and log.csv remain shareable)
+experiments/*/validation_predictions.csv
+experiments/log.lock
+submissions/*.csv
+
+# P3 reproducible outputs: keep reports/configs, exclude bulky predictions/models.
+outputs/**/validation_predictions.csv
+outputs/**/submissions/*.csv
+outputs/**/models/*.joblib
+outputs/**/experiments/log.lock
+.cache/

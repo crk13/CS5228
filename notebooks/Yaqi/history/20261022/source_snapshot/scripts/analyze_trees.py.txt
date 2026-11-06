@@ -1,0 +1,153 @@
+"""Plot real results, explain the best model, and optionally save its final fit."""
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache/matplotlib"))
+
+import joblib
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from threadpoolctl import threadpool_limits
+
+from src.config import SEED
+from src.cv import get_splits
+from src.data_cleaning import load_train, load_test, TARGET, ID_COL
+from src.features import FeaturePipeline
+from src.models.trees import tree_model
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output", default="outputs/trees")
+    parser.add_argument("--threads", type=int, default=4)
+    parser.add_argument("--explain", action="store_true")
+    parser.add_argument("--export-final", action="store_true")
+    args = parser.parse_args()
+    output = ROOT / args.output
+    comparison = pd.read_csv(output / "comparison.csv").sort_values("mean_rmse", ascending=False)
+    figures = output / "figures"
+    figures.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(11, max(4.5, len(comparison) * .38)), layout="constrained")
+    positions = np.arange(len(comparison))
+    ax.barh(positions - .18, comparison.split_a, height=.35, label="Split A")
+    if comparison.split_b.notna().any():
+        ax.barh(positions + .18, comparison.split_b, height=.35, label="Split B")
+    ax.set_yticks(positions, comparison.name)
+    ax.set(xlabel="RMSE (SGD; lower is better)", title="Tree models on shared time splits")
+    ax.set_title("Tree models on shared time splits", pad=32)
+    ax.legend(loc="lower left", bbox_to_anchor=(0, 1.01), ncol=2, frameon=False)
+    fig.savefig(figures / "model_comparison.png", dpi=160)
+    plt.close(fig)
+    best = comparison.iloc[-1]
+    summary = {"best_name": best["name"], "split_a": float(best.split_a),
+               "split_b": float(best.split_b) if pd.notna(best.split_b) else None,
+               "mean_rmse": float(best.mean_rmse), "seed": SEED}
+    reference = comparison.loc[comparison.name == "reference_all"]
+    if len(reference):
+        summary["reference_mean_rmse"] = float(reference.iloc[0].mean_rmse)
+        summary["improvement_sgd"] = summary["reference_mean_rmse"] - summary["mean_rmse"]
+        summary["improvement_percent"] = 100 * summary["improvement_sgd"] / summary["reference_mean_rmse"]
+    (output / "summary_metrics.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    monthly = pd.read_csv(output / f"{best['name']}_by_rent_approval_date.csv")
+    fig, ax = plt.subplots(figsize=(11, 4.5), layout="constrained")
+    for fold, group in monthly.groupby("fold"):
+        ax.plot(pd.to_datetime(group.RENT_APPROVAL_DATE), group.rmse, marker="o", label=fold)
+    ax.set(xlabel="Validation month", ylabel="RMSE (SGD)", title=f"Monthly error: {best['name']}")
+    ax.legend()
+    fig.savefig(figures / "best_monthly_error.png", dpi=160)
+    plt.close(fig)
+    report_path = output / "TREE_REPORT.md"
+    report = report_path.read_text(encoding="utf-8").split("\n## 最佳模型与图表")[0]
+    report += f"\n## 最佳模型与图表\n\n本次候选中，两折平均最低的配置是 `{best['name']}`，RMSE 为 {best.mean_rmse:.3f} SGD。\n"
+    if len(reference):
+        report += f"\n相对本次复跑的参考模型，平均 RMSE 降低 {summary['improvement_sgd']:.3f} SGD（{summary['improvement_percent']:.2f}%）。\n"
+    report += "\n![模型比较](figures/model_comparison.png)\n\n![最佳模型逐月误差](figures/best_monthly_error.png)\n"
+    report += "\n该结果是当前有限搜索的开发验证比较，没有上传 Kaggle，不能当作排行榜成绩。\n"
+    report_path.write_text(report, encoding="utf-8")
+    if not (args.explain or args.export_final):
+        return
+    records = json.loads((output / "runs.json").read_text(encoding="utf-8"))
+    record = next(r for r in reversed(records) if r["name"] == best["name"] and r["status"] == "complete")
+    specification = {k: v for k, v in record["specification"].items() if k != "name"}
+    train = load_train()
+    with threadpool_limits(limits=args.threads):
+        if args.explain:
+            fold = get_splits(train, "holdout")[0]
+            fit = train.iloc[fold.train_idx]
+            valid = train.iloc[fold.valid_idx]
+            pipeline = FeaturePipeline(["basic", "block"])
+            X_fit = pipeline.fit_transform(fit)
+            X_valid = pipeline.transform(valid)
+            model = tree_model(**specification, threads=args.threads).fit(X_fit, fit[TARGET])
+            # Refit must reproduce the stored A score before interpretation.
+            actual = float(np.sqrt(np.mean((model.predict(X_valid) - valid[TARGET].to_numpy()) ** 2)))
+            if not np.isclose(actual, record["split_a"], atol=1e-6, rtol=0):
+                raise ValueError(f"Reproduced RMSE {actual} differs from stored {record['split_a']}")
+            rng = np.random.default_rng(SEED)
+            positions = rng.choice(len(valid), size=min(2000, len(valid)), replace=False)
+            sample = X_valid.iloc[positions].copy()
+            y = valid[TARGET].iloc[positions].to_numpy()
+            baseline = float(np.sqrt(np.mean((model.predict(sample) - y) ** 2)))
+            rows = []
+            for column in model.estimator_.columns:
+                changes = []
+                for repeat in range(3):
+                    shuffled = sample.copy()
+                    shuffled[column] = sample[column].iloc[rng.permutation(len(sample))].to_numpy()
+                    error = np.sqrt(np.mean((model.predict(shuffled) - y) ** 2))
+                    changes.append(float(error - baseline))
+                rows.append({"feature": column, "rmse_increase_mean": float(np.mean(changes)),
+                             "rmse_increase_std": float(np.std(changes)), "repeats": 3})
+            importance = pd.DataFrame(rows).sort_values("rmse_increase_mean", ascending=False)
+            importance.to_csv(output / "permutation_importance.csv", index=False)
+            (output / "interpretation.json").write_text(json.dumps({
+                "model": best["name"], "fold": "holdout", "sample_rows": len(sample),
+                "sample_baseline_rmse": baseline, "full_fold_rmse_reproduced": actual,
+                "seed": SEED, "note": "Permutation importance is predictive, not causal; correlated features can mask each other.",
+            }, indent=2), encoding="utf-8")
+            top = importance.head(15).iloc[::-1]
+            fig, ax = plt.subplots(figsize=(10, 6), layout="constrained")
+            ax.barh(top.feature, top.rmse_increase_mean, xerr=top.rmse_increase_std)
+            ax.set(xlabel="Increase in RMSE after shuffling (SGD)", title=f"Permutation importance: {best['name']} (Split A sample)")
+            fig.savefig(figures / "permutation_importance.png", dpi=160)
+            plt.close(fig)
+            with report_path.open("a", encoding="utf-8") as stream:
+                stream.write("\n## 置换重要性\n\n在 split A 固定抽样 2000 条、重复 3 次计算，抽样误差不能替代完整验证分数。相关特征可能分摊重要性，结果不代表因果关系。\n\n![置换重要性](figures/permutation_importance.png)\n")
+        if args.export_final:
+            pipeline = FeaturePipeline(["basic", "block"])
+            X = pipeline.fit_transform(train)
+            model = tree_model(**specification, threads=args.threads).fit(X, train[TARGET])
+            target = output / "models/best_tree.joblib"
+            target.parent.mkdir(parents=True, exist_ok=True)
+            joblib.dump({"features": pipeline, "model": model, "specification": specification,
+                         "seed": SEED, "available_train_rows": len(train),
+                         "fit_rows": model.fit_rows_, "fit_start": model.fit_start_,
+                         "fit_end": model.fit_end_}, target, compress=3)
+            # Reload and check the complete prediction vector against final submission.
+            bundle = joblib.load(target)
+            test = load_test()
+            prediction = bundle["model"].predict(bundle["features"].transform(test))
+            info = json.loads((output / "best_model.json").read_text(encoding="utf-8"))
+            if info["name"] != best["name"]:
+                raise ValueError("Best model metadata disagrees with comparison")
+            submission = pd.read_csv(ROOT / info["submission"])
+            np.testing.assert_array_equal(submission.Id, test[ID_COL])
+            np.testing.assert_allclose(prediction, submission.Predicted, rtol=0, atol=1e-6)
+            (output / "model_export.json").write_text(json.dumps({
+                "path": str(target.relative_to(ROOT)), "model": best["name"],
+                "prediction_rows_checked": len(test), "reload_matches_submission": True,
+            }, indent=2), encoding="utf-8")
+    print(f"Analysis saved to {output}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

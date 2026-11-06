@@ -1,0 +1,10 @@
+{
+  "experiments": 30,
+  "best": "catboost_location_coe",
+  "split_a": 492.87431277402214,
+  "split_b": 476.1684953624768,
+  "mean_rmse": 484.52140406824947,
+  "previous_best_reproduced": 485.4631545368521,
+  "improvement_sgd": 0.9417504686026064,
+  "improvement_percent": 0.1939901019884954
+}

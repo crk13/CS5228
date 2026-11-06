@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "seed": 5228,
+  "delivery": false,
+  "checked": [
+    {
+      "model": "tabular_transformer",
+      "run_id": "20261103T165254207013Z_e7366de1",
+      "fold_rmse": {
+        "holdout": 515.6457696668556,
+        "rolling_2024_04": 484.46706041871244
+      },
+      "mean_rmse": 500.056415042784,
+      "validation_rows": 82329,
+      "test_rows": 50000,
+      "seconds": 708.2382418749621
+    },
+    {
+      "model": "market_rnn",
+      "run_id": "20261103T165254212024Z_ae71e28f",
+      "fold_rmse": {
+        "holdout": 497.55712651787877,
+        "rolling_2024_04": 482.7825929205122
+      },
+      "mean_rmse": 490.1698597191955,
+      "validation_rows": 82329,
+      "test_rows": 50000,
+      "seconds": 101.89505674992688
+    },
+    {
+      "model": "market_lstm",
+      "run_id": "20261103T165436355139Z_16342354",
+      "fold_rmse": {
+        "holdout": 498.832061301521,
+        "rolling_2024_04": 481.5367628937916
+      },
+      "mean_rmse": 490.18441209765626,
+      "validation_rows": 82329,
+      "test_rows": 50000,
+      "seconds": 101.99279649998061
+    }
+  ],
+  "all_validation_rows_labels_and_dates_exact": true,
+  "scores_recomputed": true,
+  "test_ids_exact": true,
+  "all_predictions_finite_positive_sgd": true,
+  "fold_local_training_audits_checked": true,
+  "data_hashes_unchanged": true,
+  "weights_included": false
+}

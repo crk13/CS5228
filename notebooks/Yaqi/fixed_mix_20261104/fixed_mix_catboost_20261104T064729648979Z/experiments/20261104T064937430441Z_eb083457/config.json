@@ -1,0 +1,254 @@
+{
+  "timestamp": "2026-11-04T06:49:37.430441+00:00",
+  "run_id": "20261104T064937430441Z_eb083457",
+  "name": "yaqi_catboost_fixed_mix_last",
+  "author": "Yaqi",
+  "features": [
+    "basic",
+    "block",
+    "distance",
+    "macro_coe"
+  ],
+  "feature_parameters": {
+    "basic": {},
+    "block": {},
+    "distance": {},
+    "macro_coe": {
+      "damping": 0.8,
+      "forecast": "last",
+      "include_coe": true,
+      "include_stocks": false,
+      "max_log_slope": 0.03,
+      "trend_window": 12
+    }
+  },
+  "model": "__main__.AuditFit",
+  "parameters": {
+    "estimator": {
+      "class": "src.models.trees.RecentWindowRegressor",
+      "parameters": {
+        "estimator": {
+          "class": "src.models.fixed_mix.FixedMixTargetRegressor",
+          "parameters": {
+            "estimator": {
+              "class": "src.models.base.ModelWrapper",
+              "parameters": {
+                "columns": [
+                  "FLOOR_AREA_SQM",
+                  "LEASE_COMMENCE_DATE",
+                  "RENT_MONTH",
+                  "MONTH_INDEX",
+                  "FLAT_AGE",
+                  "REMAINING_LEASE",
+                  "FLAT_TYPE_ORDINAL",
+                  "LATITUDE",
+                  "LONGITUDE",
+                  "MAX_FLOOR",
+                  "YEAR_COMPLETED",
+                  "DIST_MRT_OPEN_KM",
+                  "DIST_MALL_KM",
+                  "DIST_PRIMARY_SCHOOL_KM",
+                  "MACRO_COE_A_LAG1",
+                  "MACRO_COE_B_LAG1",
+                  "MACRO_COE_C_LAG1",
+                  "MACRO_COE_E_LAG1",
+                  "TOWN",
+                  "FLAT_TYPE",
+                  "FLAT_MODEL",
+                  "STREET",
+                  "SUBZONE",
+                  "PLANNING_AREA",
+                  "REGION",
+                  "POSTAL_CODE",
+                  "BLOCK"
+                ],
+                "estimator": {
+                  "class": "sklearn.pipeline.Pipeline",
+                  "parameters": {
+                    "memory": null,
+                    "steps": [
+                      [
+                        "prepare",
+                        {
+                          "class": "src.models.trees.NativeFrame",
+                          "parameters": {
+                            "categorical": [
+                              "TOWN",
+                              "FLAT_TYPE",
+                              "FLAT_MODEL",
+                              "STREET",
+                              "SUBZONE",
+                              "PLANNING_AREA",
+                              "REGION",
+                              "POSTAL_CODE",
+                              "BLOCK"
+                            ],
+                            "numeric": [
+                              "FLOOR_AREA_SQM",
+                              "LEASE_COMMENCE_DATE",
+                              "RENT_MONTH",
+                              "MONTH_INDEX",
+                              "FLAT_AGE",
+                              "REMAINING_LEASE",
+                              "FLAT_TYPE_ORDINAL",
+                              "LATITUDE",
+                              "LONGITUDE",
+                              "MAX_FLOOR",
+                              "YEAR_COMPLETED",
+                              "DIST_MRT_OPEN_KM",
+                              "DIST_MALL_KM",
+                              "DIST_PRIMARY_SCHOOL_KM",
+                              "MACRO_COE_A_LAG1",
+                              "MACRO_COE_B_LAG1",
+                              "MACRO_COE_C_LAG1",
+                              "MACRO_COE_E_LAG1"
+                            ],
+                            "strings": true
+                          }
+                        }
+                      ],
+                      [
+                        "regressor",
+                        {
+                          "class": "src.models.trees.CatBoostAdapter",
+                          "parameters": {
+                            "categorical": [
+                              "TOWN",
+                              "FLAT_TYPE",
+                              "FLAT_MODEL",
+                              "STREET",
+                              "SUBZONE",
+                              "PLANNING_AREA",
+                              "REGION",
+                              "POSTAL_CODE",
+                              "BLOCK"
+                            ],
+                            "depth": 7,
+                            "iterations": 1000,
+                            "l2_leaf_reg": 10.0,
+                            "learning_rate": 0.04,
+                            "random_state": 42,
+                            "threads": 4
+                          }
+                        }
+                      ]
+                    ],
+                    "transform_input": null,
+                    "verbose": false
+                  }
+                },
+                "target_transform": "none"
+              }
+            },
+            "groups": [
+              "2-room",
+              "3-room",
+              "4-room",
+              "5-room",
+              "executive"
+            ]
+          }
+        },
+        "months": 24
+      }
+    },
+    "output": "outputs/Yaqi/fixed_mix_catboost_20261104T064729648979Z/fixed_mix_last"
+  },
+  "split": "rolling",
+  "seed": 42,
+  "final": false,
+  "versions": {
+    "numpy": "2.4.6",
+    "pandas": "3.0.3",
+    "sklearn": "1.9.1"
+  },
+  "folds": [
+    {
+      "name": "holdout",
+      "train_start": "2021-01",
+      "train_end": "2023-11",
+      "valid_start": "2023-12",
+      "valid_end": "2025-03",
+      "train_rows": 102829,
+      "valid_rows": 47171,
+      "rmse": 491.0508888729039,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "DIST_MRT_OPEN_KM",
+        "DIST_MALL_KM",
+        "DIST_PRIMARY_SCHOOL_KM",
+        "MACRO_COE_A_LAG1",
+        "MACRO_COE_B_LAG1",
+        "MACRO_COE_C_LAG1",
+        "MACRO_COE_E_LAG1"
+      ]
+    },
+    {
+      "name": "rolling_2024_04",
+      "train_start": "2021-01",
+      "train_end": "2024-03",
+      "valid_start": "2024-04",
+      "valid_end": "2025-03",
+      "train_rows": 114842,
+      "valid_rows": 35158,
+      "rmse": 474.6228339794364,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "MONTH_INDEX",
+        "FLAT_AGE",
+        "REMAINING_LEASE",
+        "FLAT_TYPE_ORDINAL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "DIST_MRT_OPEN_KM",
+        "DIST_MALL_KM",
+        "DIST_PRIMARY_SCHOOL_KM",
+        "MACRO_COE_A_LAG1",
+        "MACRO_COE_B_LAG1",
+        "MACRO_COE_C_LAG1",
+        "MACRO_COE_E_LAG1"
+      ]
+    }
+  ],
+  "fold_rmse": {
+    "holdout": 491.0508888729039,
+    "rolling_2024_04": 474.6228339794364
+  },
+  "mean_rmse": 482.8368614261701
+}

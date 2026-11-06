@@ -1,0 +1,137 @@
+{
+  "timestamp": "2026-11-03T16:44:25.277451+00:00",
+  "run_id": "20261103T164425277451Z_3998e8d7",
+  "name": "yuxin_baseline_median",
+  "author": "Yuxin",
+  "features": [],
+  "feature_parameters": {},
+  "model": "AuditRecorder (run script in notebooks/Yuxin)",
+  "parameters": {
+    "audit_dir": "temporary; training evidence is in training_audit.json",
+    "estimator": {
+      "class": "src.models.base.ModelWrapper",
+      "parameters": {
+        "columns": [
+          "TOWN",
+          "FLAT_TYPE",
+          "RENT_APPROVAL_DATE"
+        ],
+        "estimator": {
+          "class": "src.models.baselines.RecentMedianRegressor",
+          "parameters": {
+            "months": 6
+          }
+        },
+        "target_transform": "none"
+      }
+    }
+  },
+  "split": "rolling",
+  "seed": 5228,
+  "final": true,
+  "versions": {
+    "numpy": "1.26.4",
+    "pandas": "2.2.2",
+    "sklearn": "1.5.1"
+  },
+  "folds": [
+    {
+      "name": "holdout",
+      "train_start": "2021-01",
+      "train_end": "2023-11",
+      "valid_start": "2023-12",
+      "valid_end": "2025-03",
+      "train_rows": 102829,
+      "valid_rows": 47171,
+      "rmse": 524.659026899584,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL"
+      ]
+    },
+    {
+      "name": "rolling_2024_04",
+      "train_start": "2021-01",
+      "train_end": "2024-03",
+      "valid_start": "2024-04",
+      "valid_end": "2025-03",
+      "train_rows": 114842,
+      "valid_rows": 35158,
+      "rmse": 506.23742413793906,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL"
+      ]
+    }
+  ],
+  "final_train_rows": 150000,
+  "test_rows": 50000,
+  "submission_path": "submissions/20261103T164425277451Z_3998e8d7.csv",
+  "fold_rmse": {
+    "holdout": 524.659026899584,
+    "rolling_2024_04": 506.23742413793906
+  },
+  "mean_rmse": 515.4482255187615,
+  "yuxin": {
+    "model_name": "baseline_median",
+    "seconds": 1.1739762090146542,
+    "versions": {
+      "numpy": "1.26.4",
+      "pandas": "2.2.2",
+      "scikit-learn": "1.5.1",
+      "torch": "2.15.0"
+    },
+    "python": "3.12.7",
+    "platform": "macOS-15.7.9-arm64-arm-64bit",
+    "device": "cpu",
+    "seed": 5228,
+    "torch_deterministic": true,
+    "smoke_only": false,
+    "features": [],
+    "data_hashes": {
+      "data/auxiliary/sg-coe-prices.csv": "e32fccd39da32780b6b7f35d069c813ed3edb0c110ea60761656bcee58d501a5",
+      "data/auxiliary/sg-hdb-block.csv": "e6ccc60c1f901f8f476eb6fe14c07ef5941d2afd06a081a1e4c00f717da27f83",
+      "data/auxiliary/sg-mrt-stations.csv": "899460b39fb251bd6883fffc9e6a772081f8e5217a657550afc3c49cfdcd3227",
+      "data/auxiliary/sg-schools.csv": "118c7ce8d96bbc934bd53655e73e6d0848c27853a625394ecc6a67a5af54f192",
+      "data/auxiliary/sg-shopping-malls.csv": "00e05b0176ac412695fc4ce1fc5a5338a1993593ffaffe26156dc2ea04ddf2c8",
+      "data/auxiliary/sg-stock-prices.csv": "c52fef9f33cfcb11285e2b9546124e02f32488e563af44e9fb3a505d10e2edff",
+      "data/example-submission.csv": "ab751676b2bfc6121ac3543075d4f2c8978a6d73a14a3442a1bb7bdbf7867678",
+      "data/test.csv": "dfc407406d957bbf7c2f005e5d9852b1bfc6546cd4186f07e6824d8e03e64cfc",
+      "data/train.csv": "6d7a417de72112361f8353659ba6fe44a442b07465b488aff1b03f7ec1ea3ba6",
+      "data_cleaned/auxiliary/coe_prices.csv": "42df3febbacf2c71a9fa1bffd75d881a41b73b7dada1739d4767b4e5c80e0415",
+      "data_cleaned/auxiliary/hdb_blocks.csv": "a57ef543ac39113b73aca3b4d19517ca4a3821389291edc431d2d9a634edffa3",
+      "data_cleaned/auxiliary/mrt_stations.csv": "5aef7f8b2a32a7a7b57958da0f1b7ceefe6bceb01c8f31469a11471a9882e5aa",
+      "data_cleaned/auxiliary/schools.csv": "cb7cbb37c2275c870ba8492a6d25f156e7cb3a3b61f91b3d69fed0933ac64b75",
+      "data_cleaned/auxiliary/shopping_malls.csv": "cc70e888c9a76f943b4d6ec3fe122ea430feb1eb3b415c72cd526952fcc839a6",
+      "data_cleaned/auxiliary/stock_prices.csv": "a8b3beb0aa8e23348ec92e1335aa1958b12c2360ae772649ba7a9a1184d6fe22",
+      "data_cleaned/test.csv": "e65c1a5deadc630b5d5f3c49102c61ed2012a541e67c56ec7127a5aecaa84a78",
+      "data_cleaned/train.csv": "73598b2bbc2d6e193346c0c96d89cda21e80eb3ed72089bbb6ff58c6cba2a4f5"
+    },
+    "model_source_hashes": {
+      "src/models/yuxin_nn/__init__.py": "a7093727b80b5f929b076783cb8308d5c544480872de63353507d7b112cc78f1",
+      "src/models/yuxin_nn/datasets.py": "e73947fbb3216cd89cfd82c642136792f595b51faa5e27847ffda7d61148e2b8",
+      "src/models/yuxin_nn/estimators.py": "4e949e952c10e9ece96d22093b60fe217d99916c8f988f5ccfd80d6421136a74",
+      "src/models/yuxin_nn/market.py": "e8b302fe31b3d4d980fc6c96e434ca9fbeb7e5eb2248b4245fa1dc6bc0c66fce",
+      "src/models/yuxin_nn/preprocessing.py": "8414c9e21bcaa0b65da9a186181c5e81c096080d720b7b27a48b139b0d9fc695",
+      "src/models/yuxin_nn/tabular.py": "6edb55a8542f20ed09fd14b1a068af4d83c30a0a04cc82c511c491e8eb42d340",
+      "src/models/yuxin_nn/temporal.py": "90383f610915e5d0000593f8bc7578398a14137bc7b8c5ac9e5335408910cb16",
+      "src/models/yuxin_nn/training.py": "06b71be5349f926d27232b8f6cda61a45724ff0841042b757bb224064abf960d"
+    }
+  }
+}

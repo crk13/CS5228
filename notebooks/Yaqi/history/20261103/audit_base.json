@@ -1,0 +1,12 @@
+[
+  {
+    "fold": "holdout",
+    "training_end": "2023-11",
+    "blocks": {}
+  },
+  {
+    "fold": "rolling_2024_04",
+    "training_end": "2024-03",
+    "blocks": {}
+  }
+]

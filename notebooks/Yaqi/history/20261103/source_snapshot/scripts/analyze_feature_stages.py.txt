@@ -1,0 +1,136 @@
+"""Summarize stage effects and inspect saved-model feature use; no refitting."""
+
+import json
+import os
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache/matplotlib"))
+
+import joblib
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from scripts.train_feature_stages import LABELS, SCENARIOS, write_json, plot_results
+
+OUT = ROOT / "outputs/location_economy_20261103"
+
+
+def raw_importance(wrapper, kind):
+    """Aggregate forest encoding/indicator columns back to source fields."""
+    estimator = wrapper.estimator_.named_steps["regressor"]
+    native = estimator.estimator_ if kind == "catboost" else estimator
+    weights = np.asarray(native.feature_importances_, dtype=float)
+    if kind not in ("rf", "extra"):
+        return pd.DataFrame({"feature": wrapper.columns, "importance": weights})
+    prepare = wrapper.estimator_.named_steps["prepare"]
+    numeric = prepare.transformers_[0][2]
+    categorical = prepare.transformers_[1][2]
+    totals = dict.fromkeys(wrapper.columns, 0.0)
+    imputer = prepare.named_transformers_["numeric"]
+    numeric_slice = prepare.output_indices_["numeric"]
+    indicators = imputer.indicator_.features_
+    assert numeric_slice.stop - numeric_slice.start == len(numeric) + len(indicators)
+    for i, column in enumerate(numeric):
+        totals[column] += float(weights[numeric_slice.start + i])
+    for i, original in enumerate(indicators):
+        totals[numeric[original]] += float(weights[numeric_slice.start + len(numeric) + i])
+    encoder = prepare.named_transformers_["categorical"].named_steps["onehot"]
+    offset = prepare.output_indices_["categorical"].start
+    for i, column in enumerate(categorical):
+        count = len(encoder.categories_[i])
+        rare = encoder.infrequent_categories_[i]
+        if rare is not None:
+            count -= len(rare) - 1
+        if encoder.drop_idx_ is not None and encoder.drop_idx_[i] is not None:
+            count -= 1
+        totals[column] += float(weights[offset:offset + count].sum())
+        offset += count
+    assert offset == prepare.output_indices_["categorical"].stop == len(weights)
+    result = pd.DataFrame({"feature": wrapper.columns, "importance": [totals[c] for c in wrapper.columns]})
+    np.testing.assert_allclose(result.importance.sum(), weights.sum(), atol=1e-9, rtol=0)
+    return result
+
+
+def main():
+    frame = pd.read_csv(OUT / "comparison.csv")
+    plot_results(OUT)
+    best = json.loads((OUT / "best_model.json").read_text(encoding="utf-8"))
+    summary = frame.loc[frame.groupby("scenario").mean_rmse.idxmin()].copy()
+    summary["order"] = summary.scenario.map({name: i for i, name in enumerate(SCENARIOS)})
+    summary.sort_values("order").drop(columns="order").to_csv(OUT / "best_by_stage.csv", index=False)
+    bundle = joblib.load(ROOT / best["model"])
+    wrapper = bundle["model"].estimator_
+    importance = raw_importance(wrapper, best["kind"])
+    importance = importance.sort_values("importance", ascending=False)
+    importance.to_csv(OUT / "native_feature_importance.csv", index=False)
+    figures = OUT / "figures"
+    top = importance.iloc[::-1]
+    fig, ax = plt.subplots(figsize=(11, max(7, len(top) * .29)), layout="constrained")
+    ax.barh(top.feature, top.importance)
+    ax.set(xlabel="Model-native importance (not causal)", title=f"Selected features: {best['name']}")
+    fig.savefig(figures / "native_feature_importance.png", dpi=160)
+    plt.close(fig)
+
+    # Forecast plots use only the already-audited feature tables, never the
+    # future realized macro series in the source files.
+    last = pd.read_csv(OUT / "covariates_location_economy_last.csv")
+    damped = pd.read_csv(OUT / "covariates_location_economy_damped.csv")
+    fig, axes = plt.subplots(2, 2, figsize=(13, 7), layout="constrained")
+    for j, fold in enumerate(("holdout", "rolling_2024_04")):
+        a = last.loc[last.fold.eq(fold)].copy()
+        b = damped.loc[damped.fold.eq(fold)].copy()
+        a = a.loc[a.RENT_APPROVAL_DATE.between("2022-01", "2025-03")]
+        b = b.loc[b.RENT_APPROVAL_DATE.between("2022-01", "2025-03")]
+        cutoff = a.loc[a.covariate_is_forecast, "RENT_APPROVAL_DATE"].min()
+        known = a.loc[~a.covariate_is_forecast]
+        for i, column in enumerate(("MACRO_COE_A_LAG1", "MACRO_SGX_MONTHLY_PRICE_INDEX_LAG1")):
+            ax = axes[i, j]
+            ax.plot(pd.to_datetime(known.RENT_APPROVAL_DATE), known[column], label="Known lagged history")
+            for table, label in ((a, "Last-value forecast"), (b, "Damped forecast")):
+                future = table.loc[table.covariate_is_forecast]
+                ax.plot(pd.to_datetime(future.RENT_APPROVAL_DATE), future[column], linestyle="--", label=label)
+            ax.axvline(pd.Timestamp(cutoff), color="gray", linewidth=1)
+            ax.set(title=f"{fold}: {column}", xlabel="Rental month", ylabel="Covariate value")
+            ax.tick_params(axis="x", rotation=30)
+    axes[0, 0].legend(fontsize=8)
+    fig.savefig(figures / "economic_inputs.png", dpi=160)
+    plt.close(fig)
+
+    baseline = frame.loc[frame.name.eq("catboost_base")].iloc[0]
+    improvement = float(baseline.mean_rmse - best["mean_rmse"])
+    write_json(OUT / "summary_metrics.json", {"experiments": len(frame), "best": best["name"],
+               "split_a": best["split_a"], "split_b": best["split_b"], "mean_rmse": best["mean_rmse"],
+               "previous_best_reproduced": float(baseline.mean_rmse), "improvement_sgd": improvement,
+               "improvement_percent": 100 * improvement / baseline.mean_rmse})
+    report_path = OUT / "FEATURE_REPORT.md"
+    report = report_path.read_text(encoding="utf-8").split("\n## 最终交付与解读")[0]
+    report += "\n## 最终交付与解读\n\n"
+    report += f"共完成 {len(frame)} 组配置。推荐配置 `{best['name']}` 的 A/B 平均 RMSE 为 {best['mean_rmse']:.3f} SGD，相对上一轮复跑最佳 CatBoost 的 {baseline.mean_rmse:.3f} 改善 {improvement:.3f} SGD（{100 * improvement / baseline.mean_rmse:.2f}%）。\n"
+    report += "\n以下在同一 CatBoost 参数下比较各阶段，便于区分位置和经济特征的作用：\n\n| 阶段 | A | B | 平均 RMSE |\n|---|---:|---:|---:|\n"
+    for row in frame.loc[frame.kind.eq("catboost")].itertuples():
+        report += f"| {LABELS[row.scenario]} | {row.split_a:.3f} | {row.split_b:.3f} | {row.mean_rmse:.3f} |\n"
+    report += "\n总体差异较小；有限开发验证结果不能证明稳定泛化或经济变量的因果作用。图中的经济未来曲线全部是截止点生成的预测，没有画入未来实测值。\n"
+    report += "\n![经济协变量输入](figures/economic_inputs.png)\n\n![模型实际使用列的重要性](figures/native_feature_importance.png)\n"
+    report += "\n模型原生重要性用于检查已选模型的输入使用情况，不同库的度量不能直接比较，也不等于因果贡献。\n"
+    report += "森林模型的重要性按原字段汇总 one-hot 编码列及相应缺失指示列，避免把一列展开后的权重误配到原字段。\n"
+    report += "\n## 五类模型的覆盖\n\n| 模型 | 已完成阶段数 | 最低平均 RMSE | 对应阶段 |\n|---|---:|---:|---|\n"
+    for kind, group in frame.groupby("kind", sort=False):
+        selected = group.loc[group.mean_rmse.idxmin()]
+        report += f"| {kind} | {len(group)} | {selected.mean_rmse:.3f} | {LABELS[selected.scenario]} |\n"
+    if frame.kind.isin(["rf", "extra"]).sum() == 12:
+        report += "\n两种森林的六阶段完整 A/B 表、地区误差、字段重要性及与推荐模型的误差相关性见 [森林补充报告](FOREST_REPORT.md)。\n"
+    report += f"\n推荐模型可用训练数据 {best['available_train_rows']} 条，按选定 24 月窗口实际拟合 {best['actual_fit_rows']} 条（{best['fit_start']}—{best['fit_end']}）。提交文件为 `submissions/best_feature_model.csv`，共 {best['test_rows']} 条。模型保存与重载预测、提交编号、真实数据未来扰动及所有分数的独立复核见 verification.json。\n"
+    if (OUT / "location_model.json").exists():
+        location = json.loads((OUT / "location_model.json").read_text(encoding="utf-8"))
+        report += f"\n另存位置版模型 `models/location_only_model.joblib` 与 `submissions/location_only_model.csv`，A/B 平均为 {location['mean_rmse']:.3f} SGD，不含经济特征。两份模型均已核对保存重载后的完整 50000 个预测。\n"
+    report_path.write_text(report, encoding="utf-8")
+    print(f"Analysis saved: {report_path}")
+
+
+if __name__ == "__main__":
+    main()

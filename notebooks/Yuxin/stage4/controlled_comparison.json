@@ -1,0 +1,5037 @@
+{
+  "scope": "cached-property controlled experiment, not twelve independently fitted property ensembles",
+  "property_source": "notebooks/Yuxin/tuning/final/experiments/20261103T175001571910Z_a7a4588e",
+  "property_source_commit": "aba5078",
+  "property_validation_sha256": "a536cc1f61c51f01ca3bc4e6c022e39b981b6c4f6e295299b53ef5b176b2e005",
+  "property_recipe": {
+    "class": "ensemble",
+    "parameters": {
+      "members": [
+        {
+          "kind": "mlp",
+          "market_normalize": true,
+          "epochs": 60,
+          "hidden_size": 256,
+          "embedding_size": 16,
+          "d_model": 32,
+          "nhead": 4,
+          "layers": 1,
+          "dropout": 0.1,
+          "batch_size": 1024,
+          "learning_rate": 0.000672894122778305,
+          "weight_decay": 5.283064500325875e-05,
+          "min_frequency": 3,
+          "inner_months": 3,
+          "patience": 7,
+          "train_months": null,
+          "loss_weighting": "uniform",
+          "threads": 1,
+          "random_state": 5228
+        },
+        {
+          "kind": "mlp",
+          "market_normalize": true,
+          "epochs": 60,
+          "hidden_size": 256,
+          "embedding_size": 16,
+          "d_model": 32,
+          "nhead": 4,
+          "layers": 1,
+          "dropout": 0.0,
+          "batch_size": 512,
+          "learning_rate": 0.0037928122106431223,
+          "weight_decay": 0.013783836177564662,
+          "min_frequency": 1,
+          "inner_months": 3,
+          "patience": 7,
+          "train_months": null,
+          "loss_weighting": "uniform",
+          "threads": 1,
+          "random_state": 5228
+        },
+        {
+          "kind": "mlp",
+          "market_normalize": true,
+          "epochs": 60,
+          "hidden_size": 128,
+          "embedding_size": 8,
+          "d_model": 32,
+          "nhead": 4,
+          "layers": 1,
+          "dropout": 0.05,
+          "batch_size": 512,
+          "learning_rate": 0.003,
+          "weight_decay": 0.001,
+          "min_frequency": 10,
+          "inner_months": 3,
+          "patience": 7,
+          "train_months": null,
+          "loss_weighting": "uniform",
+          "threads": 1,
+          "random_state": 5228
+        },
+        {
+          "kind": "mlp",
+          "market_normalize": true,
+          "epochs": 60,
+          "hidden_size": 128,
+          "embedding_size": 8,
+          "d_model": 32,
+          "nhead": 4,
+          "layers": 1,
+          "dropout": 0.0,
+          "batch_size": 1024,
+          "learning_rate": 0.002,
+          "weight_decay": 0.0001,
+          "min_frequency": 3,
+          "inner_months": 6,
+          "patience": 7,
+          "train_months": 24,
+          "loss_weighting": "uniform",
+          "threads": 1,
+          "random_state": 5228
+        }
+      ],
+      "encoder": "carry",
+      "random_state": 5228
+    },
+    "search": {
+      "phase": "carry",
+      "trial": "greedy_forward_4",
+      "development_mean_rmse": 478.23733956324185,
+      "selection": "best K=1..4 equal-weight top-K or greedy-forward candidates within one family",
+      "global_optimum_proven": false
+    }
+  },
+  "data_hashes": {
+    "data/auxiliary/sg-coe-prices.csv": "e32fccd39da32780b6b7f35d069c813ed3edb0c110ea60761656bcee58d501a5",
+    "data/auxiliary/sg-hdb-block.csv": "e6ccc60c1f901f8f476eb6fe14c07ef5941d2afd06a081a1e4c00f717da27f83",
+    "data/auxiliary/sg-mrt-stations.csv": "899460b39fb251bd6883fffc9e6a772081f8e5217a657550afc3c49cfdcd3227",
+    "data/auxiliary/sg-schools.csv": "118c7ce8d96bbc934bd53655e73e6d0848c27853a625394ecc6a67a5af54f192",
+    "data/auxiliary/sg-shopping-malls.csv": "00e05b0176ac412695fc4ce1fc5a5338a1993593ffaffe26156dc2ea04ddf2c8",
+    "data/auxiliary/sg-stock-prices.csv": "c52fef9f33cfcb11285e2b9546124e02f32488e563af44e9fb3a505d10e2edff",
+    "data/example-submission.csv": "ab751676b2bfc6121ac3543075d4f2c8978a6d73a14a3442a1bb7bdbf7867678",
+    "data/test.csv": "dfc407406d957bbf7c2f005e5d9852b1bfc6546cd4186f07e6824d8e03e64cfc",
+    "data/train.csv": "6d7a417de72112361f8353659ba6fe44a442b07465b488aff1b03f7ec1ea3ba6",
+    "data_cleaned/auxiliary/coe_prices.csv": "42df3febbacf2c71a9fa1bffd75d881a41b73b7dada1739d4767b4e5c80e0415",
+    "data_cleaned/auxiliary/hdb_blocks.csv": "a57ef543ac39113b73aca3b4d19517ca4a3821389291edc431d2d9a634edffa3",
+    "data_cleaned/auxiliary/mrt_stations.csv": "5aef7f8b2a32a7a7b57958da0f1b7ceefe6bceb01c8f31469a11471a9882e5aa",
+    "data_cleaned/auxiliary/schools.csv": "cb7cbb37c2275c870ba8492a6d25f156e7cb3a3b61f91b3d69fed0933ac64b75",
+    "data_cleaned/auxiliary/shopping_malls.csv": "cc70e888c9a76f943b4d6ec3fe122ea430feb1eb3b415c72cd526952fcc839a6",
+    "data_cleaned/auxiliary/stock_prices.csv": "a8b3beb0aa8e23348ec92e1335aa1958b12c2360ae772649ba7a9a1184d6fe22",
+    "data_cleaned/test.csv": "e65c1a5deadc630b5d5f3c49102c61ed2012a541e67c56ec7127a5aecaa84a78",
+    "data_cleaned/train.csv": "73598b2bbc2d6e193346c0c96d89cda21e80eb3ed72089bbb6ff58c6cba2a4f5"
+  },
+  "temporal_source_hashes": {
+    "temporal.py": "863810da98008a3e33856f613ed4549688b77106a31339443e6a17e3cab055be",
+    "market.py": "a32d26d3409b29cebf72ec3e65201f27f2c72b2aa52e98b96567e786f737d1a5"
+  },
+  "candidates": [
+    {
+      "candidate": "matched_carry",
+      "scope": "matched_L6",
+      "holdout": 486.3077146465668,
+      "rolling_2024_04": 470.1669644799169,
+      "mean_rmse": 478.23733956324185,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "carry"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "carry",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3100.0,
+            "2024-01": 3100.0,
+            "2024-02": 3100.0,
+            "2024-03": 3100.0,
+            "2024-04": 3100.0,
+            "2024-05": 3100.0,
+            "2024-06": 3100.0,
+            "2024-07": 3100.0,
+            "2024-08": 3100.0,
+            "2024-09": 3100.0,
+            "2024-10": 3100.0,
+            "2024-11": 3100.0,
+            "2024-12": 3100.0,
+            "2025-01": 3100.0,
+            "2025-02": 3100.0,
+            "2025-03": 3100.0
+          },
+          "selection_history": []
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "carry",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3100.0,
+            "2024-05": 3100.0,
+            "2024-06": 3100.0,
+            "2024-07": 3100.0,
+            "2024-08": 3100.0,
+            "2024-09": 3100.0,
+            "2024-10": 3100.0,
+            "2024-11": 3100.0,
+            "2024-12": 3100.0,
+            "2025-01": 3100.0,
+            "2025-02": 3100.0,
+            "2025-03": 3100.0,
+            "2025-04": 3100.0,
+            "2025-05": 3100.0,
+            "2025-06": 3100.0,
+            "2025-07": 3100.0
+          },
+          "selection_history": []
+        }
+      ]
+    },
+    {
+      "candidate": "matched_damped",
+      "scope": "matched_L6",
+      "holdout": 486.53551703484726,
+      "rolling_2024_04": 469.9868787623108,
+      "mean_rmse": 478.26119789857904,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "damped"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "damped",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3103.3566433566434,
+            "2024-01": 3106.041958041958,
+            "2024-02": 3108.19020979021,
+            "2024-03": 3109.9088111888113,
+            "2024-04": 3111.2836923076925,
+            "2024-05": 3112.3835972027973,
+            "2024-06": 3113.2635211188813,
+            "2024-07": 3113.9674602517484,
+            "2024-08": 3114.530611558042,
+            "2024-09": 3114.9811326030767,
+            "2024-10": 3115.3415494391047,
+            "2024-11": 3115.629882907927,
+            "2024-12": 3115.860549682985,
+            "2025-01": 3116.045083103031,
+            "2025-02": 3116.1927098390684,
+            "2025-03": 3116.310811227898
+          },
+          "selection_history": []
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "damped",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3101.958041958042,
+            "2024-05": 3103.5244755244757,
+            "2024-06": 3104.7776223776227,
+            "2024-07": 3105.78013986014,
+            "2024-08": 3106.582153846154,
+            "2024-09": 3107.2237650349653,
+            "2024-10": 3107.7370539860144,
+            "2024-11": 3108.1476851468537,
+            "2024-12": 3108.476190075525,
+            "2025-01": 3108.738994018462,
+            "2025-02": 3108.9492371728115,
+            "2025-03": 3109.117431696291,
+            "2025-04": 3109.251987315075,
+            "2025-05": 3109.359631810102,
+            "2025-06": 3109.4457474061237,
+            "2025-07": 3109.514639882941
+          },
+          "selection_history": []
+        }
+      ]
+    },
+    {
+      "candidate": "matched_rnn",
+      "scope": "matched_L6",
+      "holdout": 487.16157567016046,
+      "rolling_2024_04": 469.99052065102137,
+      "mean_rmse": 478.5760481605909,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "rnn"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "rnn",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 11,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3106.937091850259,
+            "2024-01": 3112.3965178912686,
+            "2024-02": 3116.7420655166925,
+            "2024-03": 3120.210184239769,
+            "2024-04": 3122.967945571102,
+            "2024-05": 3125.1684536688217,
+            "2024-06": 3126.924855088242,
+            "2024-07": 3128.327424164574,
+            "2024-08": 3129.4478500458267,
+            "2024-09": 3130.3431500316483,
+            "2024-10": 3131.058725207088,
+            "2024-11": 3131.630760350052,
+            "2024-12": 3132.0881167685384,
+            "2025-01": 3132.453828165824,
+            "2025-02": 3132.746286172301,
+            "2025-03": 3132.9801814963284
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.02904713712632656,
+              "inner_market_rmse_sgd": 79.31612249773737
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.026514099910855293,
+              "inner_market_rmse_sgd": 76.83165394223936
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.024278579279780388,
+              "inner_market_rmse_sgd": 74.12259906933384
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.021908532828092575,
+              "inner_market_rmse_sgd": 71.09508190684467
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.020400961861014366,
+              "inner_market_rmse_sgd": 67.76054092282013
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.01877186819911003,
+              "inner_market_rmse_sgd": 64.26766858873471
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.01670975610613823,
+              "inner_market_rmse_sgd": 60.71727557222207
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.015201322734355927,
+              "inner_market_rmse_sgd": 57.37186217507931
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.018204590305685997,
+              "inner_market_rmse_sgd": 55.41006263655954
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.019965803250670433,
+              "inner_market_rmse_sgd": 54.66657062216153
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.01808064430952072,
+              "inner_market_rmse_sgd": 54.64426010528948
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.019071293994784355,
+              "inner_market_rmse_sgd": 55.341549328439456
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.01717214472591877,
+              "inner_market_rmse_sgd": 56.45777086603637
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.016557371243834496,
+              "inner_market_rmse_sgd": 57.8024993956581
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.015460558235645294,
+              "inner_market_rmse_sgd": 58.99404636433381
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.0166624803096056,
+              "inner_market_rmse_sgd": 60.30972403680335
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.015533517114818096,
+              "inner_market_rmse_sgd": 61.52232525718701
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01571742258965969,
+              "inner_market_rmse_sgd": 62.42197933885198
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.015735561028122902,
+              "inner_market_rmse_sgd": 63.17028267719897
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.015794577077031136,
+              "inner_market_rmse_sgd": 63.7121614166602
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.01650632917881012,
+              "inner_market_rmse_sgd": 64.14566540384804
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.017531316727399826,
+              "inner_market_rmse_sgd": 64.35842802917647
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.016619766131043434,
+              "inner_market_rmse_sgd": 64.37434618628352
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.016859835013747215,
+              "inner_market_rmse_sgd": 64.30486291613668
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.016681145876646042,
+              "inner_market_rmse_sgd": 64.07878972898195
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.016861414536833763,
+              "inner_market_rmse_sgd": 63.76263917612137
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.016429627314209938,
+              "inner_market_rmse_sgd": 63.38897248329913
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.017269033938646317,
+              "inner_market_rmse_sgd": 63.04927227004038
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.017031684517860413,
+              "inner_market_rmse_sgd": 62.69714443977549
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.017066877335309982,
+              "inner_market_rmse_sgd": 62.37912098113827
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.016416721045970917,
+              "inner_market_rmse_sgd": 62.053147334964066
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.016271336004137993,
+              "inner_market_rmse_sgd": 61.830968191913435
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.01670706458389759,
+              "inner_market_rmse_sgd": 61.68958363795431
+            },
+            {
+              "epoch": 34,
+              "train_mse_scaled_increment": 0.016146345064044,
+              "inner_market_rmse_sgd": 61.4892990503438
+            },
+            {
+              "epoch": 35,
+              "train_mse_scaled_increment": 0.01607251726090908,
+              "inner_market_rmse_sgd": 61.30161688308382
+            },
+            {
+              "epoch": 36,
+              "train_mse_scaled_increment": 0.01656891033053398,
+              "inner_market_rmse_sgd": 61.25771811245558
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "rnn",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 8,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3106.536173068768,
+            "2024-05": 3111.739263156828,
+            "2024-06": 3115.888917417774,
+            "2024-07": 3119.1972468199588,
+            "2024-08": 3121.8362265616615,
+            "2024-09": 3123.9425225056866,
+            "2024-10": 3125.6240457465506,
+            "2024-11": 3126.9670201730496,
+            "2024-12": 3128.0399654759076,
+            "2025-01": 3128.897405052355,
+            "2025-02": 3129.582770662187,
+            "2025-03": 3130.130688416033,
+            "2025-04": 3130.568782946729,
+            "2025-05": 3130.919105306875,
+            "2025-06": 3131.199265150538,
+            "2025-07": 3131.423330281495
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.024827061221003532,
+              "inner_market_rmse_sgd": 97.19042501280286
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.02307957224547863,
+              "inner_market_rmse_sgd": 94.68840610352923
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.02135719172656536,
+              "inner_market_rmse_sgd": 92.07505263607732
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.020028794184327126,
+              "inner_market_rmse_sgd": 89.42853285636424
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.018827591091394424,
+              "inner_market_rmse_sgd": 86.70871256257601
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.018392812460660934,
+              "inner_market_rmse_sgd": 84.26533905825372
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.017306536436080933,
+              "inner_market_rmse_sgd": 82.249993168511
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.016746865585446358,
+              "inner_market_rmse_sgd": 80.81268278196568
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.01856684871017933,
+              "inner_market_rmse_sgd": 80.92510983311341
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.017146604135632515,
+              "inner_market_rmse_sgd": 82.01361570076523
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.018155785277485847,
+              "inner_market_rmse_sgd": 83.88465391440127
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.017642483115196228,
+              "inner_market_rmse_sgd": 86.01376184160817
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.018631717190146446,
+              "inner_market_rmse_sgd": 88.29024684650363
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.018169673159718513,
+              "inner_market_rmse_sgd": 90.10490697024997
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.017467878758907318,
+              "inner_market_rmse_sgd": 91.2266736002542
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.017814217135310173,
+              "inner_market_rmse_sgd": 91.87550657733296
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.017497655004262924,
+              "inner_market_rmse_sgd": 91.98795852793276
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01683429814875126,
+              "inner_market_rmse_sgd": 91.7752198459123
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.017389168962836266,
+              "inner_market_rmse_sgd": 91.31090582316405
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.017323371022939682,
+              "inner_market_rmse_sgd": 90.47143363413421
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.017778750509023666,
+              "inner_market_rmse_sgd": 89.49186607958629
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.017667165026068687,
+              "inner_market_rmse_sgd": 88.46736408665451
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.01730683073401451,
+              "inner_market_rmse_sgd": 87.48374057001934
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.018031252548098564,
+              "inner_market_rmse_sgd": 86.62635867221631
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01749235764145851,
+              "inner_market_rmse_sgd": 85.91081981148292
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.017499303445219994,
+              "inner_market_rmse_sgd": 85.34701971646304
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.017150327563285828,
+              "inner_market_rmse_sgd": 85.06485163699158
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.017966963350772858,
+              "inner_market_rmse_sgd": 85.07605156312579
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.015866190195083618,
+              "inner_market_rmse_sgd": 85.20952538047732
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.016839846968650818,
+              "inner_market_rmse_sgd": 85.6211031028775
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.016397835686802864,
+              "inner_market_rmse_sgd": 86.16057079257425
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.017135031521320343,
+              "inner_market_rmse_sgd": 86.84107270222566
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.01748874969780445,
+              "inner_market_rmse_sgd": 87.58639689672013
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "matched_lstm",
+      "scope": "matched_L6",
+      "holdout": 487.1822438877036,
+      "rolling_2024_04": 469.96437513154393,
+      "mean_rmse": 478.57330950962375,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "lstm"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "lstm",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 16,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3106.9983808540683,
+            "2024-01": 3112.545910976544,
+            "2024-02": 3116.9607588393005,
+            "2024-03": 3120.4754049832386,
+            "2024-04": 3123.2675454791765,
+            "2024-05": 3125.4949179483583,
+            "2024-06": 3127.2722804678738,
+            "2024-07": 3128.691281149429,
+            "2024-08": 3129.8246395150672,
+            "2024-09": 3130.7301508553523,
+            "2024-10": 3131.4538095924336,
+            "2024-11": 3132.0322572917403,
+            "2024-12": 3132.4947091422205,
+            "2025-01": 3132.8644748066595,
+            "2025-02": 3133.160162085904,
+            "2025-03": 3133.396631859661
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.02904713712632656,
+              "inner_market_rmse_sgd": 80.48553208001186
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.027100887149572372,
+              "inner_market_rmse_sgd": 79.22108691836158
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.025348709896206856,
+              "inner_market_rmse_sgd": 77.87984072461006
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.023517323657870293,
+              "inner_market_rmse_sgd": 76.45682981809892
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.022037189453840256,
+              "inner_market_rmse_sgd": 74.95451823111439
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.020381424576044083,
+              "inner_market_rmse_sgd": 73.3452558355599
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.019113512709736824,
+              "inner_market_rmse_sgd": 71.62455724984974
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.01790621690452099,
+              "inner_market_rmse_sgd": 69.8213174766454
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.017246076837182045,
+              "inner_market_rmse_sgd": 67.94157207741873
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.016697360202670097,
+              "inner_market_rmse_sgd": 66.02886909958931
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.01639360934495926,
+              "inner_market_rmse_sgd": 64.17792431557326
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.016813969239592552,
+              "inner_market_rmse_sgd": 62.53820365729831
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.01691005937755108,
+              "inner_market_rmse_sgd": 61.26700375894116
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.018191350623965263,
+              "inner_market_rmse_sgd": 60.44158370044968
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.01726696640253067,
+              "inner_market_rmse_sgd": 60.032844109644444
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.018529046326875687,
+              "inner_market_rmse_sgd": 59.99727733154919
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.01664109155535698,
+              "inner_market_rmse_sgd": 60.18818364237581
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.017589924857020378,
+              "inner_market_rmse_sgd": 60.57568949577601
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.016595859080553055,
+              "inner_market_rmse_sgd": 61.078836053755246
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.01733282394707203,
+              "inner_market_rmse_sgd": 61.63664041895398
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.016287880018353462,
+              "inner_market_rmse_sgd": 62.19209719466528
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.01602165400981903,
+              "inner_market_rmse_sgd": 62.71563360973425
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.017192000523209572,
+              "inner_market_rmse_sgd": 63.213342849769376
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.015012579970061779,
+              "inner_market_rmse_sgd": 63.592440429193964
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.016288137063384056,
+              "inner_market_rmse_sgd": 63.91941773449782
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.016393471509218216,
+              "inner_market_rmse_sgd": 64.18963038063053
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.015703314915299416,
+              "inner_market_rmse_sgd": 64.37167481937215
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.0161031112074852,
+              "inner_market_rmse_sgd": 64.49917787444261
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.01592414453625679,
+              "inner_market_rmse_sgd": 64.56531048416113
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.015393644571304321,
+              "inner_market_rmse_sgd": 64.54116155220285
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.01637970469892025,
+              "inner_market_rmse_sgd": 64.5110895313772
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.01639310084283352,
+              "inner_market_rmse_sgd": 64.47864197462948
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.01533819641917944,
+              "inner_market_rmse_sgd": 64.41655785143952
+            },
+            {
+              "epoch": 34,
+              "train_mse_scaled_increment": 0.015112883411347866,
+              "inner_market_rmse_sgd": 64.38233547754949
+            },
+            {
+              "epoch": 35,
+              "train_mse_scaled_increment": 0.01560142356902361,
+              "inner_market_rmse_sgd": 64.37317337198236
+            },
+            {
+              "epoch": 36,
+              "train_mse_scaled_increment": 0.015914374962449074,
+              "inner_market_rmse_sgd": 64.41031042401468
+            },
+            {
+              "epoch": 37,
+              "train_mse_scaled_increment": 0.015071554109454155,
+              "inner_market_rmse_sgd": 64.5034197632929
+            },
+            {
+              "epoch": 38,
+              "train_mse_scaled_increment": 0.014832112938165665,
+              "inner_market_rmse_sgd": 64.65238266595648
+            },
+            {
+              "epoch": 39,
+              "train_mse_scaled_increment": 0.014443393796682358,
+              "inner_market_rmse_sgd": 64.879765449868
+            },
+            {
+              "epoch": 40,
+              "train_mse_scaled_increment": 0.013598875142633915,
+              "inner_market_rmse_sgd": 65.10797989403027
+            },
+            {
+              "epoch": 41,
+              "train_mse_scaled_increment": 0.015399733558297157,
+              "inner_market_rmse_sgd": 65.49806145552162
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "lstm",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 13,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3106.0796308554054,
+            "2024-05": 3110.932177469617,
+            "2024-06": 3114.8012674704346,
+            "2024-07": 3117.8850637041573,
+            "2024-08": 3120.342961250935,
+            "2024-09": 3122.3024280437685,
+            "2024-10": 3123.865069682667,
+            "2024-11": 3125.1120434292993,
+            "2024-12": 3126.1076227971425,
+            "2025-01": 3126.902811925234,
+            "2025-02": 3127.5381507210664,
+            "2025-03": 3128.045903239958,
+            "2025-04": 3128.4517742518615,
+            "2025-05": 3128.776259632046,
+            "2025-06": 3129.0357128172814,
+            "2025-07": 3129.243189028151
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.024827061221003532,
+              "inner_market_rmse_sgd": 98.47460847276679
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.023348012939095497,
+              "inner_market_rmse_sgd": 96.88650803658294
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.02199326641857624,
+              "inner_market_rmse_sgd": 95.26479035381823
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.020606566220521927,
+              "inner_market_rmse_sgd": 93.5935219503144
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.019491227343678474,
+              "inner_market_rmse_sgd": 91.90360439104853
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.018686234951019287,
+              "inner_market_rmse_sgd": 90.23386637998837
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.01787513867020607,
+              "inner_market_rmse_sgd": 88.58689289614168
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.017612870782613754,
+              "inner_market_rmse_sgd": 87.00099906362735
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.017564071342349052,
+              "inner_market_rmse_sgd": 85.5470696223934
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.017744814977049828,
+              "inner_market_rmse_sgd": 84.34361400006475
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.017296738922595978,
+              "inner_market_rmse_sgd": 83.53215285418501
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.017181038856506348,
+              "inner_market_rmse_sgd": 83.06044626959967
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.017887994647026062,
+              "inner_market_rmse_sgd": 83.02203001044577
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.018197180703282356,
+              "inner_market_rmse_sgd": 83.29773368654074
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.016709117218852043,
+              "inner_market_rmse_sgd": 83.73518914679183
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.016620025038719177,
+              "inner_market_rmse_sgd": 84.34711094306557
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.01704273372888565,
+              "inner_market_rmse_sgd": 85.0633506430655
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.016973648220300674,
+              "inner_market_rmse_sgd": 85.86776628657844
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.017148099839687347,
+              "inner_market_rmse_sgd": 86.75306070057955
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.016809161752462387,
+              "inner_market_rmse_sgd": 87.64785538094307
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.016036415472626686,
+              "inner_market_rmse_sgd": 88.54684022336785
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.01607675850391388,
+              "inner_market_rmse_sgd": 89.39946915993356
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.016914669424295425,
+              "inner_market_rmse_sgd": 90.17971016376684
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.015979094430804253,
+              "inner_market_rmse_sgd": 90.86400656100322
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.016146589070558548,
+              "inner_market_rmse_sgd": 91.49029657756539
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.01611802540719509,
+              "inner_market_rmse_sgd": 92.05858987030882
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.015893366187810898,
+              "inner_market_rmse_sgd": 92.56168851114859
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.01532063353806734,
+              "inner_market_rmse_sgd": 93.04017113241981
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.015575521625578403,
+              "inner_market_rmse_sgd": 93.51195278388226
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.01514648087322712,
+              "inner_market_rmse_sgd": 93.95215446798811
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.016297781839966774,
+              "inner_market_rmse_sgd": 94.36057199425552
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.014850521460175514,
+              "inner_market_rmse_sgd": 94.60910661361376
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.01432720385491848,
+              "inner_market_rmse_sgd": 94.94389985221697
+            },
+            {
+              "epoch": 34,
+              "train_mse_scaled_increment": 0.01341067161411047,
+              "inner_market_rmse_sgd": 95.32654474964046
+            },
+            {
+              "epoch": 35,
+              "train_mse_scaled_increment": 0.014646573923528194,
+              "inner_market_rmse_sgd": 95.85232406466092
+            },
+            {
+              "epoch": 36,
+              "train_mse_scaled_increment": 0.014041169546544552,
+              "inner_market_rmse_sgd": 96.56525157968966
+            },
+            {
+              "epoch": 37,
+              "train_mse_scaled_increment": 0.014775710180401802,
+              "inner_market_rmse_sgd": 97.3803477650603
+            },
+            {
+              "epoch": 38,
+              "train_mse_scaled_increment": 0.013782077468931675,
+              "inner_market_rmse_sgd": 98.50063240874724
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "matched_transformer",
+      "scope": "matched_L6",
+      "holdout": 487.0368760579732,
+      "rolling_2024_04": 469.95457528844463,
+      "mean_rmse": 478.4957256732089,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "transformer"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "transformer",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 6,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3106.398263917495,
+            "2024-01": 3111.447993216366,
+            "2024-02": 3115.446686781082,
+            "2024-03": 3118.6188322815765,
+            "2024-04": 3121.1370190831203,
+            "2024-05": 3123.1412185705667,
+            "2024-06": 3124.7379034899072,
+            "2024-07": 3126.011020042507,
+            "2024-08": 3127.026825341177,
+            "2024-09": 3127.8377598799157,
+            "2024-10": 3128.485418435409,
+            "2024-11": 3129.002850812858,
+            "2024-12": 3129.4163537177865,
+            "2025-01": 3129.746873088193,
+            "2025-02": 3130.0111079781655,
+            "2025-03": 3130.2223803967095
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.02904713712632656,
+              "inner_market_rmse_sgd": 76.62647742667647
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.02335074171423912,
+              "inner_market_rmse_sgd": 71.66426421231496
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.0196931641548872,
+              "inner_market_rmse_sgd": 66.85615758511098
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.016466153785586357,
+              "inner_market_rmse_sgd": 62.50628025758837
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.014592314139008522,
+              "inner_market_rmse_sgd": 59.31375435247095
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.01617654412984848,
+              "inner_market_rmse_sgd": 57.57475401818524
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.017582520842552185,
+              "inner_market_rmse_sgd": 57.714771865103565
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.016901249065995216,
+              "inner_market_rmse_sgd": 58.82177089537286
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.015995850786566734,
+              "inner_market_rmse_sgd": 60.343678277986214
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.016296176239848137,
+              "inner_market_rmse_sgd": 62.20344266666092
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.014232070185244083,
+              "inner_market_rmse_sgd": 64.01932363710797
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.01309012807905674,
+              "inner_market_rmse_sgd": 65.8663247616664
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.012465126812458038,
+              "inner_market_rmse_sgd": 67.33778342428116
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014429601840674877,
+              "inner_market_rmse_sgd": 67.88796610474604
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.01418209820985794,
+              "inner_market_rmse_sgd": 67.59128802898934
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.013992223888635635,
+              "inner_market_rmse_sgd": 66.95029391586885
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.013224190101027489,
+              "inner_market_rmse_sgd": 66.18995495037366
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.012319785542786121,
+              "inner_market_rmse_sgd": 65.0932197971067
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.013739257119596004,
+              "inner_market_rmse_sgd": 63.766680013953795
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.015439891256392002,
+              "inner_market_rmse_sgd": 63.36375400280684
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.013941268436610699,
+              "inner_market_rmse_sgd": 63.558124648362515
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.011743567883968353,
+              "inner_market_rmse_sgd": 64.5714167871379
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.017440523952245712,
+              "inner_market_rmse_sgd": 65.90031048227506
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.013514270074665546,
+              "inner_market_rmse_sgd": 67.30809251202517
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01274180132895708,
+              "inner_market_rmse_sgd": 68.40496986932126
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.011584625579416752,
+              "inner_market_rmse_sgd": 68.78873666467967
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.01354951225221157,
+              "inner_market_rmse_sgd": 68.34919021576975
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.0174661073833704,
+              "inner_market_rmse_sgd": 67.48679973223199
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.012448449619114399,
+              "inner_market_rmse_sgd": 66.72872007226249
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.01263613160699606,
+              "inner_market_rmse_sgd": 66.86450922487775
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.013948924839496613,
+              "inner_market_rmse_sgd": 67.04670434853497
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "transformer",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 7,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3102.645920296455,
+            "2024-05": 3104.7316090750164,
+            "2024-06": 3106.380635129309,
+            "2024-07": 3107.687506738056,
+            "2024-08": 3108.72507854705,
+            "2024-09": 3109.550011736943,
+            "2024-10": 3110.2067394714145,
+            "2024-11": 3110.7300768259915,
+            "2024-12": 3111.1474458404273,
+            "2025-01": 3111.480512444977,
+            "2025-02": 3111.7464375207414,
+            "2025-03": 3111.95884044643,
+            "2025-04": 3112.1285475977324,
+            "2025-05": 3112.2641757847764,
+            "2025-06": 3112.372590537898,
+            "2025-07": 3112.459266199872
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.024827061221003532,
+              "inner_market_rmse_sgd": 98.0195989665094
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.020395878702402115,
+              "inner_market_rmse_sgd": 93.92826949872203
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.017900004982948303,
+              "inner_market_rmse_sgd": 89.61498002562216
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.01567421853542328,
+              "inner_market_rmse_sgd": 85.57936891975393
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.015414341352880001,
+              "inner_market_rmse_sgd": 82.90220755313364
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.01731926016509533,
+              "inner_market_rmse_sgd": 81.59736854261959
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.014869701117277145,
+              "inner_market_rmse_sgd": 81.41569926585348
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.01819603331387043,
+              "inner_market_rmse_sgd": 82.62073006442732
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.01850273832678795,
+              "inner_market_rmse_sgd": 84.23082993590135
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.015612981282174587,
+              "inner_market_rmse_sgd": 85.76915740499973
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.01608460396528244,
+              "inner_market_rmse_sgd": 86.66626083792463
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.013796566985547543,
+              "inner_market_rmse_sgd": 88.07612041289313
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.0153909707441926,
+              "inner_market_rmse_sgd": 90.19230142518201
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014670333825051785,
+              "inner_market_rmse_sgd": 92.39347596404218
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.014136441983282566,
+              "inner_market_rmse_sgd": 94.26681060594613
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.01336094830185175,
+              "inner_market_rmse_sgd": 95.59818091430279
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.013733410276472569,
+              "inner_market_rmse_sgd": 96.37646084103632
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01542702130973339,
+              "inner_market_rmse_sgd": 96.32620017560798
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.01319942343980074,
+              "inner_market_rmse_sgd": 95.640642217593
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.014468662440776825,
+              "inner_market_rmse_sgd": 94.32681905827211
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.013870845548808575,
+              "inner_market_rmse_sgd": 92.65760756629042
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.013003172352910042,
+              "inner_market_rmse_sgd": 90.62278938948614
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.014175599440932274,
+              "inner_market_rmse_sgd": 89.26908198392019
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.0131099047139287,
+              "inner_market_rmse_sgd": 88.22571682045825
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01493762619793415,
+              "inner_market_rmse_sgd": 88.65022444592189
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.01567969098687172,
+              "inner_market_rmse_sgd": 89.7655279299833
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.013566278852522373,
+              "inner_market_rmse_sgd": 91.38809948260385
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.0157025046646595,
+              "inner_market_rmse_sgd": 92.75027176822066
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.012233288958668709,
+              "inner_market_rmse_sgd": 93.70891789362341
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.011317693628370762,
+              "inner_market_rmse_sgd": 95.67384102005742
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.012252958491444588,
+              "inner_market_rmse_sgd": 96.96787301390975
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.012459062971174717,
+              "inner_market_rmse_sgd": 98.46070385365061
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "transformer_lookback_3",
+      "scope": "bounded_attention_search",
+      "holdout": 487.2895424785098,
+      "rolling_2024_04": 469.96643369421884,
+      "mean_rmse": 478.6279880863643,
+      "parameters": {
+        "lookback": 3,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "transformer"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "transformer",
+            "months": 35,
+            "lookback": 3,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 7,
+            "windows": 32,
+            "first_target_month": "2021-04",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3107.4307554750853,
+            "2024-01": 3113.323746157883,
+            "2024-02": 3118.0126910867407,
+            "2024-03": 3121.7473168760057,
+            "2024-04": 3124.7245798217864,
+            "2024-05": 3127.099780645683,
+            "2024-06": 3128.9957470016507,
+            "2024-07": 3130.50985367938,
+            "2024-08": 3131.7194417509245,
+            "2024-09": 3132.686030713463,
+            "2024-10": 3133.458611866576,
+            "2024-11": 3134.0762365119353,
+            "2024-12": 3134.570054996939,
+            "2025-01": 3134.964930166574,
+            "2025-02": 3135.280715534715,
+            "2025-03": 3135.533270382286
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.027207044884562492,
+              "inner_market_rmse_sgd": 76.625195142688
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.02181570790708065,
+              "inner_market_rmse_sgd": 71.71078587998791
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.017011629417538643,
+              "inner_market_rmse_sgd": 66.90119990033386
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.014705998823046684,
+              "inner_market_rmse_sgd": 62.48058302262386
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.012935937382280827,
+              "inner_market_rmse_sgd": 59.12339584568216
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.015387523919343948,
+              "inner_market_rmse_sgd": 57.18160668662748
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.01770021766424179,
+              "inner_market_rmse_sgd": 56.77270089678947
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.017078418284654617,
+              "inner_market_rmse_sgd": 57.242027073335464
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.016761332750320435,
+              "inner_market_rmse_sgd": 58.34752415760157
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.01317182183265686,
+              "inner_market_rmse_sgd": 59.66601434486606
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.016028858721256256,
+              "inner_market_rmse_sgd": 61.04911315705303
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.013206824660301208,
+              "inner_market_rmse_sgd": 62.686338420474456
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.014888034202158451,
+              "inner_market_rmse_sgd": 64.50345081062586
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014132928103208542,
+              "inner_market_rmse_sgd": 65.94823340175657
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.014216088689863682,
+              "inner_market_rmse_sgd": 67.39386076354637
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.012900874949991703,
+              "inner_market_rmse_sgd": 68.53728851830601
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.014837308786809444,
+              "inner_market_rmse_sgd": 69.21875508301878
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01478586159646511,
+              "inner_market_rmse_sgd": 69.52490174465524
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.014573682099580765,
+              "inner_market_rmse_sgd": 69.28018358417116
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.016130095347762108,
+              "inner_market_rmse_sgd": 68.63160914934197
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.012907164171338081,
+              "inner_market_rmse_sgd": 67.50858010277743
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.013286830857396126,
+              "inner_market_rmse_sgd": 66.25186320131597
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.012940572574734688,
+              "inner_market_rmse_sgd": 64.71135370017308
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.011254426091909409,
+              "inner_market_rmse_sgd": 63.165335716024266
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.013235917314887047,
+              "inner_market_rmse_sgd": 61.927408420520045
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.01435856707394123,
+              "inner_market_rmse_sgd": 61.00794194046762
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.013414332643151283,
+              "inner_market_rmse_sgd": 60.516543018568335
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.013291852548718452,
+              "inner_market_rmse_sgd": 60.37023711243505
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.011085167527198792,
+              "inner_market_rmse_sgd": 60.536516006935905
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.010754276998341084,
+              "inner_market_rmse_sgd": 61.11920943586627
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.009504430927336216,
+              "inner_market_rmse_sgd": 61.80857439214138
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.013545313850045204,
+              "inner_market_rmse_sgd": 62.931773659879525
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "transformer",
+            "months": 39,
+            "lookback": 3,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 5,
+            "windows": 36,
+            "first_target_month": "2021-04",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3106.139289350514,
+            "2024-05": 3111.013136717008,
+            "2024-06": 3114.8874377192874,
+            "2024-07": 3117.970566840587,
+            "2024-08": 3120.4267635112756,
+            "2024-09": 3122.3851914849824,
+            "2024-10": 3123.947788594127,
+            "2024-11": 3125.19523065368,
+            "2024-12": 3126.1915059532034,
+            "2025-01": 3126.987456507404,
+            "2025-02": 3127.623534647391,
+            "2025-03": 3128.131961600078,
+            "2025-04": 3128.5384249726326,
+            "2025-05": 3128.863417958109,
+            "2025-06": 3129.1232987167737,
+            "2025-07": 3129.331130708133
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.023408371955156326,
+              "inner_market_rmse_sgd": 93.29709014614689
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.019638240337371826,
+              "inner_market_rmse_sgd": 88.24410155533765
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.01710418239235878,
+              "inner_market_rmse_sgd": 83.42387943994939
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.015720905736088753,
+              "inner_market_rmse_sgd": 80.08013345112678
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.014489497989416122,
+              "inner_market_rmse_sgd": 78.647135523214
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.016459021717309952,
+              "inner_market_rmse_sgd": 79.13734246644191
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.015707818791270256,
+              "inner_market_rmse_sgd": 80.40994699500662
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.015101438388228416,
+              "inner_market_rmse_sgd": 81.88541800993107
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.015027094632387161,
+              "inner_market_rmse_sgd": 83.87842830584125
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.014079815708100796,
+              "inner_market_rmse_sgd": 86.1567396052764
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.014376508072018623,
+              "inner_market_rmse_sgd": 88.04394118877096
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.014531983062624931,
+              "inner_market_rmse_sgd": 89.4428985936658
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.014391033910214901,
+              "inner_market_rmse_sgd": 89.84587112811701
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014915557578206062,
+              "inner_market_rmse_sgd": 89.54927119548032
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.015223204158246517,
+              "inner_market_rmse_sgd": 88.64597464713114
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.01494040247052908,
+              "inner_market_rmse_sgd": 87.59665152118967
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.014937583357095718,
+              "inner_market_rmse_sgd": 86.66164484668754
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01277136616408825,
+              "inner_market_rmse_sgd": 85.94518641248035
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.014768367633223534,
+              "inner_market_rmse_sgd": 85.71171912528595
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.01505367737263441,
+              "inner_market_rmse_sgd": 85.75469217191592
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.012517611496150494,
+              "inner_market_rmse_sgd": 85.7760206732098
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.013087360188364983,
+              "inner_market_rmse_sgd": 85.98882432002625
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.01233715284615755,
+              "inner_market_rmse_sgd": 86.24086118188906
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.013066841289401054,
+              "inner_market_rmse_sgd": 86.23134602014201
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.013471596874296665,
+              "inner_market_rmse_sgd": 86.02659422086435
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.011703433468937874,
+              "inner_market_rmse_sgd": 86.16434906696156
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.011868521571159363,
+              "inner_market_rmse_sgd": 86.70699230901637
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.012213571928441525,
+              "inner_market_rmse_sgd": 88.43756592381675
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.01381817739456892,
+              "inner_market_rmse_sgd": 90.3720075294162
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.012996968813240528,
+              "inner_market_rmse_sgd": 92.46858817129944
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "transformer_hidden_size_16",
+      "scope": "bounded_attention_search",
+      "holdout": 487.10642037690286,
+      "rolling_2024_04": 469.92208442604624,
+      "mean_rmse": 478.51425240147455,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 16,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "transformer"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "transformer",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 16,
+            "feedforward_size": 32,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 4,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3106.7500193380492,
+            "2024-01": 3112.0484285024445,
+            "2024-02": 3116.239011608384,
+            "2024-03": 3119.562545238181,
+            "2024-04": 3122.190273407205,
+            "2024-05": 3124.279991611174,
+            "2024-06": 3125.9434548041195,
+            "2024-07": 3127.268972152019,
+            "2024-08": 3128.3260565083724,
+            "2024-09": 3129.1696094916465,
+            "2024-10": 3129.843107287134,
+            "2024-11": 3130.3810490702995,
+            "2024-12": 3130.810856458675,
+            "2025-01": 3131.154353953429,
+            "2025-02": 3131.428929511459,
+            "2025-03": 3131.64844790311
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.02904713712632656,
+              "inner_market_rmse_sgd": 73.84962224884575
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.018480723723769188,
+              "inner_market_rmse_sgd": 65.52876395490038
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.015807906165719032,
+              "inner_market_rmse_sgd": 58.64325470072517
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.017665013670921326,
+              "inner_market_rmse_sgd": 56.87764475057038
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.016294293105602264,
+              "inner_market_rmse_sgd": 57.635335676192696
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.01496358122676611,
+              "inner_market_rmse_sgd": 59.76275631970818
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.013802958652377129,
+              "inner_market_rmse_sgd": 63.616534003955856
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.015322081744670868,
+              "inner_market_rmse_sgd": 67.34499040242846
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.014124915935099125,
+              "inner_market_rmse_sgd": 70.3413958339983
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.01293870247900486,
+              "inner_market_rmse_sgd": 72.14910374041482
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.016205457970499992,
+              "inner_market_rmse_sgd": 72.30890393228131
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.014689316973090172,
+              "inner_market_rmse_sgd": 71.02921858524894
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.012433976866304874,
+              "inner_market_rmse_sgd": 69.31700085011714
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014721988700330257,
+              "inner_market_rmse_sgd": 68.29883132746805
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.013404306955635548,
+              "inner_market_rmse_sgd": 66.52874536926697
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.011287695728242397,
+              "inner_market_rmse_sgd": 66.05789265636548
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.013646550476551056,
+              "inner_market_rmse_sgd": 66.38277232862936
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.011584911495447159,
+              "inner_market_rmse_sgd": 67.44222271425367
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.014244896359741688,
+              "inner_market_rmse_sgd": 68.83459947367429
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.015519711188971996,
+              "inner_market_rmse_sgd": 70.87285675876541
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.014327650889754295,
+              "inner_market_rmse_sgd": 72.14336309501815
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.015146579593420029,
+              "inner_market_rmse_sgd": 73.09105466216845
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.013581653125584126,
+              "inner_market_rmse_sgd": 74.281406996253
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.013899465091526508,
+              "inner_market_rmse_sgd": 75.29786138135579
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01100904680788517,
+              "inner_market_rmse_sgd": 75.75873884110585
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.01240158174186945,
+              "inner_market_rmse_sgd": 75.85885439348918
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.013740161433815956,
+              "inner_market_rmse_sgd": 75.1437928686008
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.011417383328080177,
+              "inner_market_rmse_sgd": 73.99945536166172
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.010747759602963924,
+              "inner_market_rmse_sgd": 72.42986692170854
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "transformer",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 16,
+            "feedforward_size": 32,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 4,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3103.7623352044593,
+            "2024-05": 3106.729751754063,
+            "2024-06": 3109.075588420464,
+            "2024-07": 3110.933676001538,
+            "2024-08": 3112.407929048962,
+            "2024-09": 3113.5792658892296,
+            "2024-10": 3114.510908902214,
+            "2024-11": 3115.252790485493,
+            "2024-12": 3115.844119257808,
+            "2025-01": 3116.315799677157,
+            "2025-02": 3116.692264457461,
+            "2025-03": 3116.99287609342,
+            "2025-04": 3117.233008210769,
+            "2025-05": 3117.424886054123,
+            "2025-06": 3117.5782428010652,
+            "2025-07": 3117.7008352466573
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.024827061221003532,
+              "inner_market_rmse_sgd": 93.98192709950239
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.01730320416390896,
+              "inner_market_rmse_sgd": 85.85457713309974
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.01700669713318348,
+              "inner_market_rmse_sgd": 81.18965054109128
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.017003929242491722,
+              "inner_market_rmse_sgd": 80.96453476047084
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.017287397757172585,
+              "inner_market_rmse_sgd": 84.86037604283669
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.014891689643263817,
+              "inner_market_rmse_sgd": 88.35314608553229
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.013476548716425896,
+              "inner_market_rmse_sgd": 93.12038612359738
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.014901288785040379,
+              "inner_market_rmse_sgd": 95.3529084912991
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.01645185798406601,
+              "inner_market_rmse_sgd": 97.03980623547126
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.013275076635181904,
+              "inner_market_rmse_sgd": 98.42250643288905
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.013805900700390339,
+              "inner_market_rmse_sgd": 98.18775722858189
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.012214834801852703,
+              "inner_market_rmse_sgd": 96.79790872742939
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.015207404270768166,
+              "inner_market_rmse_sgd": 94.02962715493295
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014923512004315853,
+              "inner_market_rmse_sgd": 91.61693607256873
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.012982054613530636,
+              "inner_market_rmse_sgd": 91.62540369525361
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.012737984769046307,
+              "inner_market_rmse_sgd": 92.42609515358275
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.012224656529724598,
+              "inner_market_rmse_sgd": 91.90729778735752
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.014365019276738167,
+              "inner_market_rmse_sgd": 94.16728101487001
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.015751810744404793,
+              "inner_market_rmse_sgd": 96.56720430839604
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.014450621791183949,
+              "inner_market_rmse_sgd": 98.58112751133822
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.013677145354449749,
+              "inner_market_rmse_sgd": 100.6875276671924
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.01210693921893835,
+              "inner_market_rmse_sgd": 99.99661556398821
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.011565349996089935,
+              "inner_market_rmse_sgd": 99.43323839234114
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.012655343860387802,
+              "inner_market_rmse_sgd": 98.64844232058738
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.013807594776153564,
+              "inner_market_rmse_sgd": 96.97597368202618
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.014881900511682034,
+              "inner_market_rmse_sgd": 97.2623748089114
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.012928759679198265,
+              "inner_market_rmse_sgd": 98.47133683205529
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.01333631668239832,
+              "inner_market_rmse_sgd": 99.09338820687691
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.013956006616353989,
+              "inner_market_rmse_sgd": 99.18728076124034
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "transformer_learning_rate_0.001",
+      "scope": "bounded_attention_search",
+      "holdout": 486.8349186061581,
+      "rolling_2024_04": 469.93058945981255,
+      "mean_rmse": 478.3827540329853,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.001,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "transformer"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "transformer",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 28,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3105.368248004102,
+            "2024-01": 3109.610667407458,
+            "2024-02": 3112.9755686728017,
+            "2024-03": 3115.6499085768937,
+            "2024-04": 3117.7737510123566,
+            "2024-05": 3119.465696448082,
+            "2024-06": 3120.8145986023937,
+            "2024-07": 3121.8907680491966,
+            "2024-08": 3122.7498274816203,
+            "2024-09": 3123.435881133549,
+            "2024-10": 3123.983963349673,
+            "2024-11": 3124.421943951351,
+            "2024-12": 3124.7720188472467,
+            "2025-01": 3125.051881066142,
+            "2025-02": 3125.2756444867096,
+            "2025-03": 3125.454574506803
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.02904713712632656,
+              "inner_market_rmse_sgd": 80.63322688127025
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.02780076302587986,
+              "inner_market_rmse_sgd": 79.62224913956378
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.02677205391228199,
+              "inner_market_rmse_sgd": 78.6184998151457
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.025653330609202385,
+              "inner_market_rmse_sgd": 77.61787875164164
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.02425229549407959,
+              "inner_market_rmse_sgd": 76.63924556162563
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.023581352084875107,
+              "inner_market_rmse_sgd": 75.63892777507789
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.02257407270371914,
+              "inner_market_rmse_sgd": 74.64356736290677
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.02165508270263672,
+              "inner_market_rmse_sgd": 73.63167201224668
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.020522568374872208,
+              "inner_market_rmse_sgd": 72.62222479305467
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.019470777362585068,
+              "inner_market_rmse_sgd": 71.60793854604978
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.019305093213915825,
+              "inner_market_rmse_sgd": 70.61957418461887
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.017436716705560684,
+              "inner_market_rmse_sgd": 69.66865028772888
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.01689407043159008,
+              "inner_market_rmse_sgd": 68.73669249263911
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.017548274248838425,
+              "inner_market_rmse_sgd": 67.840718226831
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.01633608341217041,
+              "inner_market_rmse_sgd": 66.93949927428716
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.01622769981622696,
+              "inner_market_rmse_sgd": 66.06658507476207
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.014499402604997158,
+              "inner_market_rmse_sgd": 65.23811377798249
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.013640698045492172,
+              "inner_market_rmse_sgd": 64.43107157983167
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.01510548498481512,
+              "inner_market_rmse_sgd": 63.66370434714716
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.014890569262206554,
+              "inner_market_rmse_sgd": 62.97131012900708
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.015059029683470726,
+              "inner_market_rmse_sgd": 62.335931177920344
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.014610597863793373,
+              "inner_market_rmse_sgd": 61.814502657230335
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.017210958525538445,
+              "inner_market_rmse_sgd": 61.41549251018246
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.014453248120844364,
+              "inner_market_rmse_sgd": 61.10049050091347
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01435848418623209,
+              "inner_market_rmse_sgd": 60.895701066040935
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.013481984846293926,
+              "inner_market_rmse_sgd": 60.73697667039603
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.015484925359487534,
+              "inner_market_rmse_sgd": 60.635305228257955
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.016904078423976898,
+              "inner_market_rmse_sgd": 60.627415459981016
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.014815330505371094,
+              "inner_market_rmse_sgd": 60.66673879096108
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.01496791560202837,
+              "inner_market_rmse_sgd": 60.82642049681487
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.014319116249680519,
+              "inner_market_rmse_sgd": 60.9868300236773
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.01552064809948206,
+              "inner_market_rmse_sgd": 61.19612788561727
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.014958139508962631,
+              "inner_market_rmse_sgd": 61.41885635278777
+            },
+            {
+              "epoch": 34,
+              "train_mse_scaled_increment": 0.013053194619715214,
+              "inner_market_rmse_sgd": 61.63657811239289
+            },
+            {
+              "epoch": 35,
+              "train_mse_scaled_increment": 0.014924943447113037,
+              "inner_market_rmse_sgd": 61.90237804295969
+            },
+            {
+              "epoch": 36,
+              "train_mse_scaled_increment": 0.013537039048969746,
+              "inner_market_rmse_sgd": 62.219978400264836
+            },
+            {
+              "epoch": 37,
+              "train_mse_scaled_increment": 0.012918584048748016,
+              "inner_market_rmse_sgd": 62.48329482108088
+            },
+            {
+              "epoch": 38,
+              "train_mse_scaled_increment": 0.014088018797338009,
+              "inner_market_rmse_sgd": 62.73404369092235
+            },
+            {
+              "epoch": 39,
+              "train_mse_scaled_increment": 0.01370856910943985,
+              "inner_market_rmse_sgd": 62.89574898271685
+            },
+            {
+              "epoch": 40,
+              "train_mse_scaled_increment": 0.013969450257718563,
+              "inner_market_rmse_sgd": 63.05640389021362
+            },
+            {
+              "epoch": 41,
+              "train_mse_scaled_increment": 0.014542502351105213,
+              "inner_market_rmse_sgd": 63.25110725746402
+            },
+            {
+              "epoch": 42,
+              "train_mse_scaled_increment": 0.01490615215152502,
+              "inner_market_rmse_sgd": 63.43700161177115
+            },
+            {
+              "epoch": 43,
+              "train_mse_scaled_increment": 0.01367111224681139,
+              "inner_market_rmse_sgd": 63.60188001146779
+            },
+            {
+              "epoch": 44,
+              "train_mse_scaled_increment": 0.013724589720368385,
+              "inner_market_rmse_sgd": 63.80695552396436
+            },
+            {
+              "epoch": 45,
+              "train_mse_scaled_increment": 0.014178239740431309,
+              "inner_market_rmse_sgd": 63.991704816764035
+            },
+            {
+              "epoch": 46,
+              "train_mse_scaled_increment": 0.013694489374756813,
+              "inner_market_rmse_sgd": 64.1774514643075
+            },
+            {
+              "epoch": 47,
+              "train_mse_scaled_increment": 0.014723128639161587,
+              "inner_market_rmse_sgd": 64.28744927042244
+            },
+            {
+              "epoch": 48,
+              "train_mse_scaled_increment": 0.013514571823179722,
+              "inner_market_rmse_sgd": 64.3692159832075
+            },
+            {
+              "epoch": 49,
+              "train_mse_scaled_increment": 0.014884120784699917,
+              "inner_market_rmse_sgd": 64.45486014196169
+            },
+            {
+              "epoch": 50,
+              "train_mse_scaled_increment": 0.01305374875664711,
+              "inner_market_rmse_sgd": 64.54850966749676
+            },
+            {
+              "epoch": 51,
+              "train_mse_scaled_increment": 0.014124549925327301,
+              "inner_market_rmse_sgd": 64.62101274858095
+            },
+            {
+              "epoch": 52,
+              "train_mse_scaled_increment": 0.013539999723434448,
+              "inner_market_rmse_sgd": 64.74848990988673
+            },
+            {
+              "epoch": 53,
+              "train_mse_scaled_increment": 0.015202234499156475,
+              "inner_market_rmse_sgd": 64.88085809236792
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "transformer",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 24,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3103.3259270651774,
+            "2024-05": 3105.94880314499,
+            "2024-06": 3108.0230608438687,
+            "2024-07": 3109.6670908433844,
+            "2024-08": 3110.972357147715,
+            "2024-09": 3112.0101036828337,
+            "2024-10": 3112.836227105526,
+            "2024-11": 3113.494539248681,
+            "2024-12": 3114.019543650493,
+            "2025-01": 3114.438499303769,
+            "2025-02": 3114.7729959027574,
+            "2025-03": 3115.040167104395,
+            "2025-04": 3115.2536320187533,
+            "2025-05": 3115.424230154974,
+            "2025-06": 3115.5605976504316,
+            "2025-07": 3115.6696206988763
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.024827061221003532,
+              "inner_market_rmse_sgd": 99.60239177144567
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.023828186094760895,
+              "inner_market_rmse_sgd": 98.93005151424585
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.023023391142487526,
+              "inner_market_rmse_sgd": 98.25278717651027
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.021995674818754196,
+              "inner_market_rmse_sgd": 97.57337481973286
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.02132507599890232,
+              "inner_market_rmse_sgd": 96.84411755751847
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.020816657692193985,
+              "inner_market_rmse_sgd": 96.02956364759345
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.019521625712513924,
+              "inner_market_rmse_sgd": 95.16818157144706
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.019704116508364677,
+              "inner_market_rmse_sgd": 94.29195557603958
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.01932239718735218,
+              "inner_market_rmse_sgd": 93.43543913200807
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.01797190122306347,
+              "inner_market_rmse_sgd": 92.58166257209865
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.017670083791017532,
+              "inner_market_rmse_sgd": 91.64736596984169
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.017095208168029785,
+              "inner_market_rmse_sgd": 90.7455282992595
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.01744251139461994,
+              "inner_market_rmse_sgd": 89.93263016952743
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.016657793894410133,
+              "inner_market_rmse_sgd": 89.12061574776062
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.016188859939575195,
+              "inner_market_rmse_sgd": 88.36189070710775
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.015120022930204868,
+              "inner_market_rmse_sgd": 87.69148499755082
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.01564893126487732,
+              "inner_market_rmse_sgd": 87.12959652357856
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01664142869412899,
+              "inner_market_rmse_sgd": 86.61562514134964
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.01555600669234991,
+              "inner_market_rmse_sgd": 86.23173684881333
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.016099372878670692,
+              "inner_market_rmse_sgd": 85.96875114381959
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.015316186472773552,
+              "inner_market_rmse_sgd": 85.75830530331783
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.014921462163329124,
+              "inner_market_rmse_sgd": 85.60050416377634
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.015925809741020203,
+              "inner_market_rmse_sgd": 85.55366577188009
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.015434982255101204,
+              "inner_market_rmse_sgd": 85.51082881247993
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.016257766634225845,
+              "inner_market_rmse_sgd": 85.53770437335488
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.017088284716010094,
+              "inner_market_rmse_sgd": 85.68618513689185
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.015117185190320015,
+              "inner_market_rmse_sgd": 85.90315561485242
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.01678340882062912,
+              "inner_market_rmse_sgd": 86.1566746063884
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.015144456177949905,
+              "inner_market_rmse_sgd": 86.46179806040874
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.014925369061529636,
+              "inner_market_rmse_sgd": 86.87367243215051
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.015609027817845345,
+              "inner_market_rmse_sgd": 87.27716430629657
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.014713962562382221,
+              "inner_market_rmse_sgd": 87.70445368501626
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.016135437414050102,
+              "inner_market_rmse_sgd": 88.06135958841615
+            },
+            {
+              "epoch": 34,
+              "train_mse_scaled_increment": 0.014643616043031216,
+              "inner_market_rmse_sgd": 88.30298735001494
+            },
+            {
+              "epoch": 35,
+              "train_mse_scaled_increment": 0.015637852251529694,
+              "inner_market_rmse_sgd": 88.41990663451831
+            },
+            {
+              "epoch": 36,
+              "train_mse_scaled_increment": 0.014355702325701714,
+              "inner_market_rmse_sgd": 88.45759791048465
+            },
+            {
+              "epoch": 37,
+              "train_mse_scaled_increment": 0.016277136281132698,
+              "inner_market_rmse_sgd": 88.5199887265424
+            },
+            {
+              "epoch": 38,
+              "train_mse_scaled_increment": 0.01542002335190773,
+              "inner_market_rmse_sgd": 88.55475988036319
+            },
+            {
+              "epoch": 39,
+              "train_mse_scaled_increment": 0.014250117354094982,
+              "inner_market_rmse_sgd": 88.58119279725963
+            },
+            {
+              "epoch": 40,
+              "train_mse_scaled_increment": 0.015242641791701317,
+              "inner_market_rmse_sgd": 88.64706435883167
+            },
+            {
+              "epoch": 41,
+              "train_mse_scaled_increment": 0.015176581218838692,
+              "inner_market_rmse_sgd": 88.66787354260376
+            },
+            {
+              "epoch": 42,
+              "train_mse_scaled_increment": 0.015314485877752304,
+              "inner_market_rmse_sgd": 88.68057106672482
+            },
+            {
+              "epoch": 43,
+              "train_mse_scaled_increment": 0.015067009255290031,
+              "inner_market_rmse_sgd": 88.70814371265915
+            },
+            {
+              "epoch": 44,
+              "train_mse_scaled_increment": 0.014420468360185623,
+              "inner_market_rmse_sgd": 88.75114677982675
+            },
+            {
+              "epoch": 45,
+              "train_mse_scaled_increment": 0.015862662345170975,
+              "inner_market_rmse_sgd": 88.95792235000145
+            },
+            {
+              "epoch": 46,
+              "train_mse_scaled_increment": 0.015268257819116116,
+              "inner_market_rmse_sgd": 89.2047311142883
+            },
+            {
+              "epoch": 47,
+              "train_mse_scaled_increment": 0.015001400373876095,
+              "inner_market_rmse_sgd": 89.51819842752855
+            },
+            {
+              "epoch": 48,
+              "train_mse_scaled_increment": 0.015100061893463135,
+              "inner_market_rmse_sgd": 89.89884747900594
+            },
+            {
+              "epoch": 49,
+              "train_mse_scaled_increment": 0.014778967946767807,
+              "inner_market_rmse_sgd": 90.29393112280636
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "transformer_damping_0.95",
+      "scope": "bounded_attention_search",
+      "holdout": 488.87363473600533,
+      "rolling_2024_04": 469.8394133057505,
+      "mean_rmse": 479.35652402087794,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.95,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "transformer"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "transformer",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.95,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 6,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3107.597938402025,
+            "2024-01": 3114.702790029155,
+            "2024-02": 3121.3578045091053,
+            "2024-03": 3127.595385771112,
+            "2024-04": 3133.4409884303095,
+            "2024-05": 3138.930380020762,
+            "2024-06": 3144.088558902995,
+            "2024-07": 3148.9388331834048,
+            "2024-08": 3153.502475577711,
+            "2024-09": 3157.79895288154,
+            "2024-10": 3161.84611672341,
+            "2024-11": 3165.660372370895,
+            "2024-12": 3169.256825684563,
+            "2025-01": 3172.6494092565435,
+            "2025-02": 3175.8509979194055,
+            "2025-03": 3178.8735064601183
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.02904713712632656,
+              "inner_market_rmse_sgd": 74.00339715048527
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.02335074171423912,
+              "inner_market_rmse_sgd": 66.66713124155373
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.0196931641548872,
+              "inner_market_rmse_sgd": 59.88726452523361
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.016466153785586357,
+              "inner_market_rmse_sgd": 54.20664868891319
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.014592314139008522,
+              "inner_market_rmse_sgd": 50.46929050639835
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.01617654412984848,
+              "inner_market_rmse_sgd": 48.65088834836575
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.017582520842552185,
+              "inner_market_rmse_sgd": 48.79321095340806
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.016901249065995216,
+              "inner_market_rmse_sgd": 49.94304129236209
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.015995850786566734,
+              "inner_market_rmse_sgd": 51.63304115660177
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.016296176239848137,
+              "inner_market_rmse_sgd": 53.84360896060393
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.014232070185244083,
+              "inner_market_rmse_sgd": 56.12940478301426
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.01309012807905674,
+              "inner_market_rmse_sgd": 58.55923827117379
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.012465126812458038,
+              "inner_market_rmse_sgd": 60.55713422112194
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014429601840674877,
+              "inner_market_rmse_sgd": 61.31530993109353
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.01418209820985794,
+              "inner_market_rmse_sgd": 60.90290093395985
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.013992223888635635,
+              "inner_market_rmse_sgd": 60.02082925184163
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.013224190101027489,
+              "inner_market_rmse_sgd": 58.98886378166239
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.012319785542786121,
+              "inner_market_rmse_sgd": 57.52577964372138
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.013739257119596004,
+              "inner_market_rmse_sgd": 55.80104013413206
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.015439891256392002,
+              "inner_market_rmse_sgd": 55.29277613143536
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.013941268436610699,
+              "inner_market_rmse_sgd": 55.548383037419136
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.011743567883968353,
+              "inner_market_rmse_sgd": 56.866745019135784
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.017440523952245712,
+              "inner_market_rmse_sgd": 58.635992738018544
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.013514270074665546,
+              "inner_market_rmse_sgd": 60.556717085822875
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01274180132895708,
+              "inner_market_rmse_sgd": 62.08247155291692
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.011584625579416752,
+              "inner_market_rmse_sgd": 62.62413728096652
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.01354951225221157,
+              "inner_market_rmse_sgd": 62.012910403271796
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.0174661073833704,
+              "inner_market_rmse_sgd": 60.82186299387257
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.012448449619114399,
+              "inner_market_rmse_sgd": 59.78526808097453
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.01263613160699606,
+              "inner_market_rmse_sgd": 59.97086570864291
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.013948924839496613,
+              "inner_market_rmse_sgd": 60.22086070948396
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "transformer",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.95,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 7,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3103.1420303520404,
+            "2024-05": 3106.0750093819565,
+            "2024-06": 3108.815528602398,
+            "2024-07": 3111.378552907843,
+            "2024-08": 3113.7774031523013,
+            "2024-09": 3116.0241713415576,
+            "2024-10": 3118.1303380329527,
+            "2024-11": 3120.106203314856,
+            "2024-12": 3121.9611493230414,
+            "2025-01": 3123.7037371350057,
+            "2025-02": 3125.3417954678093,
+            "2025-03": 3126.882496513332,
+            "2025-04": 3128.332425726911,
+            "2025-05": 3129.697636358834,
+            "2025-06": 3130.9837039362415,
+            "2025-07": 3132.195771490738
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.024827061221003532,
+              "inner_market_rmse_sgd": 97.02797585986133
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.020395878702402115,
+              "inner_market_rmse_sgd": 90.94602883998621
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.017900004982948303,
+              "inner_market_rmse_sgd": 84.62657942955992
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.01567421853542328,
+              "inner_market_rmse_sgd": 78.81908417695401
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.015414341352880001,
+              "inner_market_rmse_sgd": 75.04286696458026
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.01731926016509533,
+              "inner_market_rmse_sgd": 73.23077289897651
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.014869701117277145,
+              "inner_market_rmse_sgd": 72.9907622748658
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.01819603331387043,
+              "inner_market_rmse_sgd": 74.67971506800376
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.01850273832678795,
+              "inner_market_rmse_sgd": 76.94532674008481
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.015612981282174587,
+              "inner_market_rmse_sgd": 79.12343700667226
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.01608460396528244,
+              "inner_market_rmse_sgd": 80.39848780825382
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.013796566985547543,
+              "inner_market_rmse_sgd": 82.42394439839642
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.0153909707441926,
+              "inner_market_rmse_sgd": 85.49492508424213
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014670333825051785,
+              "inner_market_rmse_sgd": 88.71485261628536
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.014136441983282566,
+              "inner_market_rmse_sgd": 91.47303670634322
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.01336094830185175,
+              "inner_market_rmse_sgd": 93.4432116845378
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.013733410276472569,
+              "inner_market_rmse_sgd": 94.59867214652833
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01542702130973339,
+              "inner_market_rmse_sgd": 94.52602781060132
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.01319942343980074,
+              "inner_market_rmse_sgd": 93.51335273313443
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.014468662440776825,
+              "inner_market_rmse_sgd": 91.57748555853279
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.013870845548808575,
+              "inner_market_rmse_sgd": 89.13074947247497
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.013003172352910042,
+              "inner_market_rmse_sgd": 86.16592786532834
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.014175599440932274,
+              "inner_market_rmse_sgd": 84.20781447774914
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.0131099047139287,
+              "inner_market_rmse_sgd": 82.70544587045478
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01493762619793415,
+              "inner_market_rmse_sgd": 83.3225710321496
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.01567969098687172,
+              "inner_market_rmse_sgd": 84.93922236540558
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.013566278852522373,
+              "inner_market_rmse_sgd": 87.29699477515473
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.0157025046646595,
+              "inner_market_rmse_sgd": 89.28552938813122
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.012233288958668709,
+              "inner_market_rmse_sgd": 90.69001987532977
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.011317693628370762,
+              "inner_market_rmse_sgd": 93.57850543720411
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.012252958491444588,
+              "inner_market_rmse_sgd": 95.48885258077605
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.012459062971174717,
+              "inner_market_rmse_sgd": 97.69889741293282
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "transformer_forecast_strength_0.5",
+      "scope": "bounded_attention_search",
+      "holdout": 488.95059482226816,
+      "rolling_2024_04": 469.9329936082874,
+      "mean_rmse": 479.4417942152778,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.5,
+        "kind": "transformer"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "transformer",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.5,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 6,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3112.79652783499,
+            "2024-01": 3122.7752209634277,
+            "2024-02": 3130.6030079071934,
+            "2024-03": 3136.7666236415143,
+            "2024-04": 3141.630609181847,
+            "2024-05": 3145.483460000798,
+            "2024-06": 3148.541260347238,
+            "2024-07": 3150.972117506822,
+            "2024-08": 3152.907099358819,
+            "2024-09": 3154.448945048489,
+            "2024-10": 3155.6785277598715,
+            "2024-11": 3156.6597198707937,
+            "2024-12": 3157.4430990844035,
+            "2025-01": 3158.0687993480383,
+            "2025-02": 3158.5687199898593,
+            "2025-03": 3158.9682483835013
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.02904713712632656,
+              "inner_market_rmse_sgd": 71.76522902255806
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.02335074171423912,
+              "inner_market_rmse_sgd": 62.4704041931217
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.0196931641548872,
+              "inner_market_rmse_sgd": 54.25660124540973
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.016466153785586357,
+              "inner_market_rmse_sgd": 48.02155007368378
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.014592314139008522,
+              "inner_market_rmse_sgd": 44.6373833835074
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.01617654412984848,
+              "inner_market_rmse_sgd": 43.39421872281498
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.017582520842552185,
+              "inner_market_rmse_sgd": 43.47734507158641
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.016901249065995216,
+              "inner_market_rmse_sgd": 44.24173193974104
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.015995850786566734,
+              "inner_market_rmse_sgd": 45.59765379365248
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.016296176239848137,
+              "inner_market_rmse_sgd": 47.661278828864084
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.014232070185244083,
+              "inner_market_rmse_sgd": 50.030493222085944
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.01309012807905674,
+              "inner_market_rmse_sgd": 52.72787063430769
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.012465126812458038,
+              "inner_market_rmse_sgd": 55.0438001441246
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014429601840674877,
+              "inner_market_rmse_sgd": 55.93999379246257
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.01418209820985794,
+              "inner_market_rmse_sgd": 55.4497157434562
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.013992223888635635,
+              "inner_market_rmse_sgd": 54.411686661270835
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.013224190101027489,
+              "inner_market_rmse_sgd": 53.215821015809475
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.012319785542786121,
+              "inner_market_rmse_sgd": 51.558436162371066
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.013739257119596004,
+              "inner_market_rmse_sgd": 49.6750705502667
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.015439891256392002,
+              "inner_market_rmse_sgd": 49.13923038025204
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.013941268436610699,
+              "inner_market_rmse_sgd": 49.411545549867085
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.011743567883968353,
+              "inner_market_rmse_sgd": 50.8381959166483
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.017440523952245712,
+              "inner_market_rmse_sgd": 52.82533576744623
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.013514270074665546,
+              "inner_market_rmse_sgd": 55.0574199223264
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01274180132895708,
+              "inner_market_rmse_sgd": 56.87370671364106
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.011584625579416752,
+              "inner_market_rmse_sgd": 57.527086615577
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.01354951225221157,
+              "inner_market_rmse_sgd": 56.793180357408644
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.0174661073833704,
+              "inner_market_rmse_sgd": 55.37712468462071
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.012448449619114399,
+              "inner_market_rmse_sgd": 54.16188560217033
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.01263613160699606,
+              "inner_market_rmse_sgd": 54.378544171284716
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.013948924839496613,
+              "inner_market_rmse_sgd": 54.671229511029146
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "transformer",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.5,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 7,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3105.2918405929104,
+            "2024-05": 3109.401638306812,
+            "2024-06": 3112.6134116549106,
+            "2024-07": 3115.1355410855267,
+            "2024-08": 3117.1232869824607,
+            "2024-09": 3118.694302758527,
+            "2024-10": 3119.9391855746903,
+            "2024-11": 3120.927566265795,
+            "2024-12": 3121.7135091303076,
+            "2025-01": 3122.3392438469396,
+            "2025-02": 3122.8379131031143,
+            "2025-03": 3123.235627794361,
+            "2025-04": 3123.553021705117,
+            "2025-05": 3123.8064409453573,
+            "2025-06": 3124.008859931533,
+            "2025-07": 3124.170593155615
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.024827061221003532,
+              "inner_market_rmse_sgd": 96.05819241126619
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.020395878702402115,
+              "inner_market_rmse_sgd": 87.99097712583769
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.017900004982948303,
+              "inner_market_rmse_sgd": 79.61061478176524
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.01567421853542328,
+              "inner_market_rmse_sgd": 71.92002490908249
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.015414341352880001,
+              "inner_market_rmse_sgd": 66.94043097127205
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.01731926016509533,
+              "inner_market_rmse_sgd": 64.56004841813642
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.014869701117277145,
+              "inner_market_rmse_sgd": 64.25080168470133
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.01819603331387043,
+              "inner_market_rmse_sgd": 66.47817149348415
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.01850273832678795,
+              "inner_market_rmse_sgd": 69.46597356993851
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.015612981282174587,
+              "inner_market_rmse_sgd": 72.33888588958663
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.01608460396528244,
+              "inner_market_rmse_sgd": 74.01900235819768
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.013796566985547543,
+              "inner_market_rmse_sgd": 76.69918905875507
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.0153909707441926,
+              "inner_market_rmse_sgd": 80.77188857084948
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014670333825051785,
+              "inner_market_rmse_sgd": 85.0437957046065
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.014136441983282566,
+              "inner_market_rmse_sgd": 88.70302235405651
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.01336094830185175,
+              "inner_market_rmse_sgd": 91.31682704814216
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.013733410276472569,
+              "inner_market_rmse_sgd": 92.85048167994694
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01542702130973339,
+              "inner_market_rmse_sgd": 92.75659881308019
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.01319942343980074,
+              "inner_market_rmse_sgd": 91.41778103647987
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.014468662440776825,
+              "inner_market_rmse_sgd": 88.85672771589158
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.013870845548808575,
+              "inner_market_rmse_sgd": 85.61916437133925
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.013003172352910042,
+              "inner_market_rmse_sgd": 81.69518913295288
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.014175599440932274,
+              "inner_market_rmse_sgd": 79.1051952856502
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.0131099047139287,
+              "inner_market_rmse_sgd": 77.11932202949573
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.01493762619793415,
+              "inner_market_rmse_sgd": 77.94136629713687
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.01567969098687172,
+              "inner_market_rmse_sgd": 80.0867095302538
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.013566278852522373,
+              "inner_market_rmse_sgd": 83.21111534908574
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.0157025046646595,
+              "inner_market_rmse_sgd": 85.84531413193056
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.012233288958668709,
+              "inner_market_rmse_sgd": 87.70648732047928
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.011317693628370762,
+              "inner_market_rmse_sgd": 91.52948784850801
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.012252958491444588,
+              "inner_market_rmse_sgd": 94.05658255905188
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.012459062971174717,
+              "inner_market_rmse_sgd": 96.97897272223874
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "transformer_dropout_0.2",
+      "scope": "bounded_attention_search",
+      "holdout": 486.97731616053125,
+      "rolling_2024_04": 469.92696186216057,
+      "mean_rmse": 478.45213901134593,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 6,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.2,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "transformer"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "transformer",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.2,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-05",
+            "inner_valid_start": "2023-06",
+            "selected_epochs": 8,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3106.1048200037408,
+            "2024-01": 3110.9326357353843,
+            "2024-02": 3114.756814697856,
+            "2024-03": 3117.788138886237,
+            "2024-04": 3120.1984242848202,
+            "2024-05": 3122.117206608356,
+            "2024-06": 3123.646251318785,
+            "2024-07": 3124.8656936103357,
+            "2024-08": 3125.838836601391,
+            "2024-09": 3126.61581694873,
+            "2024-10": 3127.236423992521,
+            "2024-11": 3127.7322863085524,
+            "2024-12": 3128.1285784049883,
+            "2025-01": 3128.4453581296575,
+            "2025-02": 3128.69861969166,
+            "2025-03": 3128.90112523375
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.02904713712632656,
+              "inner_market_rmse_sgd": 79.80917022165428
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.023699501529335976,
+              "inner_market_rmse_sgd": 75.72330910055261
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.020532716065645218,
+              "inner_market_rmse_sgd": 70.70333505606138
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.016599958762526512,
+              "inner_market_rmse_sgd": 66.03132145433541
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.015433702617883682,
+              "inner_market_rmse_sgd": 61.67026784433978
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.014607506804168224,
+              "inner_market_rmse_sgd": 58.13310702546359
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.01555575244128704,
+              "inner_market_rmse_sgd": 55.804601025956536
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.019411098212003708,
+              "inner_market_rmse_sgd": 54.975655721270776
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.020792366936802864,
+              "inner_market_rmse_sgd": 55.22251973730739
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.016325008124113083,
+              "inner_market_rmse_sgd": 56.052670135503725
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.016028933227062225,
+              "inner_market_rmse_sgd": 57.434886129379706
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.015073025599122047,
+              "inner_market_rmse_sgd": 59.53950815543804
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.014422076754271984,
+              "inner_market_rmse_sgd": 61.7386636846677
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014808353036642075,
+              "inner_market_rmse_sgd": 64.09018484091904
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.016788717359304428,
+              "inner_market_rmse_sgd": 66.11914054529689
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.015005892142653465,
+              "inner_market_rmse_sgd": 67.8361527576086
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.010680058039724827,
+              "inner_market_rmse_sgd": 69.25614163678429
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.01352003775537014,
+              "inner_market_rmse_sgd": 69.955549496036
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.01570814475417137,
+              "inner_market_rmse_sgd": 69.710147796021
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.018313143402338028,
+              "inner_market_rmse_sgd": 69.46019466710342
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.016858873888850212,
+              "inner_market_rmse_sgd": 69.18697755915906
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.012050487101078033,
+              "inner_market_rmse_sgd": 68.66340562962226
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.01712964102625847,
+              "inner_market_rmse_sgd": 68.19035719685036
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.011982426978647709,
+              "inner_market_rmse_sgd": 67.56050166881042
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.013086771592497826,
+              "inner_market_rmse_sgd": 66.93627291904467
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.010642034001648426,
+              "inner_market_rmse_sgd": 66.31664622699597
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.01440467033535242,
+              "inner_market_rmse_sgd": 65.8609669623124
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.013716784305870533,
+              "inner_market_rmse_sgd": 65.4423130306767
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.01258604135364294,
+              "inner_market_rmse_sgd": 65.07587525373728
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.013520835898816586,
+              "inner_market_rmse_sgd": 65.06139173150294
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.013477776199579239,
+              "inner_market_rmse_sgd": 65.08058787990771
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.015483366325497627,
+              "inner_market_rmse_sgd": 65.25953503801438
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.015909487381577492,
+              "inner_market_rmse_sgd": 65.64428909342864
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "transformer",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.2,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-09",
+            "inner_valid_start": "2023-10",
+            "selected_epochs": 6,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3103.5102438346357,
+            "2024-05": 3106.2716694720325,
+            "2024-06": 3108.451498404108,
+            "2024-07": 3110.1768815909986,
+            "2024-08": 3111.5453776447093,
+            "2024-09": 3112.6325727416133,
+            "2024-10": 3113.497558798531,
+            "2024-11": 3114.186519754198,
+            "2024-12": 3114.7357637659675,
+            "2025-01": 3115.1739335378934,
+            "2025-02": 3115.523688306613,
+            "2025-03": 3115.8029939882085,
+            "2025-04": 3116.0261205369393,
+            "2025-05": 3116.204418723314,
+            "2025-06": 3116.3469275397915,
+            "2025-07": 3116.46085165811
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.024827061221003532,
+              "inner_market_rmse_sgd": 95.7167638473532
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.0204482339322567,
+              "inner_market_rmse_sgd": 91.48336171796748
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.017051951959729195,
+              "inner_market_rmse_sgd": 87.01295275969113
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.016690008342266083,
+              "inner_market_rmse_sgd": 84.8660381432349
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.016183413565158844,
+              "inner_market_rmse_sgd": 83.89011190045022
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.019439414143562317,
+              "inner_market_rmse_sgd": 83.13245459399246
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.016014495864510536,
+              "inner_market_rmse_sgd": 83.38926283039702
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.01720055192708969,
+              "inner_market_rmse_sgd": 84.28853837872876
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.017464064061641693,
+              "inner_market_rmse_sgd": 85.74197979754302
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.015537948347628117,
+              "inner_market_rmse_sgd": 86.70128761833034
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.01843545027077198,
+              "inner_market_rmse_sgd": 87.58282102974609
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.014909403398633003,
+              "inner_market_rmse_sgd": 88.148043634361
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.01765151508152485,
+              "inner_market_rmse_sgd": 89.17239191752388
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014724153093993664,
+              "inner_market_rmse_sgd": 89.38452133617328
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.016741665080189705,
+              "inner_market_rmse_sgd": 89.96363555952382
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.014015122316777706,
+              "inner_market_rmse_sgd": 90.29675698429433
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.0164184533059597,
+              "inner_market_rmse_sgd": 90.71384851333241
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.015847768634557724,
+              "inner_market_rmse_sgd": 90.81888122405708
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.013520925305783749,
+              "inner_market_rmse_sgd": 90.77636863191366
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.016017543151974678,
+              "inner_market_rmse_sgd": 90.5708700187476
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.01521266158670187,
+              "inner_market_rmse_sgd": 90.80709216197644
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.01373881846666336,
+              "inner_market_rmse_sgd": 90.38055281975691
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.01851232349872589,
+              "inner_market_rmse_sgd": 89.76784979918176
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.011701442301273346,
+              "inner_market_rmse_sgd": 88.77105086638252
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.016030846163630486,
+              "inner_market_rmse_sgd": 88.65913553909915
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.0158610250800848,
+              "inner_market_rmse_sgd": 88.16659244188965
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.01545317005366087,
+              "inner_market_rmse_sgd": 88.71838644078856
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.017175571992993355,
+              "inner_market_rmse_sgd": 89.00157495373445
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.013887270353734493,
+              "inner_market_rmse_sgd": 89.09600437074266
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.014513326808810234,
+              "inner_market_rmse_sgd": 90.13026114534142
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.013167555443942547,
+              "inner_market_rmse_sgd": 91.05684763161938
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "candidate": "transformer_inner_months_12",
+      "scope": "bounded_attention_search",
+      "holdout": 486.66591523234996,
+      "rolling_2024_04": 469.9816896741002,
+      "mean_rmse": 478.3238024532251,
+      "parameters": {
+        "lookback": 6,
+        "hidden_size": 8,
+        "epochs": 80,
+        "learning_rate": 0.005,
+        "damping": 0.8,
+        "inner_months": 12,
+        "patience": 25,
+        "random_state": 5228,
+        "threads": 1,
+        "dropout": 0.1,
+        "weight_decay": 0.01,
+        "forecast_strength": 0.25,
+        "kind": "transformer"
+      },
+      "fits": [
+        {
+          "fold": "holdout",
+          "audit": {
+            "origin": "2023-11",
+            "kind": "transformer",
+            "months": 35,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2022-11",
+            "inner_valid_start": "2022-12",
+            "selected_epochs": 17,
+            "windows": 29,
+            "first_target_month": "2021-07",
+            "last_target_month": "2023-11",
+            "last_input_month": "2023-10"
+          },
+          "market_forecast": {
+            "2023-11": 3100.0,
+            "2023-12": 3104.3362222343826,
+            "2024-01": 3107.773070683609,
+            "2024-02": 3110.510261836695,
+            "2024-03": 3112.695507360498,
+            "2024-04": 3114.432224027905,
+            "2024-05": 3115.8181652040234,
+            "2024-06": 3116.9245904869413,
+            "2024-07": 3117.8082522674845,
+            "2024-08": 3118.514240963003,
+            "2024-09": 3119.07843292133,
+            "2024-10": 3119.5294044944167,
+            "2024-11": 3119.889938064613,
+            "2024-12": 3120.178209287924,
+            "2025-01": 3120.4087268967855,
+            "2025-02": 3120.5930774571093,
+            "2025-03": 3120.7405173213624
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.0688912495970726,
+              "inner_market_rmse_sgd": 222.83357410549345
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.05859660357236862,
+              "inner_market_rmse_sgd": 218.01728935423074
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.05164497345685959,
+              "inner_market_rmse_sgd": 212.66918062752924
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.04288319870829582,
+              "inner_market_rmse_sgd": 205.95150633396716
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.03502185270190239,
+              "inner_market_rmse_sgd": 199.0183492471447
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.03481007367372513,
+              "inner_market_rmse_sgd": 192.1613831858186
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.030674850568175316,
+              "inner_market_rmse_sgd": 185.52918444414388
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.031202148646116257,
+              "inner_market_rmse_sgd": 179.59779966167994
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.02850530855357647,
+              "inner_market_rmse_sgd": 174.5170994962358
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.028437666594982147,
+              "inner_market_rmse_sgd": 170.39064540858575
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.028620697557926178,
+              "inner_market_rmse_sgd": 167.27910041621047
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.028040900826454163,
+              "inner_market_rmse_sgd": 164.93666216836093
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.0297864843159914,
+              "inner_market_rmse_sgd": 163.20870198298965
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.02666870318353176,
+              "inner_market_rmse_sgd": 161.97205686630932
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.02549954690039158,
+              "inner_market_rmse_sgd": 161.08842704730117
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.027682509273290634,
+              "inner_market_rmse_sgd": 160.5739890552098
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.02759898081421852,
+              "inner_market_rmse_sgd": 160.55457775241942
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.027839655056595802,
+              "inner_market_rmse_sgd": 160.79588279619747
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.03517379239201546,
+              "inner_market_rmse_sgd": 161.5125588809229
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.02916581928730011,
+              "inner_market_rmse_sgd": 162.58267714978425
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.029628129675984383,
+              "inner_market_rmse_sgd": 163.70637502496322
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.03236786276102066,
+              "inner_market_rmse_sgd": 164.90966850062998
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.03064069338142872,
+              "inner_market_rmse_sgd": 166.2666056660169
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.02764229103922844,
+              "inner_market_rmse_sgd": 167.65292257707372
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.02961101196706295,
+              "inner_market_rmse_sgd": 168.93871244122545
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.03134249150753021,
+              "inner_market_rmse_sgd": 170.09052954515766
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.035449907183647156,
+              "inner_market_rmse_sgd": 171.21795414242763
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.0262211374938488,
+              "inner_market_rmse_sgd": 172.24928656974276
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.029091613367199898,
+              "inner_market_rmse_sgd": 172.82563094322288
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.03178032860159874,
+              "inner_market_rmse_sgd": 172.95377286748044
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.02892150916159153,
+              "inner_market_rmse_sgd": 172.91501877388836
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.025826141238212585,
+              "inner_market_rmse_sgd": 172.70978883326242
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.025357533246278763,
+              "inner_market_rmse_sgd": 172.28217412816025
+            },
+            {
+              "epoch": 34,
+              "train_mse_scaled_increment": 0.02693977579474449,
+              "inner_market_rmse_sgd": 171.7880752342562
+            },
+            {
+              "epoch": 35,
+              "train_mse_scaled_increment": 0.027712121605873108,
+              "inner_market_rmse_sgd": 171.236988135439
+            },
+            {
+              "epoch": 36,
+              "train_mse_scaled_increment": 0.02395385317504406,
+              "inner_market_rmse_sgd": 170.51154400145887
+            },
+            {
+              "epoch": 37,
+              "train_mse_scaled_increment": 0.03144483640789986,
+              "inner_market_rmse_sgd": 169.9585683169796
+            },
+            {
+              "epoch": 38,
+              "train_mse_scaled_increment": 0.02742244303226471,
+              "inner_market_rmse_sgd": 169.32470725691167
+            },
+            {
+              "epoch": 39,
+              "train_mse_scaled_increment": 0.02593638002872467,
+              "inner_market_rmse_sgd": 168.88481327571773
+            },
+            {
+              "epoch": 40,
+              "train_mse_scaled_increment": 0.03018846921622753,
+              "inner_market_rmse_sgd": 168.6003740712748
+            },
+            {
+              "epoch": 41,
+              "train_mse_scaled_increment": 0.02656547911465168,
+              "inner_market_rmse_sgd": 168.44854260945695
+            },
+            {
+              "epoch": 42,
+              "train_mse_scaled_increment": 0.02500787191092968,
+              "inner_market_rmse_sgd": 168.51854704145782
+            }
+          ]
+        },
+        {
+          "fold": "rolling_2024_04",
+          "audit": {
+            "origin": "2024-03",
+            "kind": "transformer",
+            "months": 39,
+            "lookback": 6,
+            "damping": 0.8,
+            "unobserved_months": 0,
+            "future_actuals_used": false,
+            "recursive": true,
+            "dropout": 0.1,
+            "weight_decay": 0.01,
+            "forecast_strength": 0.25,
+            "position_encoding": "window_relative_sinusoidal",
+            "attention_mask": "causal",
+            "nhead": 2,
+            "layers": 1,
+            "d_model": 8,
+            "feedforward_size": 16,
+            "inner_train_end": "2023-03",
+            "inner_valid_start": "2023-04",
+            "selected_epochs": 9,
+            "windows": 33,
+            "first_target_month": "2021-07",
+            "last_target_month": "2024-03",
+            "last_input_month": "2024-02"
+          },
+          "market_forecast": {
+            "2024-03": 3100.0,
+            "2024-04": 3102.106639075676,
+            "2024-05": 3103.771129793721,
+            "2024-06": 3105.089643051724,
+            "2024-07": 3106.136198956234,
+            "2024-08": 3106.968149647639,
+            "2024-09": 3107.6302827543336,
+            "2024-10": 3108.157844014608,
+            "2024-11": 3108.578528611144,
+            "2024-12": 3108.9142076813127,
+            "2025-01": 3109.182197266158,
+            "2025-02": 3109.3962356227553,
+            "2025-03": 3109.5672407954285,
+            "2025-04": 3109.703900942143,
+            "2025-05": 3109.8131370379115,
+            "2025-06": 3109.9004670990466,
+            "2025-07": 3109.9702935418627
+          },
+          "selection_history": [
+            {
+              "epoch": 1,
+              "train_mse_scaled_increment": 0.03736027330160141,
+              "inner_market_rmse_sgd": 75.42623182692867
+            },
+            {
+              "epoch": 2,
+              "train_mse_scaled_increment": 0.030440179631114006,
+              "inner_market_rmse_sgd": 69.04376337014305
+            },
+            {
+              "epoch": 3,
+              "train_mse_scaled_increment": 0.023942533880472183,
+              "inner_market_rmse_sgd": 62.58545384477789
+            },
+            {
+              "epoch": 4,
+              "train_mse_scaled_increment": 0.021106723695993423,
+              "inner_market_rmse_sgd": 56.22208748798918
+            },
+            {
+              "epoch": 5,
+              "train_mse_scaled_increment": 0.017874719575047493,
+              "inner_market_rmse_sgd": 50.12988115976367
+            },
+            {
+              "epoch": 6,
+              "train_mse_scaled_increment": 0.016024673357605934,
+              "inner_market_rmse_sgd": 45.04221347837906
+            },
+            {
+              "epoch": 7,
+              "train_mse_scaled_increment": 0.018097033724188805,
+              "inner_market_rmse_sgd": 41.75151566274139
+            },
+            {
+              "epoch": 8,
+              "train_mse_scaled_increment": 0.01906629465520382,
+              "inner_market_rmse_sgd": 40.22091483777339
+            },
+            {
+              "epoch": 9,
+              "train_mse_scaled_increment": 0.019115781411528587,
+              "inner_market_rmse_sgd": 39.54046963349873
+            },
+            {
+              "epoch": 10,
+              "train_mse_scaled_increment": 0.01789686270058155,
+              "inner_market_rmse_sgd": 39.62185208440328
+            },
+            {
+              "epoch": 11,
+              "train_mse_scaled_increment": 0.020173661410808563,
+              "inner_market_rmse_sgd": 40.408168776343885
+            },
+            {
+              "epoch": 12,
+              "train_mse_scaled_increment": 0.016607210040092468,
+              "inner_market_rmse_sgd": 41.99082327498736
+            },
+            {
+              "epoch": 13,
+              "train_mse_scaled_increment": 0.01619834080338478,
+              "inner_market_rmse_sgd": 44.27863862873919
+            },
+            {
+              "epoch": 14,
+              "train_mse_scaled_increment": 0.014817947521805763,
+              "inner_market_rmse_sgd": 47.024035788675214
+            },
+            {
+              "epoch": 15,
+              "train_mse_scaled_increment": 0.01669454574584961,
+              "inner_market_rmse_sgd": 50.21616374859244
+            },
+            {
+              "epoch": 16,
+              "train_mse_scaled_increment": 0.01581074297428131,
+              "inner_market_rmse_sgd": 53.42557275855883
+            },
+            {
+              "epoch": 17,
+              "train_mse_scaled_increment": 0.014247634448111057,
+              "inner_market_rmse_sgd": 56.10855731448283
+            },
+            {
+              "epoch": 18,
+              "train_mse_scaled_increment": 0.016447052359580994,
+              "inner_market_rmse_sgd": 58.10802807121731
+            },
+            {
+              "epoch": 19,
+              "train_mse_scaled_increment": 0.017270836979150772,
+              "inner_market_rmse_sgd": 59.31940153117615
+            },
+            {
+              "epoch": 20,
+              "train_mse_scaled_increment": 0.015984706580638885,
+              "inner_market_rmse_sgd": 59.674834303973135
+            },
+            {
+              "epoch": 21,
+              "train_mse_scaled_increment": 0.01729162596166134,
+              "inner_market_rmse_sgd": 59.259163608284695
+            },
+            {
+              "epoch": 22,
+              "train_mse_scaled_increment": 0.019611891359090805,
+              "inner_market_rmse_sgd": 58.171774647264385
+            },
+            {
+              "epoch": 23,
+              "train_mse_scaled_increment": 0.015096960589289665,
+              "inner_market_rmse_sgd": 56.690485112152224
+            },
+            {
+              "epoch": 24,
+              "train_mse_scaled_increment": 0.015076401643455029,
+              "inner_market_rmse_sgd": 54.91490534512786
+            },
+            {
+              "epoch": 25,
+              "train_mse_scaled_increment": 0.017931491136550903,
+              "inner_market_rmse_sgd": 53.084102190857855
+            },
+            {
+              "epoch": 26,
+              "train_mse_scaled_increment": 0.015138966962695122,
+              "inner_market_rmse_sgd": 51.47566902226851
+            },
+            {
+              "epoch": 27,
+              "train_mse_scaled_increment": 0.014064604416489601,
+              "inner_market_rmse_sgd": 49.8754428916568
+            },
+            {
+              "epoch": 28,
+              "train_mse_scaled_increment": 0.01440784614533186,
+              "inner_market_rmse_sgd": 48.83010588058879
+            },
+            {
+              "epoch": 29,
+              "train_mse_scaled_increment": 0.018073614686727524,
+              "inner_market_rmse_sgd": 48.06099286736742
+            },
+            {
+              "epoch": 30,
+              "train_mse_scaled_increment": 0.016528157517313957,
+              "inner_market_rmse_sgd": 47.32591656360814
+            },
+            {
+              "epoch": 31,
+              "train_mse_scaled_increment": 0.017290059477090836,
+              "inner_market_rmse_sgd": 46.914139249371026
+            },
+            {
+              "epoch": 32,
+              "train_mse_scaled_increment": 0.014135090634226799,
+              "inner_market_rmse_sgd": 46.858901186143704
+            },
+            {
+              "epoch": 33,
+              "train_mse_scaled_increment": 0.014573575928807259,
+              "inner_market_rmse_sgd": 47.255720704850624
+            },
+            {
+              "epoch": 34,
+              "train_mse_scaled_increment": 0.014390354044735432,
+              "inner_market_rmse_sgd": 47.83718681315451
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "selected": "transformer_inner_months_12",
+  "all_candidates_completed_both_folds": true,
+  "selection_bias": "Outer folds already used for HPO; no unbiased hidden-test claim"
+}

@@ -1,0 +1,58 @@
+{
+  "accepted": [
+    {
+      "step": "+AUX_MRT_KM",
+      "holdout": 501.69084278867643,
+      "rolling_2024_04": 486.02276311911646,
+      "mean_rmse": 493.8568029538965
+    },
+    {
+      "step": "+AUX_MALL_KM",
+      "holdout": 501.32029792139235,
+      "rolling_2024_04": 485.674609422989,
+      "mean_rmse": 493.49745367219066
+    },
+    {
+      "step": "+AUX_CBD_KM",
+      "holdout": 501.01084255344097,
+      "rolling_2024_04": 485.3835272439094,
+      "mean_rmse": 493.1971848986752
+    }
+  ],
+  "config": {
+    "aux": "p1_aux",
+    "knn_features": [
+      "LATITUDE",
+      "LONGITUDE",
+      "FLOOR_AREA_SQM",
+      "FLAT_TYPE_ORDINAL",
+      "REMAINING_LEASE",
+      "MONTH_INDEX",
+      "FLAT_AGE",
+      "MAX_FLOOR"
+    ],
+    "ridge_numeric": [
+      "FLOOR_AREA_SQM",
+      "REMAINING_LEASE",
+      "AUX_MRT_KM",
+      "AUX_MALL_KM",
+      "AUX_CBD_KM"
+    ],
+    "ridge_categorical": [
+      "FLAT_TYPE",
+      "FLAT_MODEL",
+      "TOWN"
+    ],
+    "base": "ridge",
+    "alpha": 1.0,
+    "n_neighbors": 80,
+    "weights": "distance",
+    "clip_month": false,
+    "geo_km": false,
+    "level": "none",
+    "by_flat_type": false,
+    "feature_weights": null,
+    "target_transform": "none"
+  },
+  "mean_rmse": 493.1971848986752
+}

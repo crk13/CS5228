@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "worker": "outputs/location_economy_extra_20261103",
+  "added": [
+    "extra_base",
+    "extra_location",
+    "extra_location_coe",
+    "extra_location_stocks",
+    "extra_location_economy_last",
+    "extra_location_economy_damped"
+  ],
+  "total_experiments": 30,
+  "identical_signatures": true,
+  "serialized_recipes_match": true,
+  "preserved_original_run_ids": true,
+  "winner": "catboost_location_coe",
+  "reused_unchanged_best_model": true
+}

@@ -1,0 +1,44 @@
+{
+  "branch": "yaqi-tree-models",
+  "base_commit": "6eb4f01fb38391d6dad0f0c959ec3a293442af86",
+  "main_before": "7def64e7edaf1b421d2cbf9e5801f2417e9c5e47",
+  "project_files": 88,
+  "contains_raw_or_cleaned_datasets": false,
+  "files": [
+    {
+      "name": "best_monthly_error.png",
+      "bytes": 91270,
+      "sha256": "f6b1fc826cee8c42cb3307f25e5e6c566df875fd6960ad22ae2ae274661ff251"
+    },
+    {
+      "name": "comparison.csv",
+      "bytes": 3245,
+      "sha256": "1e71f2abbb9b38f1805e26385cb54efa6e2dfeb7ec2b19e7f0966c4fe292ae4d"
+    },
+    {
+      "name": "model_comparison.png",
+      "bytes": 57414,
+      "sha256": "8d58b607f4dfd2952167b04fb7091f3cde8b451bfd8cd73aa03fee891bafd383"
+    },
+    {
+      "name": "permutation_importance.png",
+      "bytes": 62682,
+      "sha256": "5073d327a0b171e7d2da53ab69037b24b8ba70c769808e9b93bf74781127bd3a"
+    },
+    {
+      "name": "YAQI_RESULTS.md",
+      "bytes": 4823,
+      "sha256": "107dd2c00de6dddf3f7b32d5eeaa4781ba0b1da959d3fb13ba753ad51f6aad98"
+    },
+    {
+      "name": "yaqi_tree_models.patch",
+      "bytes": 537838,
+      "sha256": "570898f029f799c6c5118d54f885b3b674ab322f2fb5829e81731660ee68433c"
+    },
+    {
+      "name": "yaqi_tree_models_delivery.zip",
+      "bytes": 19553453,
+      "sha256": "9c9f7a6ff44e854663df54217a0d9a4d4ed9ff660e0f464593bbd98283c9fcb3"
+    }
+  ]
+}

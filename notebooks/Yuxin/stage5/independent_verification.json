@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "all_12_fixed_blends_recomputed": true,
+  "group_squared_errors_reconcile": true,
+  "all_72_correlations_recomputed": true,
+  "all_12_transfer_weights_and_scores_recomputed": true,
+  "saved_validation_and_test_blend_exact": true,
+  "hash_pinned_sources_checked": true,
+  "scope": "arithmetic and temporal-weight boundary verified; base-model selection bias remains"
+}

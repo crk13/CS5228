@@ -1,0 +1,95 @@
+{
+  "archive": "yaqi_tree_results.zip",
+  "archive_bytes": 19252498,
+  "archive_sha256": "94e4cf578b0063b7cc8216086a3c9a59c21904eb43c355a1acaf369422228e2e",
+  "best_model": "catboost_address_24m",
+  "seed": 42,
+  "validation_rmse": {
+    "holdout": 493.6174956233871,
+    "rolling_2024_04": 477.30881345031713
+  },
+  "mean_rmse": 485.46315453685213,
+  "contains_raw_or_cleaned_datasets": false,
+  "files": [
+    {
+      "path": "outputs/trees/experiments/20261022T083645789390Z_730b776e/validation_predictions.csv",
+      "bytes": 4191132,
+      "sha256": "a53115c5235ebd21e62e71022b4a2ff9ba342f18d992c1a10df990a10e5d72fc"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T083647870161Z_ad188407/validation_predictions.csv",
+      "bytes": 4190237,
+      "sha256": "7244001a1226c1824ec6dc6705e425add064b1efd77f0a3acc6e82d031892350"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T084617188162Z_da35b454/validation_predictions.csv",
+      "bytes": 4190290,
+      "sha256": "13928b296cf5fa47a4d2119f84e3bb3cd7f852ca559197420ec19f30db1a7ad2"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T085632372185Z_8134631b/validation_predictions.csv",
+      "bytes": 4190048,
+      "sha256": "fe2979c6f7621075de2714cd5046725e36ac0f2b565a02ce1c2fed7068d309ea"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T085637052299Z_76e8e9ba/validation_predictions.csv",
+      "bytes": 4190338,
+      "sha256": "9f6b9bafb30675f27e8862f998c024e11a9fe24940785dd39e338d991cb84995"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T085644178764Z_1f19df22/validation_predictions.csv",
+      "bytes": 4066095,
+      "sha256": "968e3168bcaceab4a88e4ee13fa7abcbbf7410ab9e6e1258cbd8a06e99e625d1"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T085656292472Z_d7bb7d02/validation_predictions.csv",
+      "bytes": 4190133,
+      "sha256": "e441b39b21621a94ca3a8b827b06600ea6a6ac4221f48920a68b04c590e6003f"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T085910786732Z_f8392471/validation_predictions.csv",
+      "bytes": 4189966,
+      "sha256": "6d124ea07a8d4382e9d78acd342891de4ce8c6b0f739b2dfb86cb6841506f68a"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T085915407551Z_a6d20984/validation_predictions.csv",
+      "bytes": 4190023,
+      "sha256": "76eb4194251e96ca45aa75b7e35789158a862ef50df9b4bbb9c2721f4e98fcde"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T085920861885Z_55aefbc2/validation_predictions.csv",
+      "bytes": 4190265,
+      "sha256": "084f7c20cf28fc3cc6abdbf82b13e253fce64e0b9ad4eceb3cbd7fa77331dc47"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T090042018986Z_d27432b4/validation_predictions.csv",
+      "bytes": 4190261,
+      "sha256": "75f3eee64ad369e80a99eb6c3d2211506d31d6f8251f2ba12ae3862d65babd38"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T090224250422Z_25902837/validation_predictions.csv",
+      "bytes": 4190294,
+      "sha256": "dc9d72bb3c689e92cd19a79f9def4b0eb898cbfbebc6985c144f7dd93be3cbde"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T090228604888Z_d611e0af/validation_predictions.csv",
+      "bytes": 4190390,
+      "sha256": "44e80eadfdc9b199caaf856a42ccc654d4baf5845b09d5cbfe1efeb78141455c"
+    },
+    {
+      "path": "outputs/trees/experiments/20261022T090435551251Z_0102e08b/validation_predictions.csv",
+      "bytes": 4190390,
+      "sha256": "44e80eadfdc9b199caaf856a42ccc654d4baf5845b09d5cbfe1efeb78141455c"
+    },
+    {
+      "path": "outputs/trees/submissions/20261022T090435551251Z_0102e08b.csv",
+      "bytes": 1262617,
+      "sha256": "8ca7e2928057027ab1926311ae4b19bc9a4547cfb7e43d3790508418a01b36eb"
+    },
+    {
+      "path": "outputs/trees/models/best_tree.joblib",
+      "bytes": 3210275,
+      "sha256": "8cad59059b09b7d59b5fde6681db475a527e4528606142d9737e5b9ab591c105"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "transformer_pending_at_recording": true,
+  "scope": "Historical progress snapshot for the three market models; final four-model verification is final_verification.json",
+  "checked": {
+    "status": "passed",
+    "seed": 5228,
+    "delivery": false,
+    "checked": [
+      {
+        "model": "market_carry",
+        "run_id": "20261103T175001571910Z_a7a4588e",
+        "fold_rmse": {
+          "holdout": 486.3077146465668,
+          "rolling_2024_04": 470.1669644799169
+        },
+        "mean_rmse": 478.23733956324185,
+        "validation_rows": 82329,
+        "test_rows": 50000,
+        "seconds": 721.057041333057
+      },
+      {
+        "model": "market_lstm",
+        "run_id": "20261103T180702083101Z_b8e1e8c0",
+        "fold_rmse": {
+          "holdout": 486.3378902453926,
+          "rolling_2024_04": 469.91941098556197
+        },
+        "mean_rmse": 478.1286506154773,
+        "validation_rows": 82329,
+        "test_rows": 50000,
+        "seconds": 525.5318047909532
+      },
+      {
+        "model": "market_rnn",
+        "run_id": "20261103T180702097497Z_0c01ed2c",
+        "fold_rmse": {
+          "holdout": 486.39862779560883,
+          "rolling_2024_04": 469.8532164875725
+        },
+        "mean_rmse": 478.12592214159065,
+        "validation_rows": 82329,
+        "test_rows": 50000,
+        "seconds": 527.693639291916
+      }
+    ],
+    "all_validation_rows_labels_and_dates_exact": true,
+    "scores_recomputed": true,
+    "test_ids_exact": true,
+    "all_predictions_finite_positive_sgd": true,
+    "fold_local_training_audits_checked": true,
+    "data_hashes_unchanged": true,
+    "weights_included": false
+  },
+  "shared_property": {
+    "checked": true,
+    "same_property_training_and_predictions": true,
+    "max_abs_ratio_deltas": {
+      "market_rnn": 4.440892098500626e-16,
+      "market_lstm": 4.440892098500626e-16
+    }
+  },
+  "max_prediction_deltas_vs_search": {
+    "market_carry": 4.547473508864641e-13,
+    "market_lstm": 4.547473508864641e-13,
+    "market_rnn": 4.547473508864641e-13
+  }
+}

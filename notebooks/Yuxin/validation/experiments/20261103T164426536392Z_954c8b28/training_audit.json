@@ -1,0 +1,26 @@
+[
+  {
+    "origin": "2023-11",
+    "train_rows": 102829,
+    "audit": {},
+    "selection_history": [],
+    "training_history": [],
+    "inference_probe_max_abs_delta_sgd": 0.0
+  },
+  {
+    "origin": "2024-03",
+    "train_rows": 114842,
+    "audit": {},
+    "selection_history": [],
+    "training_history": [],
+    "inference_probe_max_abs_delta_sgd": 0.0
+  },
+  {
+    "origin": "2025-03",
+    "train_rows": 150000,
+    "audit": {},
+    "selection_history": [],
+    "training_history": [],
+    "inference_probe_max_abs_delta_sgd": 0.0
+  }
+]

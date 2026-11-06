@@ -1,0 +1,7 @@
+FLAT_TYPE,total_rows,monthly_min,monthly_median,monthly_max,missing_months,total_months
+1-room,42,0,1.0,4,21,51
+2-room,3098,30,60.0,87,0,51
+3-room,49024,740,964.0,1143,0,51
+4-room,54079,859,1071.0,1337,0,51
+5-room,35523,551,691.0,955,0,51
+executive,8234,117,159.0,222,0,51

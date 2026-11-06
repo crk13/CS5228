@@ -1,0 +1,281 @@
+{
+  "status": "passed",
+  "migrated_files_hash_checked": 303,
+  "initial_configurations": 13,
+  "feature_configurations": 30,
+  "catalog_rows": 43,
+  "archived_runs_checked_including_final_repeats": 44,
+  "submissions_checked": 5,
+  "scores_recomputed_from_predictions": true,
+  "row_indices_dates_labels_exact": true,
+  "data_files_hash_checked_per_phase": 17,
+  "cross_phase_catboost_repeat_predictions_identical": true,
+  "official_delivery_runs": 3,
+  "model_weights_included": false,
+  "runs": [
+    {
+      "date": "20261022",
+      "run_id": "20261022T083645789390Z_730b776e",
+      "mean_rmse": 489.3963183783835,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T083647870161Z_ad188407",
+      "mean_rmse": 492.55615519003436,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T084617188162Z_da35b454",
+      "mean_rmse": 495.2426474313158,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T085632372185Z_8134631b",
+      "mean_rmse": 489.0348877417515,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T085637052299Z_76e8e9ba",
+      "mean_rmse": 490.28831816794514,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T085644178764Z_1f19df22",
+      "mean_rmse": 488.55563591600753,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T085656292472Z_d7bb7d02",
+      "mean_rmse": 487.2767068935213,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T085910786732Z_f8392471",
+      "mean_rmse": 495.5628373989541,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T085915407551Z_a6d20984",
+      "mean_rmse": 490.27532180025105,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T085920861885Z_55aefbc2",
+      "mean_rmse": 489.7846645495235,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T090042018986Z_d27432b4",
+      "mean_rmse": 487.13518531425075,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T090224250422Z_25902837",
+      "mean_rmse": 489.4896794774336,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T090228604888Z_d611e0af",
+      "mean_rmse": 485.46315453685213,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261022",
+      "run_id": "20261022T090435551251Z_0102e08b",
+      "mean_rmse": 485.46315453685213,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T063958592981Z_c6d60758",
+      "mean_rmse": 485.46315453685213,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T064222624109Z_e126e3f4",
+      "mean_rmse": 492.544391352381,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T064240052965Z_2b723e51",
+      "mean_rmse": 485.8141464945452,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T064310753746Z_6972583c",
+      "mean_rmse": 484.55920605052324,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T064702203560Z_2d5cd4c7",
+      "mean_rmse": 492.44266755642957,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T064726451164Z_29aa2f0c",
+      "mean_rmse": 485.9341258537839,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T064800758768Z_fad60b21",
+      "mean_rmse": 484.52140406824947,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T065143121693Z_f3f31774",
+      "mean_rmse": 492.2448689158048,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T065209030917Z_385447cf",
+      "mean_rmse": 485.94748066574056,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T065244965199Z_f6deacc6",
+      "mean_rmse": 484.76364800815645,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T065636515520Z_cbaf4330",
+      "mean_rmse": 492.35244327859255,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T065702859778Z_52dd2a4f",
+      "mean_rmse": 486.3342531823381,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T065740958496Z_1792779d",
+      "mean_rmse": 484.7038015560354,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T070132629211Z_6cc99cfd",
+      "mean_rmse": 492.5453652602848,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T070158696263Z_7bcec101",
+      "mean_rmse": 486.38511531713345,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T070238187370Z_76fe65d3",
+      "mean_rmse": 486.2557922041494,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T070630768987Z_3a6f2544",
+      "mean_rmse": 492.644878265516,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T070656537350Z_9e69a132",
+      "mean_rmse": 486.7302767429327,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T072808265294Z_a76320ec",
+      "mean_rmse": 493.4235455768111,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T073839557549Z_db75438d",
+      "mean_rmse": 495.29973684837466,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T073839834454Z_2ccef2b9",
+      "mean_rmse": 493.19019358260493,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T074845285184Z_b6e78b5f",
+      "mean_rmse": 493.7455403971413,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T074910523835Z_0b232131",
+      "mean_rmse": 494.31127410474426,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T080041904272Z_cb37c830",
+      "mean_rmse": 496.1008575572484,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T080101067991Z_e3b2fc2b",
+      "mean_rmse": 493.43098279822146,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T081147566738Z_1ada4d8c",
+      "mean_rmse": 494.59157117769934,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T081439541578Z_bdb2a040",
+      "mean_rmse": 494.1846799376408,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T082225360386Z_e203f34a",
+      "mean_rmse": 495.08893879563254,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T082441220812Z_7b073e91",
+      "mean_rmse": 496.6301150028934,
+      "validation_rows": 82329
+    },
+    {
+      "date": "20261103",
+      "run_id": "20261103T083415559096Z_1549ca33",
+      "mean_rmse": 497.1799255282724,
+      "validation_rows": 82329
+    }
+  ]
+}

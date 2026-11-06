@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "archive_payloads_hash_verified": 81,
+  "data_files_verified": 17,
+  "source_snapshots_verified": 7,
+  "six_prediction_files_aligned": true,
+  "fold_scores_recomputed": 12,
+  "market_indices_rebuilt_from_training_only": true,
+  "base_model_parameters_identical": true,
+  "submission_rows": 50000,
+  "submission_matches_checked_export": true,
+  "formal_delivery_run_count": 3,
+  "model_weights_included": false,
+  "kaggle_scores_included": false,
+  "runs": [
+    {
+      "kind": "catboost",
+      "variant": "raw_rent",
+      "folds_recomputed": 2
+    },
+    {
+      "kind": "catboost",
+      "variant": "fixed_mix_last",
+      "folds_recomputed": 2
+    },
+    {
+      "kind": "xgboost",
+      "variant": "raw_rent",
+      "folds_recomputed": 2
+    },
+    {
+      "kind": "xgboost",
+      "variant": "fixed_mix_last",
+      "folds_recomputed": 2
+    },
+    {
+      "kind": "lightgbm",
+      "variant": "raw_rent",
+      "folds_recomputed": 2
+    },
+    {
+      "kind": "lightgbm",
+      "variant": "fixed_mix_last",
+      "folds_recomputed": 2
+    }
+  ]
+}

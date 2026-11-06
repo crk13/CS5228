@@ -1,0 +1,5 @@
+kind,reference,fold,rows,residual_pearson
+rf,catboost_location_coe,holdout,47171,0.9666490890231036
+rf,catboost_location_coe,rolling_2024_04,35158,0.9669320304335796
+extra,catboost_location_coe,holdout,47171,0.9734439281104349
+extra,catboost_location_coe,rolling_2024_04,35158,0.9693161327623301

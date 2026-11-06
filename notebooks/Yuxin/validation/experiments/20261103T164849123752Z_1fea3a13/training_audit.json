@@ -1,0 +1,686 @@
+[
+  {
+    "origin": "2023-11",
+    "train_rows": 102829,
+    "audit": {
+      "kind": "market_carry",
+      "origin": "2023-11",
+      "train_rows": 102829,
+      "property": {
+        "kind": "mlp",
+        "origin": "2023-11",
+        "train_rows": 102829,
+        "selected_epochs": 11,
+        "target": "market_ratio",
+        "target_center": 1.0144079725945123,
+        "target_scale": 0.22645161549498183,
+        "numerical": [
+          "FLOOR_AREA_SQM",
+          "LEASE_COMMENCE_DATE",
+          "FLAT_AGE",
+          "REMAINING_LEASE",
+          "FLAT_TYPE_ORDINAL",
+          "LATITUDE",
+          "LONGITUDE",
+          "MAX_FLOOR",
+          "YEAR_COMPLETED"
+        ],
+        "categorical": [
+          "TOWN",
+          "FLAT_TYPE",
+          "FLAT_MODEL",
+          "STREET",
+          "SUBZONE",
+          "PLANNING_AREA",
+          "REGION",
+          "BLOCK_KEY"
+        ],
+        "cardinalities": [
+          28,
+          8,
+          21,
+          566,
+          158,
+          33,
+          7,
+          7219
+        ],
+        "device": "cpu",
+        "inner": {
+          "enabled": true,
+          "train_end": "2023-08",
+          "valid_start": "2023-09",
+          "valid_end": "2023-11",
+          "train_rows": 94118,
+          "valid_rows": 8711,
+          "selection_metric": "RMSE_SGD",
+          "preprocessing_fit_on_inner_train_only": true
+        },
+        "future_actuals_used": false
+      },
+      "market": {
+        "origin": "2023-11",
+        "kind": "carry",
+        "months": 35,
+        "lookback": 6,
+        "damping": 0.8,
+        "unobserved_months": 0,
+        "future_actuals_used": false,
+        "recursive": true
+      },
+      "device": "cpu",
+      "future_actuals_used": false
+    },
+    "selection_history": [],
+    "training_history": [],
+    "property_selection_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.7341459945850238,
+        "inner_rmse_sgd": 595.5520788655305
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.6545751951529598,
+        "inner_rmse_sgd": 584.7879010162673
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.6416255512562101,
+        "inner_rmse_sgd": 584.6826151197856
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.6346187666877077,
+        "inner_rmse_sgd": 579.7763662963902
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.6287107708684196,
+        "inner_rmse_sgd": 582.2432246216235
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.6248796203991699,
+        "inner_rmse_sgd": 578.334018367034
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.6197093682748238,
+        "inner_rmse_sgd": 577.665305309315
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.6168231301100058,
+        "inner_rmse_sgd": 576.7730911727227
+      },
+      {
+        "epoch": 9,
+        "train_mse": 0.6128776754756697,
+        "inner_rmse_sgd": 579.3938131985085
+      },
+      {
+        "epoch": 10,
+        "train_mse": 0.6097538524912841,
+        "inner_rmse_sgd": 580.6443143847575
+      },
+      {
+        "epoch": 11,
+        "train_mse": 0.6058489728104144,
+        "inner_rmse_sgd": 574.4889389240395
+      },
+      {
+        "epoch": 12,
+        "train_mse": 0.6034095630329306,
+        "inner_rmse_sgd": 575.9150661738341
+      },
+      {
+        "epoch": 13,
+        "train_mse": 0.5992081502620356,
+        "inner_rmse_sgd": 576.1012626785096
+      },
+      {
+        "epoch": 14,
+        "train_mse": 0.5960437929375187,
+        "inner_rmse_sgd": 581.4024166533485
+      },
+      {
+        "epoch": 15,
+        "train_mse": 0.5924246157157254,
+        "inner_rmse_sgd": 578.8590875855108
+      },
+      {
+        "epoch": 16,
+        "train_mse": 0.5909532479872657,
+        "inner_rmse_sgd": 575.728908563135
+      }
+    ],
+    "property_training_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.7157546483607503
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.6511486235701235
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.6406694872446612
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.6336187616825767
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.6271774900548602
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.6223799268295283
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.6195259764839081
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.6138052036239187
+      },
+      {
+        "epoch": 9,
+        "train_mse": 0.6108146406433583
+      },
+      {
+        "epoch": 10,
+        "train_mse": 0.607698504943717
+      },
+      {
+        "epoch": 11,
+        "train_mse": 0.6039705713323734
+      }
+    ],
+    "market_selection_history": [],
+    "market_training_history": [],
+    "market_forecast": {
+      "2023-11": 3100.0,
+      "2023-12": 3100.0,
+      "2024-01": 3100.0,
+      "2024-02": 3100.0,
+      "2024-03": 3100.0,
+      "2024-04": 3100.0,
+      "2024-05": 3100.0,
+      "2024-06": 3100.0,
+      "2024-07": 3100.0,
+      "2024-08": 3100.0,
+      "2024-09": 3100.0,
+      "2024-10": 3100.0,
+      "2024-11": 3100.0,
+      "2024-12": 3100.0,
+      "2025-01": 3100.0,
+      "2025-02": 3100.0,
+      "2025-03": 3100.0
+    },
+    "inference_probe_max_abs_delta_sgd": 0.0
+  },
+  {
+    "origin": "2024-03",
+    "train_rows": 114842,
+    "audit": {
+      "kind": "market_carry",
+      "origin": "2024-03",
+      "train_rows": 114842,
+      "property": {
+        "kind": "mlp",
+        "origin": "2024-03",
+        "train_rows": 114842,
+        "selected_epochs": 11,
+        "target": "market_ratio",
+        "target_center": 1.01221609937905,
+        "target_scale": 0.22612837030993324,
+        "numerical": [
+          "FLOOR_AREA_SQM",
+          "LEASE_COMMENCE_DATE",
+          "FLAT_AGE",
+          "REMAINING_LEASE",
+          "FLAT_TYPE_ORDINAL",
+          "LATITUDE",
+          "LONGITUDE",
+          "MAX_FLOOR",
+          "YEAR_COMPLETED"
+        ],
+        "categorical": [
+          "TOWN",
+          "FLAT_TYPE",
+          "FLAT_MODEL",
+          "STREET",
+          "SUBZONE",
+          "PLANNING_AREA",
+          "REGION",
+          "BLOCK_KEY"
+        ],
+        "cardinalities": [
+          28,
+          8,
+          21,
+          566,
+          158,
+          33,
+          7,
+          7543
+        ],
+        "device": "cpu",
+        "inner": {
+          "enabled": true,
+          "train_end": "2023-12",
+          "valid_start": "2024-01",
+          "valid_end": "2024-03",
+          "train_rows": 105837,
+          "valid_rows": 9005,
+          "selection_metric": "RMSE_SGD",
+          "preprocessing_fit_on_inner_train_only": true
+        },
+        "future_actuals_used": false
+      },
+      "market": {
+        "origin": "2024-03",
+        "kind": "carry",
+        "months": 39,
+        "lookback": 6,
+        "damping": 0.8,
+        "unobserved_months": 0,
+        "future_actuals_used": false,
+        "recursive": true
+      },
+      "device": "cpu",
+      "future_actuals_used": false
+    },
+    "selection_history": [],
+    "training_history": [],
+    "property_selection_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.7305004114875441,
+        "inner_rmse_sgd": 548.1285870857079
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.6537081654910915,
+        "inner_rmse_sgd": 543.7966317656178
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.6410417753963698,
+        "inner_rmse_sgd": 540.3858888506378
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.633926299906701,
+        "inner_rmse_sgd": 542.9564213636256
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.6277775327645064,
+        "inner_rmse_sgd": 534.736945209425
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.6230156706486618,
+        "inner_rmse_sgd": 533.4709620752112
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.6188083355903256,
+        "inner_rmse_sgd": 532.0745905696556
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.6146686506583136,
+        "inner_rmse_sgd": 531.0096640698417
+      },
+      {
+        "epoch": 9,
+        "train_mse": 0.6110557139444145,
+        "inner_rmse_sgd": 532.2257838820316
+      },
+      {
+        "epoch": 10,
+        "train_mse": 0.6082110893431584,
+        "inner_rmse_sgd": 533.7749133215173
+      },
+      {
+        "epoch": 11,
+        "train_mse": 0.6041303830919824,
+        "inner_rmse_sgd": 530.5383490069759
+      },
+      {
+        "epoch": 12,
+        "train_mse": 0.6014487744841938,
+        "inner_rmse_sgd": 533.0893351996184
+      },
+      {
+        "epoch": 13,
+        "train_mse": 0.5979951655953585,
+        "inner_rmse_sgd": 533.3740725652615
+      },
+      {
+        "epoch": 14,
+        "train_mse": 0.5949756452684197,
+        "inner_rmse_sgd": 532.5721132207988
+      },
+      {
+        "epoch": 15,
+        "train_mse": 0.5919376913075256,
+        "inner_rmse_sgd": 532.5770075658643
+      },
+      {
+        "epoch": 16,
+        "train_mse": 0.5899139217378304,
+        "inner_rmse_sgd": 530.8307427429327
+      }
+    ],
+    "property_training_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.7231047865653997
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.6488050265786449
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.6384471937734022
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.630577813369499
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.6262021510435914
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.62030179903418
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.6174625276479121
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.6122871002984274
+      },
+      {
+        "epoch": 9,
+        "train_mse": 0.6084736387654616
+      },
+      {
+        "epoch": 10,
+        "train_mse": 0.6053092856790488
+      },
+      {
+        "epoch": 11,
+        "train_mse": 0.6025341492248045
+      }
+    ],
+    "market_selection_history": [],
+    "market_training_history": [],
+    "market_forecast": {
+      "2024-03": 3100.0,
+      "2024-04": 3100.0,
+      "2024-05": 3100.0,
+      "2024-06": 3100.0,
+      "2024-07": 3100.0,
+      "2024-08": 3100.0,
+      "2024-09": 3100.0,
+      "2024-10": 3100.0,
+      "2024-11": 3100.0,
+      "2024-12": 3100.0,
+      "2025-01": 3100.0,
+      "2025-02": 3100.0,
+      "2025-03": 3100.0,
+      "2025-04": 3100.0,
+      "2025-05": 3100.0,
+      "2025-06": 3100.0,
+      "2025-07": 3100.0
+    },
+    "inference_probe_max_abs_delta_sgd": 8.423937742918497e-07
+  },
+  {
+    "origin": "2025-03",
+    "train_rows": 150000,
+    "audit": {
+      "kind": "market_carry",
+      "origin": "2025-03",
+      "train_rows": 150000,
+      "property": {
+        "kind": "mlp",
+        "origin": "2025-03",
+        "train_rows": 150000,
+        "selected_epochs": 12,
+        "target": "market_ratio",
+        "target_center": 1.0092467816180137,
+        "target_scale": 0.22268967488808356,
+        "numerical": [
+          "FLOOR_AREA_SQM",
+          "LEASE_COMMENCE_DATE",
+          "FLAT_AGE",
+          "REMAINING_LEASE",
+          "FLAT_TYPE_ORDINAL",
+          "LATITUDE",
+          "LONGITUDE",
+          "MAX_FLOOR",
+          "YEAR_COMPLETED"
+        ],
+        "categorical": [
+          "TOWN",
+          "FLAT_TYPE",
+          "FLAT_MODEL",
+          "STREET",
+          "SUBZONE",
+          "PLANNING_AREA",
+          "REGION",
+          "BLOCK_KEY"
+        ],
+        "cardinalities": [
+          28,
+          8,
+          21,
+          571,
+          158,
+          33,
+          7,
+          8136
+        ],
+        "device": "cpu",
+        "inner": {
+          "enabled": true,
+          "train_end": "2024-12",
+          "valid_start": "2025-01",
+          "valid_end": "2025-03",
+          "train_rows": 141076,
+          "valid_rows": 8924,
+          "selection_metric": "RMSE_SGD",
+          "preprocessing_fit_on_inner_train_only": true
+        },
+        "future_actuals_used": false
+      },
+      "market": {
+        "origin": "2025-03",
+        "kind": "carry",
+        "months": 51,
+        "lookback": 6,
+        "damping": 0.8,
+        "unobserved_months": 0,
+        "future_actuals_used": false,
+        "recursive": true
+      },
+      "device": "cpu",
+      "future_actuals_used": false
+    },
+    "selection_history": [],
+    "training_history": [],
+    "property_selection_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.6910428342447008,
+        "inner_rmse_sgd": 475.53552466715627
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.6310711782740933,
+        "inner_rmse_sgd": 470.03551783414036
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.6199858443312299,
+        "inner_rmse_sgd": 467.02373179125397
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.6135014762846376,
+        "inner_rmse_sgd": 465.8861356906564
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.6083780009011266,
+        "inner_rmse_sgd": 462.7691818944088
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.6029037972148787,
+        "inner_rmse_sgd": 461.82789179125984
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.5988162714409062,
+        "inner_rmse_sgd": 461.7247913656853
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.5944466196942118,
+        "inner_rmse_sgd": 461.5567550619319
+      },
+      {
+        "epoch": 9,
+        "train_mse": 0.5908488724756229,
+        "inner_rmse_sgd": 461.1931945770621
+      },
+      {
+        "epoch": 10,
+        "train_mse": 0.5873285311604652,
+        "inner_rmse_sgd": 460.541678196192
+      },
+      {
+        "epoch": 11,
+        "train_mse": 0.5830419273550738,
+        "inner_rmse_sgd": 459.86609367656825
+      },
+      {
+        "epoch": 12,
+        "train_mse": 0.5802446879414185,
+        "inner_rmse_sgd": 454.9961346003456
+      },
+      {
+        "epoch": 13,
+        "train_mse": 0.5777323843907646,
+        "inner_rmse_sgd": 457.13914796801197
+      },
+      {
+        "epoch": 14,
+        "train_mse": 0.5751247411363163,
+        "inner_rmse_sgd": 458.315830634874
+      },
+      {
+        "epoch": 15,
+        "train_mse": 0.5716198735867966,
+        "inner_rmse_sgd": 457.6919951468521
+      },
+      {
+        "epoch": 16,
+        "train_mse": 0.5690213774373349,
+        "inner_rmse_sgd": 456.64179491419554
+      },
+      {
+        "epoch": 17,
+        "train_mse": 0.5668311602250872,
+        "inner_rmse_sgd": 457.8734076196657
+      }
+    ],
+    "property_training_history": [
+      {
+        "epoch": 1,
+        "train_mse": 0.6840210908190409
+      },
+      {
+        "epoch": 2,
+        "train_mse": 0.6234340700213115
+      },
+      {
+        "epoch": 3,
+        "train_mse": 0.6126756903711955
+      },
+      {
+        "epoch": 4,
+        "train_mse": 0.6065389213371277
+      },
+      {
+        "epoch": 5,
+        "train_mse": 0.6018492224057516
+      },
+      {
+        "epoch": 6,
+        "train_mse": 0.5969632071812948
+      },
+      {
+        "epoch": 7,
+        "train_mse": 0.5930400000063578
+      },
+      {
+        "epoch": 8,
+        "train_mse": 0.589082712542216
+      },
+      {
+        "epoch": 9,
+        "train_mse": 0.5852199971580505
+      },
+      {
+        "epoch": 10,
+        "train_mse": 0.5823103219985962
+      },
+      {
+        "epoch": 11,
+        "train_mse": 0.5780976811599732
+      },
+      {
+        "epoch": 12,
+        "train_mse": 0.5755095568911235
+      }
+    ],
+    "market_selection_history": [],
+    "market_training_history": [],
+    "market_forecast": {
+      "2025-03": 3200.0,
+      "2025-04": 3200.0,
+      "2025-05": 3200.0,
+      "2025-06": 3200.0,
+      "2025-07": 3200.0,
+      "2025-08": 3200.0,
+      "2025-09": 3200.0,
+      "2025-10": 3200.0,
+      "2025-11": 3200.0,
+      "2025-12": 3200.0,
+      "2026-01": 3200.0,
+      "2026-02": 3200.0,
+      "2026-03": 3200.0,
+      "2026-04": 3200.0,
+      "2026-05": 3200.0,
+      "2026-06": 3200.0,
+      "2026-07": 3200.0
+    },
+    "inference_probe_max_abs_delta_sgd": 0.0
+  }
+]

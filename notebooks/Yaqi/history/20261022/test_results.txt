@@ -1,0 +1,19 @@
+test_feature_switches_and_reserved_blocks (test_framework.FrameworkTests.test_feature_switches_and_reserved_blocks) ... ok
+final [holdout/holdout] RMSE = 936.750
+test_final_refits_features_on_all_train_and_writes_submission (test_framework.FrameworkTests.test_final_refits_features_on_all_train_and_writes_submission) ... ok
+test_hist_model_handles_unseen_categories_and_missing_building_values (test_framework.FrameworkTests.test_hist_model_handles_unseen_categories_and_missing_building_values) ... ok
+test_malformed_submission_is_rejected (test_framework.FrameworkTests.test_malformed_submission_is_rejected) ... ok
+test_recent_median_uses_six_calendar_months_and_fallbacks (test_framework.FrameworkTests.test_recent_median_uses_six_calendar_months_and_fallbacks) ... ok
+test_shared_splits_are_chronological_and_positional (test_framework.FrameworkTests.test_shared_splits_are_chronological_and_positional) ... ok
+test_target_transform_predictions_are_original_scale (test_framework.FrameworkTests.test_target_transform_predictions_are_original_scale) ... ok
+leakage [holdout/holdout] RMSE = 936.750
+leakage [holdout/holdout] RMSE = 997700.000
+test_validation_targets_never_reach_feature_transform (test_framework.FrameworkTests.test_validation_targets_never_reach_feature_transform) ... ok
+test_all_models_handle_unknown_categories_and_missing_values (test_trees.TreeTests.test_all_models_handle_unknown_categories_and_missing_values) ... ok
+test_recent_window_uses_calendar_months_and_positional_targets (test_trees.TreeTests.test_recent_window_uses_calendar_months_and_positional_targets) ... ok
+test_vocabulary_cannot_learn_from_validation (test_trees.TreeTests.test_vocabulary_cannot_learn_from_validation) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 2.301s
+
+OK

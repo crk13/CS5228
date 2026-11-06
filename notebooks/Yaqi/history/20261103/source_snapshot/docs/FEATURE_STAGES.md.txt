@@ -1,0 +1,139 @@
+# 分阶段加入位置与经济特征
+
+此阶段沿用现有 GitHub 清洗数据、公共 `run_experiment()`、两个时间验证窗口。输出独立保存到 `outputs/location_economy_20261103/`，不覆盖原有 `outputs/trees/` 结果，也不修改任何原始或清洗 CSV。
+
+## 运行
+
+在 VS Code 打开本项目，使用已选的现有 Python 3.11 解释器：
+
+```powershell
+python -m unittest discover -s tests -v
+python scripts/train_feature_stages.py --final
+```
+
+继续同一数据、代码、环境及线程配置下已经开始的实验：
+
+```powershell
+python scripts/train_feature_stages.py --resume --final
+```
+
+仅比较 CatBoost，或先只完成位置阶段：
+
+```powershell
+python scripts/train_feature_stages.py --models catboost --output outputs/catboost_features --final
+python scripts/train_feature_stages.py --stages base location --output outputs/location_only
+```
+
+默认三种模型：CatBoost、LightGBM、XGBoost。每种模型固定最近 24 个月训练、加入邮编和楼号、随机种子 42、4 个 CPU 线程；模型参数与上一阶段同类配置一致，在特征阶段之间保持不变。没有为每一阶段单独调参，也不使用验证标签早停。
+
+补充随机森林与 ExtraTrees，保留既有 18 组并追加 12 组：
+
+```powershell
+python scripts/train_feature_stages.py --models rf extra --resume --final
+```
+
+森林模型使用 160 棵树、最大深度 24、叶子最少 8 条、`max_features=0.8`。为控制高基数地址带来的编码宽度，每个类别字段的 one-hot 最多保留 32 类（低频类别合并），原先选定的输入字段仍全部使用，编码只在当前训练窗口拟合。此设置在六个特征阶段一致。它与最早一轮未限制编码类别数的森林配置不同，因此本轮各阶段应与本轮森林基准比较。模型差异包括各自的编码方式，不能宣称是所有算法的最优性比较。
+
+合并完成后共五种模型、30 组配置；`--resume` 同时检查源数据、依赖、源代码与每个已有模型的序列化参数，防止静默复用已经改变的配置。默认命令仍只启动三种提升树；补充命令只运行两种森林，报告和推荐模型会比较同一目录下全部已完成结果。
+
+本次实际运行时，两种森林在独立目录并行，每进程 4 线程，避免共同改写日志。两个训练命令分别启动并等待完成后，再运行合并命令：
+
+```powershell
+python scripts/train_feature_stages.py --models rf --resume
+python scripts/train_feature_stages.py --models extra --output outputs/location_economy_extra_20261103 --resume
+python scripts/merge_forest_experiments.py
+```
+
+合并时检查两处数据、代码、依赖、随机种子与线程指纹相同，核对全部序列化模型参数及逐行验证分数。原有实验 ID 保留；如果 30 组中的最佳配置不变，沿用原模型文件，随后重新核对提交预测。
+
+另存两种森林各自最优配置的模型与提交，并更新报告：
+
+```powershell
+python scripts/export_forest_candidate.py --kind rf
+python scripts/export_forest_candidate.py --kind extra
+python scripts/verify_feature_stages.py
+python scripts/analyze_feature_stages.py
+python scripts/report_forest_supplement.py
+```
+
+## 实验顺序
+
+| 阶段 | 在原有模型输入上增加的内容 |
+|---|---|
+| base | 无；从头复跑原有特征作为对照 |
+| location | 最近 open MRT、商场、小学的大圆直线距离 |
+| location_coe | 位置距离＋按月、类别汇总的 COE |
+| location_stocks | 位置距离＋SGX 月均股价归一化指数 |
+| location_economy_last | 位置距离＋COE＋股票，未知未来协变量保持截止时点最后值 |
+| location_economy_damped | 位置距离＋COE＋股票，未知未来协变量使用预设阻尼趋势预测 |
+
+默认三种提升树共 18 组配置，补充两种森林后共 30 组，每组两个时间验证窗口。每个模型先完成基础、位置阶段，再进行经济数据实验。原有房龄已经使用，因此本阶段不重复添加房龄。
+
+## 位置口径与限制
+
+`src/features/distance.py` 使用辅助文件中的经纬度计算最近距离，单位 km，不表示步行距离。
+
+- MRT 必须 `STATUS == open`；排除文件中的 LRT 及 RTS 线路，按坐标去重，防止换乘线路重复。
+- 小学必须 `MAINLEVEL_CODE == primary`；不把普通中学和混合学段学校算作这次指定的小学集合。
+- 商场使用提供表中的有效坐标。
+- 输入坐标缺失时距离保持缺失，由对应模型处理；房屋行数与顺序不变。
+
+地铁、学校、商场文件均缺少历史启用日期。这里实施的是图片要求的**给定设施文件快照实验**，不能据此宣称这些设施在 2021 年已经存在、或者所有结果是严格重建历史设施的回测。设施数量及口径写入 `audit_location*.json`。
+
+## 经济数据的信息边界
+
+固定一个训练截止月 M，一次性预测之后的整段验证或测试期。
+
+1. 假设已获得的月度经济实测数据只到 M-1 月（延迟一个完整日历月）。先按这个日期截断辅助表，然后才聚合、填补或拟合协变量预测。
+2. 训练记录月份 t 使用 t-1 月的 COE、股票值，不能使用当月或未来经济值。
+3. 验证/测试需要的 t-1 月若超过 M-1，就由当前训练截止点的历史经济数据预测，不读取已经在文件中提供的未来实测值。预测时不随着验证月份推进而获取新的实测数据。
+4. 所有处理在每一折重新拟合。首月没有前月信息时保留缺失；历史缺月只向前填充。
+
+实际截止：A 用经济数据到 2023-10；B 到 2024-02；最终训练到 2025-02。文件没有发布日期，延迟一个完整月是明确建模假设，不能当作已经验证真实发布时间。
+
+COE：同月同类各轮的 `QUOTA_PREMIUM` 取均值，分别使用 A/B/C/E 四个类别。
+
+股票：只取 `MARKET == sgx`，因此不混合 SGD、HKD、USD、EUR。对每家公司计算日 `CLOSE` 的月均值，再以第一可见月份确定固定股票集合、归一化为 100，最后取等权均值。不使用可能受后续公司行动调整的 `ADJUSTED_CLOSE`；此指数不是官方 STI。
+
+未知未来经济数据有两个预设方案：
+
+- `last`：最后可见月值持平。
+- `damped`：最近 12 个可见月份的对数线性斜率，限制在每月 ±0.03，阻尼系数 0.8。h 个月后的水平为 `last * exp(slope * sum(0.8**j, j=1..h))`。这些参数预先固定，没有根据验证租金挑选预测轨迹。
+
+测试包括：任意修改截止点之后的所有实测 COE/股票值，生成的训练与未来特征必须完全不变。
+
+## 读取结果
+
+- `FEATURE_REPORT.md`：中文对比结果、定义与限制。
+- `comparison.csv`：A/B 分数、平均值、相对基础及位置阶段的变化。变化为新分数减对照分数，负数表示改善。
+- `experiments/<run_id>/config.json`：完整模型参数与实际使用列；`validation_predictions.csv` 可交给 P1 融合。
+- `audit_*.json`：各折设施与宏观截断信息；`covariates_*.csv`：历史与未来预测经济输入，可检查来源。
+- `*_by_*.csv`：按月份、房型、镇区的误差与偏差。
+- `best_model.json`：本轮开发验证平均分最低的配置与产物路径。
+- `models/best_feature_model.joblib`：完整特征流水线和模型。
+- `submissions/best_feature_model.csv`：50000 行、`Id,Predicted`，保持原始测试顺序并逐行核对提交样例。
+- `verification.json`：从逐行预测重算分数、核对真实标签与行序、检查新特征实际进入模型、确认数据哈希不变。
+- `FOREST_REPORT.md`、`forest_comparison.csv`：两种森林的六阶段完整成绩。
+- `models/rf_best_model.joblib`、`models/extra_best_model.joblib` 及对应 `submissions/*_best_model.csv`：两种森林各自最佳配置的模型与全部测试预测。
+- `rf_model.json`、`extra_model.json`：配置、实际训练范围、编码宽度和提交重载检查；`*_feature_importance.csv` 为按原始字段汇总的森林重要性。
+
+所有阶段都是开发验证，两个窗口重叠，选择后的最好分数不能视为独立泛化评估。经济特征或位置特征没有预设一定优于基础模型；最终推荐按实际结果选择。
+
+独立复核与 Notebook 入口：
+
+```powershell
+python scripts/verify_feature_stages.py
+```
+
+复核还会在真实辅助表中将截止点之后的全部经济价格替换为极端数值，确认生成特征完全不变；检查 `transform` 不重新加载经济表，并验证全部 200000 条房屋记录的距离有限、模型保存重载与提交一致。
+
+Notebook 为 `notebooks/Yaqi_location_economy.ipynb`。
+
+保存位置版备选模型、补充图表与分析：
+
+```powershell
+python scripts/export_location_candidate.py
+python scripts/analyze_feature_stages.py
+```
+
+位置版另存为 `models/location_only_model.joblib`、`submissions/location_only_model.csv`，不使用 COE 或股票。若经济特征增益很小，这个版本可用于单独检验位置特征的实际表现。其配置及保存重载检查见 `location_model.json`。
