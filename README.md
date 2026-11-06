@@ -130,6 +130,24 @@ python -m venv --system-site-packages .venv
 [正式交付](results/Yuxin/README.md) 恰好保留三个运行；[选择与配置锁定清单](results/Yuxin/selection.json) 记录参数文件、实际训练轮数、原训练源码提交和产物哈希。
 分组误差与融合诊断位于 `notebooks/Yuxin/stage5/`，不是额外正式交付；新时间模型的配置、训练审计与验证摘要位于 `notebooks/Yuxin/stage4/full/`，逐折预测 CSV 按 `.gitignore` 不再提交。
 
+## P1 KNN 与最终融合
+
+**最终提交 `results/P1/fusion/fusion_stack3_L3.csv`，Kaggle 公开榜 434.67**（组内原先最好的单模型提交为 444.84）。
+
+- **KNN**：Ridge 先给出主预测，KNN 再修正其残差，并加入 MRT、商场、CBD 距离等辅助特征。v3 的 rolling 平均 RMSE 为 492.28。宏观指标（COE、股指）会让验证误差明显变大，因此不用。详见 [KNN 文档](doc/knn_p1.md)。
+- **融合**：
+  - 第一层：7 个基础模型按月去均值后做 NNLS 加权。
+  - 第二层：ExtraTrees、HistGradientBoosting、MLP 学习残差后取平均。
+  - 测试集整体水平：先对齐到 2025-03 的最新水平，再叠加 hedonic 租金指数的近期趋势（L3）。
+  - 跨时间验证的 mean_dm：最优单模型 463.42，纯线性 462.15，两层融合 460.83。详见 [融合文档](doc/fusion_p1.md)。
+
+| 提交 | 公开榜 |
+|---|---:|
+| fusion_stack3_L3（主选） | **434.67** |
+| fusion_et_L3 | 435.00 |
+| fusion_nnls_L3 | 435.42 |
+| fusion_stack3_L1（对冲选择） | 435.48 |
+
 ## 重要文档
 
 | 文档 | 内容 |
@@ -142,3 +160,4 @@ python -m venv --system-site-packages .venv
 | [Yuxin 开发方案](doc/develop_yuxin_nn.md) / [验收记录](doc/develop_test_yuxin_nn.md) | 六步实施要求、实际结果与边界 |
 | [Yuxin 调参报告](doc/develop_tuning_yuxin_nn.md) | 步骤 1—3 的有限搜索及冻结参数 |
 | [Yuxin 运行说明](notebooks/Yuxin/README.md) / [正式候选](results/Yuxin/README.md) | 神经网络复现、步骤 4—6 与交付索引 |
+| [P1 KNN](doc/knn_p1.md) / [P1 融合与最终提交](doc/fusion_p1.md) | KNN 结构与辅助特征取舍；两层融合、整体水平处理、Kaggle 检验与最终选择 |
