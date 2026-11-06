@@ -1,0 +1,124 @@
+{
+  "timestamp": "2026-11-03T11:00:30.459326+00:00",
+  "run_id": "20261103T110030459326Z_838f1908",
+  "name": "ridge_market_ratio_carry",
+  "author": "FXY",
+  "features": [
+    "block",
+    "mrt_distance"
+  ],
+  "feature_parameters": {
+    "block": {},
+    "mrt_distance": {}
+  },
+  "model": "src.models.base.ModelWrapper",
+  "parameters": {
+    "columns": [
+      "SUBZONE",
+      "BLOCK",
+      "STREET",
+      "FLAT_TYPE",
+      "FLAT_MODEL",
+      "FLOOR_AREA_SQM",
+      "RENT_YEAR",
+      "LEASE_COMMENCE_DATE",
+      "MRT_KM",
+      "RENT_APPROVAL_DATE"
+    ],
+    "estimator": {
+      "class": "src.models.market_ratio.MarketRatioRidge",
+      "parameters": {
+        "alphas": [
+          0.3,
+          1,
+          3,
+          10,
+          30,
+          100
+        ],
+        "recent_months": 6
+      }
+    },
+    "target_transform": "none"
+  },
+  "split": "rolling",
+  "seed": 5228,
+  "final": true,
+  "versions": {
+    "numpy": "2.4.0",
+    "pandas": "2.3.3",
+    "sklearn": "1.9.0"
+  },
+  "folds": [
+    {
+      "name": "holdout",
+      "train_start": "2021-01",
+      "train_end": "2023-11",
+      "valid_start": "2023-12",
+      "valid_end": "2025-03",
+      "train_rows": 102829,
+      "valid_rows": 47171,
+      "rmse": 488.68975921824983,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "MRT_KM"
+      ]
+    },
+    {
+      "name": "rolling_2024_04",
+      "train_start": "2021-01",
+      "train_end": "2024-03",
+      "valid_start": "2024-04",
+      "valid_end": "2025-03",
+      "train_rows": 114842,
+      "valid_rows": 35158,
+      "rmse": 471.94276062987916,
+      "feature_columns": [
+        "FLOOR_AREA_SQM",
+        "LEASE_COMMENCE_DATE",
+        "RENT_YEAR",
+        "RENT_MONTH",
+        "RENT_APPROVAL_DATE",
+        "TOWN",
+        "BLOCK",
+        "STREET",
+        "FLAT_TYPE",
+        "FLAT_MODEL",
+        "POSTAL_CODE",
+        "LATITUDE",
+        "LONGITUDE",
+        "MAX_FLOOR",
+        "YEAR_COMPLETED",
+        "SUBZONE",
+        "PLANNING_AREA",
+        "REGION",
+        "MRT_KM"
+      ]
+    }
+  ],
+  "final_train_rows": 150000,
+  "test_rows": 50000,
+  "submission_path": "results/FXY/submissions/20261103T110030459326Z_838f1908.csv",
+  "fold_rmse": {
+    "holdout": 488.68975921824983,
+    "rolling_2024_04": 471.94276062987916
+  },
+  "mean_rmse": 480.3162599240645
+}
