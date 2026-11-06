@@ -1,0 +1,16 @@
+stage,config,holdout,rolling_2024_04,mean_rmse,delta_vs_basic
+baseline,basic,510.386,494.229,502.307,0.0
+single,clip_month,509.668,532.573,521.12,18.813
+single,geo_km,510.429,494.582,502.505,0.198
+single,market_level,511.587,494.829,503.208,0.901
+single,add_age_floor,508.367,492.508,500.437,-1.87
+single,per_sqm,518.122,500.381,509.251,6.944
+single,by_flat_type,510.254,494.247,502.25,-0.057
+single,ridge_residual,506.715,491.221,498.968,-3.339
+single,uniform,511.115,495.222,503.169,0.861
+single,tune,509.269,492.473,500.871,-1.437
+greedy,ridge_residual + add_age_floor,504.375,488.873,496.624,-5.683
+greedy,ridge_residual + add_age_floor + by_flat_type,504.678,489.002,496.84,-5.467
+final,ridge_residual + add_age_floor + tune,506.946,489.818,498.382,-3.925
+follow_up,clip_month + uniform,507.754,493.821,500.788,-1.52
+follow_up,ridge_residual + add_age_floor + clip_month + uniform,504.637,489.362,497.0,-5.307

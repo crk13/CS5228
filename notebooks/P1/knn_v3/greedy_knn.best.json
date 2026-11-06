@@ -1,0 +1,44 @@
+{
+  "accepted": [
+    {
+      "step": "+AUX_MRT_KM",
+      "holdout": 500.7058405998792,
+      "rolling_2024_04": 485.3594826597823,
+      "mean_rmse": 493.0326616298307
+    }
+  ],
+  "config": {
+    "aux": "p1_aux",
+    "knn_features": [
+      "LATITUDE",
+      "LONGITUDE",
+      "FLOOR_AREA_SQM",
+      "FLAT_TYPE_ORDINAL",
+      "REMAINING_LEASE",
+      "MONTH_INDEX",
+      "FLAT_AGE",
+      "MAX_FLOOR",
+      "AUX_MRT_KM"
+    ],
+    "ridge_numeric": [
+      "FLOOR_AREA_SQM",
+      "REMAINING_LEASE"
+    ],
+    "ridge_categorical": [
+      "FLAT_TYPE",
+      "FLAT_MODEL",
+      "TOWN"
+    ],
+    "base": "ridge",
+    "alpha": 1.0,
+    "n_neighbors": 80,
+    "weights": "distance",
+    "clip_month": false,
+    "geo_km": false,
+    "level": "none",
+    "by_flat_type": false,
+    "feature_weights": null,
+    "target_transform": "none"
+  },
+  "mean_rmse": 493.0326616298307
+}
