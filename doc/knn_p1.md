@@ -1,6 +1,6 @@
 # P1：KNN 基础模型
 
-本文记录 P1 交付给融合的三个 KNN 运行：模型结构、特征及取舍理由、搜索过程和结果。公共框架的接口和交付规则只以 [接口协议](../docs/experiment-interface.md) 为准，这里不重复。融合方法见 `p1_fusion` 分支的 `doc/fusion_p1.md`。
+本文记录 P1 交付给融合的三个 KNN 运行：模型结构、特征及取舍理由、搜索过程和结果。公共框架的接口和交付规则只以 [接口协议](../docs/experiment-interface.md) 为准，这里不重复。融合方法见 [融合文档](fusion_p1.md)。
 
 ## 1. 结论
 
@@ -116,7 +116,7 @@ v2 的单项消融见 [knn_v2_ablation.csv](../notebooks/P1/knn_v2_ablation.csv)
 
 ## 5. 复现
 
-在 `p1_knn` 分支、项目根目录下运行：
+在项目根目录下运行：
 
 ```bash
 python notebooks/P1/knn_run.py deliver      # v1；grid 子命令重跑 holdout 网格

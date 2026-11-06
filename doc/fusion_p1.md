@@ -1,6 +1,6 @@
 # P1：模型融合与最终提交
 
-本文记录融合方法、验证设计、搜索结果、Kaggle 公开榜检验和最终选择。公共框架的接口和交付规则只以 [接口协议](../docs/experiment-interface.md) 为准。各基础模型的说明见各成员的文档；P1 的 KNN 见 `p1_knn` 分支的 `doc/knn_p1.md`。
+本文记录融合方法、验证设计、搜索结果、Kaggle 公开榜检验和最终选择。公共框架的接口和交付规则只以 [接口协议](../docs/experiment-interface.md) 为准。各基础模型的说明见各成员的文档；P1 的 KNN 见 [KNN 文档](knn_p1.md)。
 
 ## 1. 结论
 
@@ -139,7 +139,7 @@
 
 ## 7. 复现
 
-在 `p1_fusion` 分支、项目根目录下运行（需要先 `git fetch origin`，以便读取各成员的固定提交）：
+在项目根目录下运行（需要先 `git fetch origin`，以便读取各成员的固定提交）：
 
 ```bash
 python notebooks/P1/fusion_inputs.py              # 读取并校验全部输入

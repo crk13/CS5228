@@ -134,7 +134,7 @@ python -m venv --system-site-packages .venv
 
 **最终提交 `results/P1/fusion/fusion_stack3_L3.csv`，Kaggle 公开榜 434.67**（组内原先最好的单模型提交为 444.84）。
 
-- **KNN**（代码在 `p1_knn` 分支）：Ridge 先给出主预测，KNN 再修正其残差，并加入 MRT、商场、CBD 距离等辅助特征。v3 的 rolling 平均 RMSE 为 492.28。宏观指标（COE、股指）会让验证误差明显变大，因此不用。详见 [KNN 文档](doc/knn_p1.md)。
+- **KNN**：Ridge 先给出主预测，KNN 再修正其残差，并加入 MRT、商场、CBD 距离等辅助特征。v3 的 rolling 平均 RMSE 为 492.28。宏观指标（COE、股指）会让验证误差明显变大，因此不用。详见 [KNN 文档](doc/knn_p1.md)。
 - **融合**：
   - 第一层：7 个基础模型按月去均值后做 NNLS 加权。
   - 第二层：ExtraTrees、HistGradientBoosting、MLP 学习残差后取平均。
