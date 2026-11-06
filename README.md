@@ -71,7 +71,7 @@ CS5228/
 |---|---|---|
 | P1 | 数据清洗与公共实验框架、KNN、融合与最终提交 | [KNN](doc/knn_p1.md) · [融合与最终提交](doc/fusion_p1.md) |
 | P2 | 统计模型：基线、Ridge、双向固定效应、混合效应；时间趋势处理 | [Ridge 文档](doc/ridge_p2.md) · [交付索引](results/FXY/README.md) |
-| P3 | GBDT：LightGBM、XGBoost、CatBoost、RF；调参与 SHAP | — |
+| P3 | GBDT：LightGBM、XGBoost、CatBoost、RF；调参与 SHAP | [树模型文档](doc/trees_p3.md) · [实验与交付索引](notebooks/Yaqi/README.md) |
 | P4 | 辅助数据、距离特征、MLP + embedding | [开发方案](doc/develop_yuxin_nn.md) · [验收记录](doc/develop_test_yuxin_nn.md) · [调参报告](doc/develop_tuning_yuxin_nn.md) · [运行说明](notebooks/Yuxin/README.md) |
 
 各组员共用实验框架，以便比较模型表现和进行消融实验。新增模型库由相应负责人维护依赖。
